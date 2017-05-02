@@ -8,8 +8,25 @@ var bodyParser = require('body-parser');
 var index = require('./routes/index');
 var users = require('./routes/users');
 var sendPackage = require('./routes/sendPackage.js');
+var mongoSessionURL = "mongodb://localhost:27017/social_delivery_system";
+var expressSessions = require("express-session");
+var passport = require('passport');
+var mongoStore = require("connect-mongo/es5")(expressSessions);
 
 var app = express();
+
+app.use(expressSessions({
+	  secret: "sds",
+	  resave: false,
+	  saveUninitialized: false,
+	  duration: 30 * 60 * 1000,
+	  activeDuration: 5 * 6 * 1000,
+	  store: new mongoStore({
+	    url: mongoSessionURL
+	  })
+	}));
+	app.use(passport.initialize());
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -27,7 +44,9 @@ app.use('/', index);
 app.use('/login', index);
 app.use('/register', index);
 app.use('/send', sendPackage.sendPackage);
-app.use('/users', users);
+// app.get('/users', users);
+
+app.post('/v1/authenticateuser', users.login)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -41,6 +41,7 @@
     }
 
     $scope.checkuser = function(){
+      console.log("here in login user")
       $http({
         method:'get',
         url:'/v1/authenticateuser'
@@ -135,7 +136,7 @@
 
         <div class="hm-content hm-content--main text-center">
           <div class="hm-main-cta-wrapper animated animation-delay2500 fadeIn half-time">
-            <a class="hm-cta metric-home-click-send js-tracking" data-animation-classes="animated fadeOutRight half-time ease-out" data-event="{&#39;name&#39;: &#39;Home - Press send CTA&#39;, &#39;options&#39;: {}}" href="send">
+            <a class="hm-cta metric-home-click-send js-tracking" data-animation-classes="animated fadeOutRight half-time ease-out" data-event="{&#39;name&#39;: &#39;Home - Press send CTA&#39;, &#39;options&#39;: {}}" href="">
               <b class="hm-cta__title" ng-click="checkuser()">Send</b>
               <span class="hm-cta__subtitle">What would you like to send?</span>
               <span class="hm-cta__icon">{</span>

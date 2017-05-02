@@ -1,0 +1,370 @@
+	.table_fdesc td:first-child
+	{
+		text-align: right;
+		color: #969696;
+		font-size: 13px;
+	}
+	.table_fdesc td
+	{
+		padding: 7px;
+	}
+	.td2_content
+	{
+	font-size: 16px;
+	}
+	.name{
+	font-size: 22px !important;
+	font-weight: bold;
+	}
+		#map {
+        width: 500px;
+        height: 400px;
+        margin-top: 10px;
+      }
+	.top_heading
+	{
+		font-family: "Arial", cursive, sans-serif;
+		font-size: 24px;
+	}
+	/*
+	  .footer {
+	  background-color: #333;
+	  width: 100%;
+	  bottom: 0;
+	  height: 52px;
+	  }*/
+	  .pad{
+	  padding: 0px !important;
+	  }
+	  .request_margin
+	  {
+	  	margin-bottom: 12px;
+	  }
+	  .product_name
+	  {
+	  	color: #000000 !important;
+	  	font-family: Arial, "Helvetica Neue", Helvetica, sans-serif !important;
+		font-size: 22px !important;
+	  }
+	  .product_profile_price
+	  {
+	  	color: #000000 !important;
+	  	font-family: Arial, "Helvetica Neue", Helvetica, sans-serif !important;
+		font-size: 21px !important;
+		font-weight:bold;
+	  }
+	  .content_top1
+	  {
+	  margin-bottom: 5px;
+	  }
+.thumbnail {
+    width: 320px;
+    height: 240px;
+}
+
+.image {
+    width: 100%;
+    height: 100%;    
+}
+
+.image img {
+    -webkit-transition: all 1s ease; /* Safari and Chrome */
+    -moz-transition: all 1s ease; /* Firefox */
+    -ms-transition: all 1s ease; /* IE 9 */
+    -o-transition: all 1s ease; /* Opera */
+    transition: all 1s ease;
+}
+
+.image:hover img {
+    -webkit-transform:scale(1.25); /* Safari and Chrome */
+    -moz-transform:scale(1.25); /* Firefox */
+    -ms-transform:scale(1.25); /* IE 9 */
+    -o-transform:scale(1.25); /* Opera */
+     transform:scale(1.25);
+}
+.btn1{
+	width: 105px;
+	margin: 0px;
+	text-align: center;
+}
+.cur
+{
+	cursor: pointer;
+}
+.btn2{
+	width: 105px;
+	margin: 0px;
+	background: red;
+	text-align: center;
+}
+.btn2:hover{
+	background: red;
+}
+.btn3{
+	background: red !important;
+}
+.btn3:hover{
+	background: red !important;
+}
+.ap_farmer_name{
+color: #555555;
+font-size: 19px;
+}
+.ap_name{
+color: #679900;
+font-size: 21px;
+}
+.ap_price{
+color: #b12704;
+font-size: 19px;
+}
+.ap_desc{
+color: #000000;
+font-size: 18px;
+}
+.ap_rr{
+color: #555555;
+font-size: 15px;
+}
+.content_name
+{
+float: left;
+width: 40%;
+text-align: center;
+}
+.content_email
+{
+	float: left;
+	display: inline;
+	width: 30%;
+	text-align: center;
+}
+.content_add_delete
+{
+
+	display: inline;
+	width: 25%;
+}
+  ol, ul{
+  margin-bottom: 0px !important; 
+  }
+@media only screen and (max-width: 640px){
+
+	.btn1{
+		width: 90px;
+	}
+	  h3
+	  {
+		font-size: 18px !important;
+	  }
+  	.content_name
+	{
+		float: left;
+		width: 100%;
+		text-align: center;
+	}
+	.content_email
+	{
+		float: left;
+		display: inline;
+		width: 100%;
+		text-align: center;
+	}
+	.content_add_delete
+	{
+	
+		float: right;
+		display: inline;
+		width: 100%;
+		margin-top: 16px;
+	}
+  }
+  h4
+  {
+  	font-size: 16px !important;
+  }
+
+
+
+
+
+
+/* 	.table_fdesc td:first-child
+	{
+		text-align: right;
+		color: #969696;
+		font-size: 11px;
+	}
+	.table_fdesc td
+	{
+		padding: 7px;
+	}
+	.td2_content
+	{
+	font-size: 16px;
+	}
+	.name{
+	font-size: 22px !important;
+	font-weight: bold;
+	}
+		#map {
+        width: 500px;
+        height: 400px;
+        margin-top: 10px;
+      }
+	.top_heading
+	{
+		font-family: "Arial", cursive, sans-serif;
+		font-size: 24px;
+	}
+	
+	  .footer {
+	  background-color: #333;
+	  width: 100%;
+	  bottom: 0;
+	  height: 52px;
+	  }
+	  .pad{
+	  padding: 0px !important;
+	  }
+	  .request_margin
+	  {
+	  	margin-bottom: 12px;
+	  }
+	  .product_name
+	  {
+	  	color: #000000 !important;
+	  	font-family: Arial, "Helvetica Neue", Helvetica, sans-serif !important;
+		font-size: 22px !important;
+	  }
+	  .product_profile_price
+	  {
+	  	color: #000000 !important;
+	  	font-family: Arial, "Helvetica Neue", Helvetica, sans-serif !important;
+		font-size: 21px !important;
+		font-weight:bold;
+	  }
+	  .content_top1
+	  {
+	  margin-bottom: 5px;
+	  }
+.thumbnail {
+    width: 320px;
+    height: 240px;
+}
+
+.image {
+    width: 100%;
+    height: 100%;    
+}
+
+.image img {
+    -webkit-transition: all 1s ease; Safari and Chrome
+    -moz-transition: all 1s ease; Firefox
+    -ms-transition: all 1s ease; IE 9
+    -o-transition: all 1s ease; Opera
+    transition: all 1s ease;
+}
+
+.image:hover img {
+    -webkit-transform:scale(1.25); Safari and Chrome
+    -moz-transform:scale(1.25); Firefox
+    -ms-transform:scale(1.25); IE 9
+    -o-transform:scale(1.25); Opera
+     transform:scale(1.25);
+}
+.btn1{
+	width: 105px;
+	margin: 0px;
+}
+.btn2{
+	width: 105px;
+	margin: 0px;
+	background: red;
+}
+.btn2:hover{
+	background: red;
+}
+.btn3{
+	background: red !important;
+}
+.btn3:hover{
+	background: red !important;
+}
+.ap_farmer_name{
+color: #555555;
+font-size: 19px;
+}
+.ap_name{
+color: #679900;
+font-size: 21px;
+}
+.ap_price{
+color: #b12704;
+font-size: 19px;
+}
+.ap_desc{
+color: #000000;
+font-size: 18px;
+}
+.ap_rr{
+color: #555555;
+font-size: 15px;
+}
+.content_name
+{
+float: left;
+width: 40%;
+text-align: center;
+}
+.content_email
+{
+	float: left;
+	display: inline;
+	width: 30%;
+	text-align: center;
+}
+.content_add_delete
+{
+
+	display: inline;
+	width: 25%;
+}
+  ol, ul{
+  margin-bottom: 0px !important; 
+  }
+@media only screen and (max-width: 640px){
+
+	.btn1{
+		width: 90px;
+	}
+	  h3
+	  {
+		font-size: 18px !important;
+	  }
+  	.content_name
+	{
+		float: left;
+		width: 100%;
+		text-align: center;
+	}
+	.content_email
+	{
+		float: left;
+		display: inline;
+		width: 100%;
+		text-align: center;
+	}
+	.content_add_delete
+	{
+	
+		float: right;
+		display: inline;
+		width: 100%;
+		margin-top: 16px;
+	}
+  }
+  h4
+  {
+  	font-size: 16px !important;
+  } */

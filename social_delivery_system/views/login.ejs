@@ -1,9 +1,6 @@
 
 <!DOCTYPE html>
 <head>
-
-
-
 <meta charset="utf-8">
   <meta name="google" value="notranslate" />
 <meta http-equiv="Content-Language" content="en" />
@@ -16,8 +13,6 @@
 <meta name="description" content="
   The social delivery service where you save the environment, make money and do something nice for other people.
 ">
-
-
 <meta name="apple-itunes-app" content="app-id=1037756477">
 <!-- Favicons -->
 <link rel="shortcut icon" href="//d1xqbpwl1wh09p.cloudfront.net/web_images/favicon.png" type="image/png">
@@ -45,10 +40,44 @@
 <!-- Stylesheets -->
 <link rel="stylesheet" media="all" href="https://d1112petr9ji1a.cloudfront.net/assets/application-bac74edb05b8d09242307623247b39e57872aca9abbde84ab37667ba59ba3a68.css" />
 <link rel="stylesheet" media="all" href="https://d1112petr9ji1a.cloudfront.net/assets/app-2a7eb28789d541ecb4e68b87c8793bceb04d9b85ee51cf52b7eae9e4aa8c7a71.css" />
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+ <script>
 
+  var app = angular.module("schmuber_index_app", []); 
+  app.controller("schmuber_index_controller", function($scope,$http,$window,$location) {
+
+    $scope.navigate = function(type){
+      if(type=='login') $window.location.href='login'
+      else if(type=='register')$window.location.href='register'
+      
+    }
+
+    $scope.login = function(){
+        console.log("in login")
+      $http({
+        method:'POST',
+        url:'/v1/authenticateuser',
+        data:{
+            emailID:$scope.emailID,
+            password:$scope.password
+        },
+      }).then(function(res){
+        console.log(res.data)
+        // if(res.data.status == "200"){
+          
+           
+        // }
+      });
+    }
+
+});
+
+</script>
 </head>
 
-<body  class="en  not-logged-in " data-lang="en" data-pageview="">
+<body  class="en  not-logged-in " data-lang="en" data-pageview="" ng-app="schmuber_index_app" ng-controller="schmuber_index_controller">
 
 <header class="header-wrapper expand cf ">
     <div class="fixed-header">
@@ -106,17 +135,17 @@
   <div class="content content--body content--no-bottom">
         <div class="register-main">
 
-                <form id="login" autocomplete="on" name="login_form" class="new_session" action="/sessions" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="+cMGR7ayUfNhULoxCkKAf4awsLu51zC9/40BgyABc9y+6dxCdCN4VRHUq9ADcy6eNOgAbhNurRR75bPL9dQQ8g==" />
+                <form id="login" autocomplete="on" name="login_form" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="+cMGR7ayUfNhULoxCkKAf4awsLu51zC9/40BgyABc9y+6dxCdCN4VRHUq9ADcy6eNOgAbhNurRR75bPL9dQQ8g==" />
                     <section class="fields-content cf">
                         <fieldset class="cf">
-                            <input placeholder="Email address" class="input--full" type="text" name="session[email]" id="session_email" />
+                            <input placeholder="Email address" class="input--full" type="text" ng-model="emailID"/>
                         </fieldset>
 
                         <fieldset class="cf">
-                            <input placeholder="Password" class="input--full" type="password" name="session[password]" id="session_password" />
+                            <input placeholder="Password" class="input--full" type="password" ng-model="password"/>
                         </fieldset>
                         <fieldset class="submit-field cf">
-              <input type="submit" name="commit" value="Login" class="[ btn btn--big btn--primary o-paragraph-normal ]  [ pull-right submit-right ]" data-disablify="true" data-disable-with="Logging in..." data-disable-with="Logging in..." />
+                         <input type="submit" name="commit" value="Login" class="[ btn btn--big btn--primary o-paragraph-normal ]  [ pull-right submit-right ]" data-disablify="true" data-disable-with="Logging in..."  ng-click="login()"/>
                             <p class="submit-text">Can't login? <a href='/users/forgot_password' class='gray-link'>Recover your password</a></p>
                         </fieldset>
 
