@@ -21,9 +21,13 @@
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/js/angular-fusioncharts.min.js"></script>
 <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>	
+
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 	
-	
-	<style>
+<style>
 	.pad_10
 	{
 		padding: 10px 0 10px 0px !important;
@@ -32,6 +36,10 @@
 	    font-size:22px !important; 
 		color: #232323 !important;
 	   }
+	   body {
+    padding-top: 70px; /* Required padding for .navbar-fixed-top. Change if height of navigation changes. */
+}
+
 	</style>
 	<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDKFu5RJEbw7m_TNta9p2aZqwzP0Dq801M&signed_in=true&callback=initMap" async defer></script> -->
 
@@ -132,6 +140,19 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 		$scope.genericShow();
 		$scope.charts_show = true;
 	}
+
+
+	$scope.signOut = function(){
+		$scope.generic()
+		$http({
+			method:'get',
+			url:'/v1/signout'
+		}).then(function(res){
+
+		});
+	}
+
+
 });
 
 
@@ -141,125 +162,48 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 
 </head>
 <body ng-app="adminPage" ng-controller="adminPage">
-    <div style="width:100%;">
+ <!--    <div style="width:100%;">
 	<p><a ng-click="home();"><img src="" style="margin-left:1%;margin-top: 0.5%;margin-bottom: 0.5%;"alt="Social Delivery Service" /></a>
             <a class="cur" ng-click="logout();" style='float: right;margin-right: 3%;margin-top: 1%;color: whitesmoke;'>SignOut</a>
         </p>
-    </div>
+    </div> -->
   <div class="wrap" style="width:95%">
       
-	<div class="header">
-		
-		<div class="header_top">
-		
-			  <script type="text/javascript">
-			function DropDown(el) 
-			{
-				this.dd = el;
-				this.initEvents();
-			}
-			DropDown.prototype = {
-				initEvents : function() {
-					var obj = this;
-
-					obj.dd.on('click', function(event){
-						$(this).toggleClass('active');
-						event.stopPropagation();
-					});	
-				}
-			}
-
-			$(function() {
-
-				var dd = new DropDown( $('#dd') );
-
-				$(document).click(function() {
-					// all dropdowns
-					$('.wrapper-dropdown-2').removeClass('active');
-				});
-
-			});
-
-		</script>
-	 <div class="clear"></div>
-  </div>
-	<div class="header_bottom">
-	     	<div class="menu">
-	     		<ul>
-			    	<!-- <li><a class="cur" ng-click="home();">Home</a></li> -->
-			    	 <li><a class="cur" ng-click="getCustomers()">Customer List</a></li>
+	<!-- <div class="header">
+		<div class="header_bottom">
+		 	<div class="menu">
+		 		<ul>
+			    	<li><a class="cur" ng-click="getCustomers()">Customer List</a></li>
 					<li><a class="cur" ng-click="showBills()">Completed Trips</a></li>
 					<li><a class="cur" ng-click="showOpenShipperRequests()">Open Shipper Requests</a></li>
 					<li><a class="cur" ng-click="showOpenTransporterRequests()">Open Transporter Requests</a></li>
-					<!-- <li><a class="cur" ng-click="adminGetTrucks()">Trips</a></li> -->
-
 					<li><a class="cur" ng-click="chartsShow();">Statics</a></li>
-			    	<div class="clear"></div>
-     			</ul>
-	     	</div>
-			
-	     	<!-- 
-	     	<div class="search_box" ng-show="customerSearch">
-	     		<table>
-					<tr>
-					<td>
-						<select ng-model="searchBy" ng-change="changedValue()">
-							<option value="">Search By:</option>
-							<option value="cKey">Customer ID</option>
-							<option value="cFirstName">Customer First Name</option>
-							<option value="cLastName">Customer Last Name</option>
-							<option value="cEmail">Customer Email</option>
-							<option value="cPhoneNumber">Customer Phone Number</option>
-							<option value="cAddress">Customer Address</option>
-							<option value="cCity">Customer City</option>
-							<option value="cState">Customer State</option>
-							<option value="cZip">Customer Zip</option>
-						</select>
-					</td>
-					<td>
-						<form>
-							<input ng-model="searchCustomer[filter]" type="text" value="Search" maxlength="30" 
-					autocomplete=off required Placeholder="Search">
-						</form>
-					</td>
-					
-					</tr>
-				</table>
-	     	</div>
-	     	
-	     	
-	     	<div class="search_box" ng-show="billSearch">
-	     		<table>
-					<tr>
-					<td>
-						<select ng-model="searchBy" ng-change="changedValue()">
-							<option value="">Search By:</option>
-							<option value="bill_id">Bill ID</option>
-							<option value="bDate">Bill Date</option>
-							<option value="cKey">Customer Key</option>
-							<option value="bExpectedDeliveryDate">Expected Delivery Date</option>
-							<option value="bPickupLocation">Pickup Location</option>
-							<option value="bDropLocation">Drop off Location</option>
-							<option value="driver_id">Drive ID</option>
+				</ul>
+		 	</div>
+		     
+		</div>	     
+   </div> -->
+   <!-- navigation -->
+  	<div class="w3-top">
+	  	<div class="w3-bar w3-black w3-card-2">
+		    <a class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right" href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+		    <a href="" class="w3-bar-item w3-button w3-padding-large" ng-click="getHomeStats()">Home</a>
+		    <a href="" class="w3-bar-item w3-button w3-padding-large w3-hide-small" ng-click="getCustomers()">Customer List</a>
+		    <a href="" class="w3-bar-item w3-button w3-padding-large w3-hide-small" ng-click="showBills()">Successfull Trips</a>
+		    <a href="" class="w3-bar-item w3-button w3-padding-large w3-hide-small" ng-click="chartsShow()">Statics</a>
+		    <div class="w3-dropdown-hover w3-hide-small">
+		      	<button class="w3-padding-large w3-button" title="More">Pending Requests <i class="fa fa-caret-down"></i></button>     
+		      	<div class="w3-dropdown-content w3-bar-block w3-card-4">
+			        <a href="#" class="w3-bar-item w3-button" ng-click="showOpenShipperRequests()">Shipper Requests</a>
+			        <a href="#" class="w3-bar-item w3-button" ng-click="showOpenTransporterRequests()">Transporter Requests</a>
+		      	</div>
+		    </div>
+		    <a href="javascript:void(0)" class="w3-padding-large w3-hover-red w3-hide-small w3-right" ng-click="signOut()">Sign Out</a>
+	  	</div>
+	</div>
 
-						</select>
-					</td>
-					<td>
-						<form>
-							<input ng-model="searchBill[filter]" type="text" value="Search" Placeholder="Search">
-						</form>
-					</td>
-					
-					</tr>
-				</table>
-	     	</div>   -->	
-	     	
-	     
-	</div>	     
-	<div class="header_slide">
-			<div class="clear"></div>
-		</div>
-   </div>
+<!-- end navigation -->
+
  <div class="main">
     <div class="content" style="width:92%; margin: 0 auto;">
     	
