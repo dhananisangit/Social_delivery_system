@@ -26,6 +26,23 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+   <!-- template css -->
+    <!-- <link href="../../maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="/css/animate.min.css">
+    <!-- <link type="text/css" rel="stylesheet" media="all" href="/css/jquery.mmenu.all.css" /> -->
+    <!-- <link rel="stylesheet" href="/css/jquery.videobackground.css"> -->
+    <!-- <link rel="stylesheet" href="/css/bootstrap-checkbox.css"> -->
+    <!-- <link rel="stylesheet" href="/css/bootstrap-dropdown-multilevel.css"> -->
+
+    <link rel="stylesheet" href="/css/rickshaw.min.css">
+    <link rel="stylesheet" href="/css/morris.css">
+    <link rel="stylesheet" href="/css/tabdrop.css">
+    <link rel="stylesheet" href="/css/summernote.css">
+    <link rel="stylesheet" href="/css/summernote-bs3.css">
+    <link rel="stylesheet" href="/css/chosen.min.css">
+    <link rel="stylesheet" href="/css/chosen-bootstrap.css">
+
+
 	
 <style>
 	.pad_10
@@ -55,6 +72,11 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 		$scope.customerProfileShow = false
 		$scope.shipperRequests = false
 		$scope.transporterRequests = false
+		$scope.showHome = false
+	}
+
+	$scope.getHomeStats = function(){
+		$scope.showHome = true
 	}
 	
 	$scope.getCustomers= function(){
@@ -183,6 +205,7 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 		     
 		</div>	     
    </div> -->
+
    <!-- navigation -->
   	<div class="w3-top">
 	  	<div class="w3-bar w3-black w3-card-2">
@@ -203,6 +226,173 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 	</div>
 
 <!-- end navigation -->
+
+
+<!-- cards -->
+
+            <div class="row cards" ng-show="showHome">
+              
+              <div class="card-container col-lg-3 col-sm-6 col-sm-12">
+                <div class="card card-redbrown hover">
+                  <div class="front"> 
+
+                    <div class="media">        
+                      <span class="pull-left">
+                        <i class="fa fa-users media-object"></i>
+                      </span>
+
+                      <div class="media-body">
+                        <small>New Users</small>
+                        <h2 class="media-heading animate-number" data-value="3659" data-animation-duration="1500">0</h2>
+                      </div>
+                    </div> 
+
+                    <div class="progress-list">
+                      <div class="details">
+                        <div class="title">This month plan %</div>
+                      </div>
+                      <div class="status pull-right bg-transparent-black-1">
+                        <span class="animate-number" data-value="83" data-animation-duration="1500">0</span>%
+                      </div>
+                      <div class="clearfix"></div>
+                      <div class="progress progress-little progress-transparent-black">
+                        <div class="progress-bar animate-progress-bar" data-percentage="83%"></div>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="back">
+                    <a href="#">
+                      <i class="fa fa-bar-chart-o fa-4x"></i>
+                      <span>Check Summary</span>
+                    </a>  
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="card-container col-lg-3 col-sm-6 col-sm-12">
+                <div class="card card-blue hover">
+                  <div class="front">        
+                    
+                    <div class="media">                  
+                      <span class="pull-left">
+                        <i class="fa fa-shopping-cart media-object"></i>
+                      </span>
+
+                      <div class="media-body">
+                        <small>New Orders</small>
+                        <h2 class="media-heading animate-number" data-value="19214" data-animation-duration="1500">0</h2>
+                      </div>
+                    </div> 
+
+                    <div class="progress-list">
+                      <div class="details">
+                        <div class="title">This month plan %</div>
+                      </div>
+                      <div class="status pull-right bg-transparent-black-1">
+                        <span class="animate-number" data-value="100" data-animation-duration="1500">0</span>%
+                      </div>
+                      <div class="clearfix"></div>
+                      <div class="progress progress-little progress-transparent-black">
+                        <div class="progress-bar animate-progress-bar" data-percentage="100%"></div>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="back">
+                    <a href="#">
+                      <i class="fa fa-bar-chart-o fa-4x"></i>
+                      <span>Check Summary</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+
+
+              <div class="card-container col-lg-3 col-sm-6 col-sm-12">
+                <div class="card card-greensea hover">
+                  <div class="front">        
+                    
+                    <div class="media">
+                      <span class="pull-left">
+                        <i class="fa fa-usd media-object"></i>
+                      </span>
+
+                      <div class="media-body">
+                        <small>Sales</small>
+                        <h2 class="media-heading animate-number" data-value="169541" data-animation-duration="1500">0</h2>
+                      </div>
+                    </div>
+
+                    <div class="progress-list">
+                      <div class="details">
+                        <div class="title">This month plan %</div>
+                      </div>
+                      <div class="status pull-right bg-transparent-black-1">
+                        <span class="animate-number" data-value="42" data-animation-duration="1500">0</span>%
+                      </div>
+                      <div class="clearfix"></div>
+                      <div class="progress progress-little progress-transparent-black">
+                        <div class="progress-bar animate-progress-bar" data-percentage="42%"></div>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="back">
+                    <a href="#">
+                      <i class="fa fa-bar-chart-o fa-4x"></i>
+                      <span>Check Summary</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="card-container col-lg-3 col-sm-6 col-xs-12">
+                <div class="card card-slategray hover">
+                  <div class="front"> 
+
+                    <div class="media">                   
+                      <span class="pull-left">
+                        <i class="fa fa-eye media-object"></i>
+                      </span>
+
+                      <div class="media-body">
+                        <small>Visits</small>
+                        <h2 class="media-heading animate-number" data-value="9634" data-animation-duration="1500">0</h2>
+                      </div>
+                    </div> 
+
+                    <div class="progress-list">
+                      <div class="details">
+                        <div class="title">This month plan %</div>
+                      </div>
+                      <div class="status pull-right bg-transparent-black-1">
+                        <span class="animate-number" data-value="25" data-animation-duration="1500">0</span>%
+                      </div>
+                      <div class="clearfix"></div>
+                      <div class="progress progress-little progress-transparent-black">
+                        <div class="progress-bar animate-progress-bar" data-percentage="25%"></div>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="back">
+                    <a href="#">
+                      <i class="fa fa-bar-chart-o fa-4x"></i>
+                      <span>Check Summary</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+
+
+<!-- end cards -->
 
  <div class="main">
     <div class="content" style="width:92%; margin: 0 auto;">

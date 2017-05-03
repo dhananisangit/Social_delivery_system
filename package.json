@@ -12,10 +12,10 @@
     "debug": "~2.6.3",
     "ejs": "~2.3.3",
     "express": "~4.15.2",
-    "express-session": "node_modules/express-session",
+    "express-session": "~1.15.2",
     "mongodb": "^2.2.26",
     "morgan": "~1.8.1",
-    "passport": "node_modules/passport",
+    "passport": "~0.3.2",
     "serve-favicon": "~2.4.2"
   },
   "devDependencies": {
