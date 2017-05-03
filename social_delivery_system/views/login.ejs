@@ -64,11 +64,10 @@
             password:$scope.password
         },
       }).then(function(res){
-        console.log(res.data)
-        // if(res.data.status == "200"){
-          
-           
-        // }
+        if(res.data.status == "200"){
+          // $scope.userName = res.data.name
+          $window.location.href = '/admin';
+        }
       });
     }
 

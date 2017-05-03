@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
+var admin = require('./routes/admin');
 var sendPackage = require('./routes/sendPackage.js');
 var mongoSessionURL = "mongodb://localhost:27017/social_delivery_system";
 var expressSessions = require("express-session");
@@ -43,10 +44,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/login', index);
 app.use('/register', index);
+
 app.use('/send', sendPackage.sendPackage);
 // app.get('/users', users);
-
 app.post('/v1/authenticateuser', users.login)
+
+
+// admin
+app.use('/admin', admin.home);
+app.get('/v1/getcustomerlist', admin.getCustomerList)
+app.get('/v1/getbilllist', admin.getBillList)
+app.get('/v1/getopenshipperrequests', admin.getOpenShipperRequests)
+app.get('/v1/getopentransporterrequests', admin.getOpenTransporterRequests)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

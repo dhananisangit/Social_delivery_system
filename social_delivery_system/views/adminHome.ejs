@@ -10,24 +10,17 @@
 <link href="/css/slider.css" rel="stylesheet" type="text/css" media="all"/>
 <link href="/css/adminHome.css" rel="stylesheet" type="text/css" media="all"/>
 
-<script type="text/javascript" src="/js/jquery-1.7.2.min.js"></script> 
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script type="text/javascript" src="/js/move-top.js"></script>
 <script type="text/javascript" src="/js/easing.js"></script>
 <script type="text/javascript" src="/js/startstop-slider.js"></script>
 <script type="text/javascript" src="/js/fusioncharts.js"></script>
 <script type="text/javascript" src="/js/themes/fusioncharts.theme.fint.js"></script>
 
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/js/angular-fusioncharts.min.js"></script>
-
-
-	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-	<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>	
+<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>	
 	
 	
 	<style>
@@ -40,1161 +33,105 @@
 		color: #232323 !important;
 	   }
 	</style>
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDKFu5RJEbw7m_TNta9p2aZqwzP0Dq801M&signed_in=true&callback=initMap" async defer></script>
+	<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDKFu5RJEbw7m_TNta9p2aZqwzP0Dq801M&signed_in=true&callback=initMap" async defer></script> -->
 
 <script>
 
-var adminPage = angular.module("adminPage",["ng-fusioncharts"]);
+var adminPage = angular.module("adminPage",[]);
 adminPage.controller('adminPage', function($scope,$http,$window){
-	$scope.genericShow=function(){
-		$scope.home = false;
+
+	$scope.generic = function(){
 		$scope.customerList = false;
-		$scope.farmerList = false;
-		$scope.Bills = false;
-		$scope.productList = false;
-		$scope.farmerSearch  =false;
-		$scope.productSearch  =false;
-		$scope.billSearch  =false;
-		$scope.customerSearch  =false;
-		$scope.farmerProfileShow = false;
-		$scope.customerProfileShow = false;
-		$scope.customerProfileShow = false;
-		$scope.productProfileShow = false;
-		$scope.charts_show = false;
-		$scope.chats1_show= false;
-		$scope.truckList_Show=false;
-		$scope.TripSearch_show=false;
-		$scope.customerRequests = false;
-		$scope.farmerRequests = false;
-		$scope.productRequests = false;
-		$scope.billProfile = false;
-		$scope.GoogleMaps_Show = false;
-		$scope.tripsOfTruck = false;
-		$scope.tripsOfDriver = false;
+		$scope.Bills = false
+		$scope.showBillProfile = false
+		$scope.customerProfileShow = false
+		$scope.shipperRequests = false
+		$scope.transporterRequests = false
 	}
 	
-	$scope.genericValue = function(){
-		$scope.names = {"1":"1"};
-	}
-	
-	 $http({
-		method:"GET",
-		url:'/adminGetNotificationList'
-	}).then(function(res){
-		if(res.data.status=="200"){
-			$scope.pendingFarmerRequests = res.data.fRequests;
-			$scope.pendingCustomerRequests = res.data.cRequests;
-			$scope.pendingProductRequests = res.data.pRequests;	
-			$scope.home1();
-		}else{
-			$window.location.href = '/';
-		}
-	}); 
-	 
-	 $scope.logout = function(){
-		 	//alert("nitesh");
+	$scope.getCustomers= function(){
+		if($scope.customerList)$scope.customerList = false;
+		else{
+			$scope.generic()
 			$http({
 				method:'get',
-				url:'/sessionEnd'
-				}).then(function(res){
-				if(res.data.status == "200"){
-					//alert("wadhwa");
-					$window.location.href = '/';
-				}else{
-					//alert("wadhwa1");
-				}
+				url:'/v1/getcustomerlist'
+			}).then(function(res){
+				
+				$scope.customers = res.data.customerList
+				$scope.generic()
+				$scope.customerList = true
 			});
-		} 
-	
-	$scope.customers = function(){
-		$scope.genericShow();
-		$http({
-			method:'get',
-			url:'/adminGetCustomerList'
-		}).then(function(res){
-			if(res.data.status == "200"){
-				console.log("In customer list");
-				$scope.customerList = true;
-				$scope.customerSearch  =true;
-				$scope.customers1 = res.data.customers;
-			}
-		});	
-	};
-	
-	$scope.home1 = function(){
-		$scope.genericShow();
-		console.log("1");
-		$http({
-			method:'get',
-			url:'/adminGetNotificationList'
-		}).then(function(res){
-			
-			$scope.pendingFarmerRequests = res.data.fRequests;
-			$scope.pendingCustomerRequests = res.data.cRequests;
-			$scope.pendingProductRequests = res.data.pRequests;
-	
-		$scope.home = true;
-		});
-	};
-	
-	$scope.farmers = function(){
-		$scope.genericShow();
-		$http({
-			method:'get',
-			url:'/adminGetFarmerList'
-		}).then(function(res){
-			console.log("In farmer list");
-			$scope.farmerList = true;
-			$scope.farmerSearch  =true;
-			$scope.farmers1 = res.data.farmers;			
-		});
-	};
-	
+		}
+	}
+
 	$scope.showBills = function(){
-		$scope.genericShow();
-		$scope.names = {"1":"1"};
-		$http({
-			methdod:'get',
-			url:'/adminGetBillList'
-		}).then(function(res){
-			console.log("In bill list");
-			console.log(res.data.bills[0].bill_id+":");
-			$scope.Bills = true;
-			$scope.billSearch  =true;
-			$scope.billList = res.data.bills;
-		});
-	};
-	
-	$scope.products = function(){
-		$scope.genericShow();
-		$http({
-			method:'get',
-			url:'/adminGetProductList'
-		}).then(function(res){
-			console.log("In products list");
-			$scope.productList = true;
-			$scope.productSearch  =true;
-			$scope.products1 = res.data.products;
-		});
-	};
-	
-	$scope.acceptRequest = function(id, type){
-		console.log("User accepted11"+type);
-		$http({
-			method:"POST",
-			url:'/adminUserAccepted',
-			data:{
-			"userType": type,
-			"userID":id
-			}
-		
-		}).then(function(data){
-				console.log("user or product request accepted");
-				$scope.home1();
-		});
-	};
-	
-	$scope.declineRequest = function(id, type){
-		console.log("User declined"+ type);
-		$http({
-			method:"POST",
-			url:'/adminUserRejected',
-			data:{
-			"userType": type,
-			"userID":id
-			}
-		
-		}).then(function(data){
-				$scope.home1();
-		});
-	};
-	
-	$scope.deleteCustomer = function(id){
-		console.log("User deleted type::"+ id);
-		$http({
-			method:"POST",
-			url:'/adminDeleteCustomer',
-			data:{
-			"userID":id
-			}
-		
-		}).then(function(data){
-				console.log("Customer is deleted");
-				$scope.customers();
-		});
-	};
-	
-	$scope.deleteFarmer = function(id){
-		console.log("User deleted type::"+ id);
-		$http({
-			method:"POST",
-			url:'/admindeleteFarmer',
-			data:{
-			"userID":id
-			}
-		
-		}).then(function(data){
-				console.log("farmer is deleted");
-				$scope.farmers();
-			
-		});
-	};
-	
-	$scope.deleteProduct = function(id){
-		console.log("User deleted type::"+ id);
-		$http({
-			method:"POST",
-			url:'/adminDeleteProduct',
-			data:{
-			"userID":id
-			}
-		}).then(function(data){
-				console.log("Product is deleted");
-				$scope.products();
-		});
-	};
-	
-	$scope.deleteBill = function(id){
-		console.log("Bill deleted::"+id);
-		$http({
-			method:"POST",
-			url:'/adminDeleteBill',
-			data:{
-				"billID":id
-			}
-		}).then(function(){
-			console.log("Bill is deleted finally");
-			$scope.showBills();
-		})
-	}
-	
-	$scope.showFarmerRequests = function(){
-		if($scope.farmerRequests==true){
-			$scope.farmerRequests = false;
-		}
+		if($scope.Bills)$scope.Bills = false;
 		else{
-		
-		$scope.farmerRequests = true;
-		$scope.productRequests = false;
-		$scope.customerRequests = false;
+			$scope.generic()
+			$http({
+				method:'get',
+				url:'/v1/getbilllist'
+			}).then(function(res){
+				
+				$scope.billList = res.data.billList
+				$scope.generic()
+				$scope.Bills = true
+			});
 		}
 	}
-	$scope.showProductRequests = function(){
-		
-		if($scope.productRequests==true){
-	
-			$scope.productRequests = false;
-		}
+
+	$scope.openBillDetails = function(billDetails){
+		if ($scope.showBillProfile) $scope.showBillProfile = false
 		else{
-	
-		$scope.productRequests = true;
-		$scope.customerRequests = false;
-		$scope.farmerRequests = false;
+			$scope.billInfo = billDetails
+			$scope.showBillProfile = true
 		}
 	}
-	$scope.showCustomerRequests = function(){
-		//$scope.genericShow();
-		//$scope.ge
-		if($scope.customerRequests==true){
-			$scope.customerRequests = false;
-		}
+
+	$scope.showCustomerProfile = function(customerDetails){
+		if($scope.customerProfileShow) $scope.customerProfileShow = false
 		else{
-		$scope.customerRequests = true;
-		$scope.farmerRequests = false;
-		$scope.productRequests = false;
+			$scope.customerProfileShow = true;
+			$scope.customerDetails = customerDetails
 		}
 	}
-	
-	
-	$scope.showFarmerProfile = function(fKey,fFirstName,fLastName,fEmail,fPhoneNumber,fAddress,fState,fCity,fZip,fRatingReview,fDeliveryHistory,fVideo){
-		$scope.genericShow();
-		$scope.farmerProfileShow = true;
-		console.log(fKey+" value of key");
-		
-		
-		$scope.f = {ID:fKey,FirstName:fFirstName,LastName:fLastName,Email:fEmail,PhoneNumber:fPhoneNumber,Address:fAddress,State:fState,City:fCity,Zip:fZip,RatingReview:fRatingReview,DeliveryHistory:fDeliveryHistory,fVideo:fVideo};
-		
-		
-		var player = document.getElementById('videoPlayer');
-		var mp4Vid = document.getElementById('mp4Source');
-		player.play();
-		player.pause();
-		$(mp4Vid).attr('src', "http://127.0.0.1:3000/uploads/videos/"+fVideo);
-		player.load();
-		
+
+	$scope.showOpenShipperRequests = function(){
+		if($scope.shipperRequests){$scope.shipperRequests=false}
+		else{
+			$scope.generic()
+			$http({
+				method:'get',
+				url:'/v1/getopenshipperrequests'
+			}).then(function(res){
+				$scope.pendingShipperRequests = res.data.shipperRequests
+				$scope.generic()
+				$scope.shipperRequests = true
+			});
+		}
 	}
-	
-	
-	
-	
-	$scope.showCustomerProfile = function(cKey,cFirstName,cLastName,cEmail,cPhoneNumber,cAddress,cState,cCity,cZip,cRatingReview){
-		$scope.genericShow();
-		$scope.customerProfileShow = true;
-		console.log(cKey+" :: customer key");
-		$scope.c = {ID:cKey,FirstName:cFirstName,LastName:cLastName,Email:cEmail,PhoneNumber:cPhoneNumber,Address:cAddress,State:cState,City:cCity,Zip:cZip,RatingReview:cRatingReview};
+
+	$scope.showOpenTransporterRequests = function(){
+		if($scope.transporterRequests){$scope.transporterRequests = false;}
+		else{
+			$scope.generic()
+			$http({
+				method:'get',
+				url:'/v1/getopentransporterrequests'
+			}).then(function(res){
+				$scope.pendingTransporterRequests = res.data.transporterRequests
+				$scope.generic()
+				$scope.transporterRequests = true
+			});
+
+		}
 	}
-	
-	$scope.showProductProfile = function(fName,pName,pPrice,pDesc,pReviewRatings,pImage){
-		$scope.genericShow();
-		$scope.productProfileShow = true;
-		$scope.p = {FamerName:fName,ProductName:pName,Price:pPrice,Desc:pDesc,ReviewRatings:pReviewRatings,pImage:pImage}
-	}
-	
-	$scope.showBill = function(bill_id,bDate,bExpectedDeliveryDate,cKey,bPickupLocation,bDropLocation,driver_id,billingProducts,bTotal){
-		$scope.genericShow();
-		$scope.billProfile = true;
-		$scope.names = {bill_id:bill_id,bDate:bDate,bExpectedDeliveryDate:bExpectedDeliveryDate,cKey:cKey,bPickupLocation:bPickupLocation,bDropLocation:bDropLocation,driver_id:driver_id,billingProducts:billingProducts,bTotal:bTotal};
-	}
-	$scope.chartsShow=function(){
-		
+
+	$scope.chartsShow = function(){
 		$scope.genericShow();
 		$scope.charts_show = true;
 	}
-
-	$scope.adminGetTrucks = function(){
-		
-		$http({
-			method:'get',
-			url:'/adminGetTrucks'
-		}).then(function(res){
-			console.log("Truck:" +res.data.trucksArray);
-			$scope.genericShow();
-			$scope.trucksArray=res.data.trucksArray;
-			$scope.truckList_Show = true;
-			$scope.TripSearch_show = true;
-		});
-	}
-	
-	$scope.showTripsOfDriver = function(){
-		
-		console.log("in driver");
-		if($scope.tripsOfDriver==true){
-			$scope.tripsOfDriver = false;
-		}
-		else{
-		
-		$scope.tripsOfDriver = true;
-		$scope.tripsOfTruck = false;
-		}
-		
-		
-	}
-	
-	$scope.showTripsOfTruck = function(){
-		console.log("in truck");
-		if($scope.tripsOfTruck==true){
-			$scope.tripsOfTruck = false;
-		}
-		else{
-		
-		$scope.tripsOfTruck = true;
-		$scope.tripsOfDriver = false;
-		}
-	}
-	
-	$scope.currentPage = 0;
-	$scope.pageSize = 20;
-	$scope.numberOfPages=function(arrPassed){
-		return Math.ceil(arrPassed.length/$scope.pageSize);                
-	}
-	
-	$scope.GoogleMapsShow = function(){
-		//$scope.names = {"1":"1"};
-		//$scope.genericShow();
-		$scope.GoogleMaps_Show = true;
-		$scope.initMap();
-		
-	}
-		
-	
-	$scope.initMap = function() {
-		var directionsService = new google.maps.DirectionsService;
-        var directionsDisplay = new google.maps.DirectionsRenderer;
-        var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 7,
-          center: {lat: 41.85, lng: -87.65}
-        });
-		
-		var geocoder = new google.maps.Geocoder();
-		geocoder.geocode({'address': $scope.names.bPickupLocation}, function(results, status) {
-			if (status === google.maps.GeocoderStatus.OK) {
-				var image = 'https://i.imgsafe.org/0e650f6.jpg';
-				var marker = new google.maps.Marker({
-					position: results[0].geometry.location,
-					map:map,
-					icon: image
-				});
-			} else {
-				alert('Geocode was not successful for the following reason: ' + status);
-			}
-		});
-		
-        directionsDisplay.setMap(map);
-		 directionsService.route({
-          origin: $scope.names.bPickupLocation,
-          destination: $scope.names.bDropLocation,
-          travelMode: google.maps.TravelMode.DRIVING
-        }, function(response, status) {
-          if (status === google.maps.DirectionsStatus.OK) {
-            directionsDisplay.setDirections(response);
-          } else {
-            window.alert('Directions request failed due to ' + status);
-          }
-        });
-    }
-	
-	$scope.charts = function(graphType){
-		
-		$scope.genericShow();
-		$scope.charts_show = true;
-		$scope.chats1_show = true;
-		
-		if(graphType == "RevenuePerLocation"){
-			
-			var data = [];
-			$http({
-				method:'get',
-				url:'/revenuePerLocation'
-			}).then(function(res){
-				data = res.data.data1234;
-				$scope.chart = {"caption":"Total Revenue Per Location","subCaption":"Today","xAxisName":"Location","yAxisName":"Revenue","data":data};
-				$scope.createChart1();
-			});	
-			
-			
-		}
-		else if(graphType == "TripsPerLocation"){
-			
-			var data = [];
-			$http({
-				method:'get',
-				url:'/tripsPerLocation'
-			}).then(function(res){
-				data = res.data.data1234;
-				$scope.chart = {"caption":"Total trips per location","subCaption":"Today","xAxisName":"Name of State","yAxisName":"Number of Trips","data":data};
-				$scope.createChart1();
-			});	
-			
-		
-		}
-		else if(graphType == "RidesPerArea"){
-			
-			var data = [];
-			$http({
-				method:'get',
-				url:'/ridesPerArea'
-			}).then(function(res){
-				data = res.data.data1234;
-				$scope.chart = {"caption":"Total Rides per Driver","subCaption":"Today","xAxisName":"Driver ID","yAxisName":"Number of Trips","data":data};
-				$scope.createChart1();
-			});	
-		
-		}
-		else if(graphType == "RidesPerDriver"){
-			var data = [];
-			$http({
-				method:'get',
-				url:'/ridesPerDriver'
-			}).then(function(res){
-				data = res.data.data1234;
-				$scope.chart = {"caption":"Total Rides per Driver","subCaption":"","xAxisName":"Driver ID","yAxisName":"Number of Trips","data":data};
-				$scope.createChart1();
-			});	
-		}
-		else if(graphType == "RidesPerCustomer"){
-			var data = [];
-			$http({
-				method:'get',
-				url:'/ridesPerCustomer'
-			}).then(function(res){
-				data = res.data.data1234;
-				$scope.chart = {"caption":"Total Rides per customer","subCaption":"","xAxisName":"Customer ID","yAxisName":"Number of Rides","data":data};
-				$scope.createChart1();
-			});
-		}
-		else if(graphType == "map" ){
-			$scope.createChart10();
-		}
-		else{
-			$scope.chart = {"1":"1"};	
-		}
-		
-	}
-	 
-
-	$scope.createChart10 = function(){
-		FusionCharts.ready(function () {
-		    var wrCoverage = new FusionCharts({
-		        type: 'maps/usa',
-		        renderAt: 'chartContainer',
-		        width: '1000',
-		        height: '400',
-		        dataFormat: 'json',
-		        dataSource: {
-		            "chart": {
-		                "theme": "fint",                
-		                "caption": "Total delivery Report",
-		                "subcaption": "Today",                
-		                "showMarkerLabels":"0",
-		                "numberSuffix": "%",
-		                //Changing connector hover color
-		                "connectorHoverColor": "#f8bd19",
-		                //Changing connector hover thickness
-		                "connectorHoverThickness": "3",
-		                //Enabling entity hover effect
-		                //Enabling marker hover effect
-		                "showMarkerHoverEffect": "1",
-		                //Changing marker fill color on hover
-		                "markerFillHoverColor": "#cccccc",
-		                "showLabels": "1"
-		            },
-		            "markers": {
-		                "shapes": [
-		                    {
-		                        "id": "myCustomShape",
-		                        "type": "circle",
-		                        "fillcolor": "#f8bd19",
-		                        "showborder": "0",
-		                    }
-		                ],
-		                "items": [
-		                    {
-		                        "shapeid": "myCustomShape",
-		                        "id": "WA",
-		                        "x": "54.5",
-		                        "y": "44.8",
-		                        "label": "Washington",
-		                        "radius" : "1"
-		                    },
-		                    {
-		                        "shapeid": "myCustomShape",
-		                        "id": "OR",
-		                        "x": "58.3",
-		                        "y": "101.7",
-		                        "radius": "1"
-		                    },
-		                    {
-		                        "shapeid": "myCustomShape",
-		                        "id": "ID",
-		                        "x": "132.8",
-		                        "y": "110.7",
-		                        "radius": "1"
-		                    },
-		                    {
-		                        "shapeid": "myCustomShape",
-		                        "id": "MT",
-		                        "x": "188.8",
-		                        "y": "45.1",
-		                        "radius": "1"
-		                    },
-		                    {
-		                        "shapeid": "myCustomShape",
-		                        "id": "WY",
-		                        "x": "220",
-		                        "y": "121",
-		                        "radius": "1"
-		                    },
-		                    {
-		                        "shapeid": "myCustomShape",
-		                        "id": "AZ",
-		                        "x": "165",
-		                        "y": "261",
-		                        "radius": "1"
-		                    },
-		                    {
-		                        "shapeid": "myCustomShape",
-		                        "id": "UT",
-		                        "x": "170",
-		                        "y": "178",
-		                        "radius": "1"
-		                        
-		                    },
-		                    {
-		                        "shapeid": "myCustomShape",
-		                        "id": "NV",
-		                        "x": "101",
-		                        "y": "193",
-		                        "radius": "1"
-		                    },                    
-		                    {
-		                        "shapeid": "myCustomShape",
-		                        "id": "LA",
-		                        "x": "406",
-		                        "y": "300",
-		                        "radius": "1"
-		                    },
-		                    {
-		                        "shapeid": "myCustomShape",
-		                        "id": "OK",
-		                        "x": "347",
-		                        "y": "245",
-		                        "radius": "1"
-		                    },
-		                    {
-		                        "shapeid": "myCustomShape",
-		                        "id": "NM",
-		                        "x": "238",
-		                        "y": "263",
-		                        "radius": "1"
-		                    },
-		                    {
-		                        "shapeid": "myCustomShape",
-		                        "id": "CO",
-		                        "x": "246.72",
-		                        "y": "179.01",
-		                        "radius": "1"
-		                    },
-		                    {
-		                        "shapeid": "myCustomShape",
-		                        "id": "KS",
-		                        "x": "335",
-		                        "y": "195",
-		                        "radius": "1"
-		                    },
-		                    {
-		                        "shapeid": "myCustomShape",
-		                        "id": "MO",
-		                        "x": "408",
-		                        "y": "197",
-		                        "radius": "1"
-		                    },
-		                    {
-		                        "shapeid": "myCustomShape",
-		                        "id": "AR",
-		                        "x": "413",
-		                        "y": "253",
-		                        "radius": "1"
-		                    },
-		                    {
-		                        "shapeid": "myCustomShape",
-		                        "id": "MS",
-		                        "x": "442",
-		                        "y": "277",
-		                        "radius": "1"
-		                    },
-		                    {
-		                        "shapeid": "myCustomShape",
-		                        "id": "NE",
-		                        "x": "318",
-		                        "y": "146",
-		                        "radius": "1"
-		                    },
-		                    {
-		                        "shapeid": "myCustomShape",
-		                        "id": "SD",
-		                        "x": "311",
-		                        "y": "99",
-		                        "radius": "1"
-		                    },
-		                    {
-		                        "shapeid": "myCustomShape",
-		                        "id": "ND",
-		                        "x": "310",
-		                        "y": "42",
-		                        "radius": "1"
-		                    },
-		                    {
-		                        "shapeid": "myCustomShape",
-		                        "id": "MN",
-		                        "x": "382",
-		                        "y": "61",
-		                        "radius": "1"
-		                    },
-		                    {
-		                        "shapeid": "myCustomShape",
-		                        "id": "WI",
-		                        "x": "439",
-		                        "y": "91",
-		                        "radius": "1"
-		                    },
-		                    {
-		                        "shapeid": "myCustomShape",
-		                        "id": "IA",
-		                        "x": "396",
-		                        "y": "139",
-		                        "radius": "1"
-		                    },
-		                    {
-		                        "shapeid": "myCustomShape",
-		                        "id": "IL",
-		                        "x": "445",
-		                        "y": "174",
-		                        "radius": "1"
-		                    },                    
-		                    {
-		                        "shapeid": "myCustomShape",
-		                        "id": "MI",
-		                        "x": "502",
-		                        "y": "114",
-		                        "radius": "1"
-		                    },
-		                    {
-		                        "shapeid": "myCustomShape",
-		                        "id": "IN",
-		                        "x": "483",
-		                        "y": "174",
-		                        "radius": "1"
-		                    },
-		                    {
-		                        "shapeid": "myCustomShape",
-		                        "id": "OH",
-		                        "x": "530",
-		                        "y": "168",
-		                        "radius": "1"
-		                    },
-		                    {
-		                        "shapeid": "myCustomShape",
-		                        "id": "KY",
-		                        "x": "501",
-		                        "y": "210",
-		                        "radius": "1"
-		                    },
-		                    {
-		                        "shapeid": "myCustomShape",
-		                        "id": "WV",
-		                        "x": "544",
-		                        "y": "199",
-		                        "radius": "1"
-		                    },
-		                    {
-		                        "shapeid": "myCustomShape",
-		                        "id": "PA",
-		                        "x": "593",
-		                        "y": "155",
-		                        "radius": "1"
-		                    },
-		                    {
-		                        "shapeid": "myCustomShape",
-		                        "id": "VA",
-		                        "x": "580",
-		                        "y": "210",
-		                        "radius": "1"
-		                    },
-		                    {
-		                        "shapeid": "myCustomShape",
-		                        "id": "NY",
-		                        "x": "620",
-		                        "y": "120",
-		                        "radius": "1"
-		                    },
-		                    {
-		                        "shapeid": "myCustomShape",
-		                        "id": "VT",
-		                        "x": "654",
-		                        "y": "95",
-		                        "radius": "1"
-		                    },
-		                    {
-		                        "shapeid": "myCustomShape",
-		                        "id": "ME",
-		                        "x": "700",
-		                        "y": "82",
-		                        "radius": "1",
-		                    },
-		                    {
-		                        "shapeid": "myCustomShape",
-		                        "id": "NH",
-		                        "x": "666",
-		                        "y": "114",
-		                        "radius": "1"
-		                        
-		                    },
-		                    {
-		                        "shapeid": "myCustomShape",
-		                        "id": "MA",
-		                        "x": "655",
-		                        "y": "132",
-		                        "radius": "1"
-		                    },
-		                    {
-		                        "shapeid": "myCustomShape",
-		                        "id": "CT",
-		                        "x": "654",
-		                        "y": "146",
-		                        "radius": "1"
-		                    },
-		                    {
-		                        "shapeid": "myCustomShape",
-		                        "id": "TN",
-		                        "x": "490",
-		                        "y": "237",
-		                        "radius": "1"
-		                    },
-		                    {
-		                        "shapeid": "myCustomShape",
-		                        "id": "GA",
-		                        "x": "522",
-		                        "y": "283",
-		                        "radius": "1"
-		                    },
-		                    {
-		                        "shapeid": "myCustomShape",
-		                        "id": "AL",
-		                        "x": "489",
-		                        "y": "279",
-		                        "radius": "1"
-		                    },
-		                    {
-		                        "shapeid": "myCustomShape",
-		                        "id": "FL",
-		                        "x": "539",
-		                        "y": "350",
-		                        "radius": "1"
-		                    },
-		                    {
-		                        "shapeid": "myCustomShape",
-		                        "id": "TX",
-		                        "x": "333",
-		                        "y": "304",
-		                        "label": "Texas",
-		                        "value": "75",
-		                        "tooltext": "Capacity utilization:$value% {br}Packages shipped/day : 253240 Units(avg) {br}Packages received/day: 253400 Units(avg){br}Daily operational cost: $4000(avg)"
-		                    },                    
-		                    {
-		                        "shapeid": "myCustomShape",
-		                        "id": "NC",
-		                        "x": "576",
-		                        "y": "240",
-		                        "label": "North Carolina",
-		                        "value": "65",
-		                        "tooltext": "Capacity utilization: $value%{br}Packages shipped/day : 311120 Units(avg){br}Packages received/day: 311320 Units(avg){br}Daily operational cost: $2000(avg)"
-		                    },
-		                     {
-		                        "shapeid": "myCustomShape",
-		                        "id": "CA",
-		                        "x": "65.57",
-		                        "y": "227.21",
-		                        "label": "California",
-		                        //Adding value to marker and making it data enabled
-		                        "value": "80",
-		                        "tooltext": "Capacity utilization: $value%{br}Packages shipped/day : 126140 Units(avg) {br}Packages received/day: 129500 Units(avg){br}Daily operational cost: $6000(avg)"
-		                    },
-		                ],
-		                "connectors": [
-		                    {
-		                        "from": "CA",
-		                        "to": "WA",
-		                        "label": "20540",
-		                    "tooltext": "<b>Shipping Details:</b>{br}Daily shipment: $label Units{br}Average shipping cost: $1.2"
-		                    },
-		                    {
-		                        "from": "CA",
-		                        "to": "ID",
-		                        "label": "17400",
-		                    "tooltext": "<b>Shipping Details:</b>{br}Daily shipment: $label Units{br}Average shipping cost: $1.1"
-		                    },
-		                    {
-		                        "from": "CA",
-		                        "to": "MT",
-		                        "label": "15600",
-		                    "tooltext": "<b>Shipping Details:</b>{br}Daily shipment: $label Units{br}Average shipping cost: $1.3"
-		                    },
-		                    {
-		                        "from": "CA",
-		                        "to": "WY",
-		                        "label": "18400",
-		                    "tooltext": "<b>Shipping Details:</b>{br}Daily shipment: $label Units{br}Average shipping cost: $1.6"
-		                    },
-		                    {
-		                        "from": "CA",
-		                        "to": "NV",
-		                        "label": "19300",
-		                    "tooltext": "<b>Shipping Details:</b>{br}Daily shipment: $label Units{br}Average shipping cost: $0.4"
-		                    },
-		                    {
-		                        "from": "CA",
-		                        "to": "UT",
-		                        "label": "16500",
-		                    "tooltext": "<b>Shipping Details:</b>{br}Daily shipment: $label Units{br}Average shipping cost: $0.5"
-		                    },
-		                    {
-		                        "from": "CA",
-		                        "to": "AZ",
-		                        "label": "18400",
-		                    "tooltext": "<b>Shipping Details:</b>{br}Daily shipment: $label Units{br}Average shipping cost: $0.5"
-		                    },                    
-		                    {
-		                        "from": "TX",
-		                        "to": "NM",
-		                        "label": "21300",
-		                    "tooltext": "<b>Shipping Details:</b>{br}Daily shipment: $label Units{br}Average shipping cost: $0.4"
-		                    },
-		                    {
-		                        "from": "TX",
-		                        "to": "LA",
-		                        "label": "15440",
-		                    "tooltext": "<b>Shipping Details:</b>{br}Daily shipment: $label Units{br}Average shipping cost: $0.3"
-		                    },
-		                    {
-		                        "from": "TX",
-		                        "to": "OK",
-		                        "label": "16800",
-		                    "tooltext": "<b>Shipping Details:</b>{br}Daily shipment: $label Units{br}Average shipping cost: $0.3"
-		                    },
-		                    
-		                    {
-		                        "from": "TX",
-		                        "to": "CO",
-		                        "label": "17200",
-		                    "tooltext": "<b>Shipping Details:</b>{br}Daily shipment: $label Units{br}Average shipping cost: $1.1"
-		                    },
-		                    {
-		                        "from": "TX",
-		                        "to": "KS",
-		                        "label": "13670",
-		                    "tooltext": "<b>Shipping Details:</b>{br}Daily shipment: $label Units{br}Average shipping cost: $0.5"
-		                    },
-		                    {
-		                        "from": "TX",
-		                        "to": "MO",
-		                        "label": "12560",
-		                    "tooltext": "<b>Shipping Details:</b>{br}Daily shipment: $label Units{br}Average shipping cost: $1.3"
-		                    },
-		                    {
-		                        "from": "TX",
-		                        "to": "AR",
-		                        "label": "19200",
-		                    "tooltext": "<b>Shipping Details:</b>{br}Daily shipment: $label Units{br}Average shipping cost: $0.4"
-		                    },
-		                    {
-		                        "from": "TX",
-		                        "to": "MS",
-		                        "label": "18760",
-		                    "tooltext": "<b>Shipping Details:</b>{br}Daily shipment: $label Units{br}Average shipping cost: $0.6"
-		                    },
-		                    {
-		                        "from": "TX",
-		                        "to": "NE",
-		                        "label": "16870",
-		                    "tooltext": "<b>Shipping Details:</b>{br}Daily shipment: $label Units{br}Average shipping cost: $1.4"
-		                    },
-		                    {
-		                        "from": "TX",
-		                        "to": "SD",
-		                        "label": "17300",
-		                    "tooltext": "<b>Shipping Details:</b>{br}Daily shipment: $label Units{br}Average shipping cost: $1.6"
-		                    },
-		                    {
-		                        "from": "TX",
-		                        "to": "ND",
-		                        "label": "19900",
-		                    "tooltext": "<b>Shipping Details:</b>{br}Daily shipment: $label Units{br}Average shipping cost: $1.7"
-		                    },
-		                    {
-		                        "from": "TX",
-		                        "to": "MN",
-		                        "label": "16100",
-		                    "tooltext": "<b>Shipping Details:</b>{br}Daily shipment: $label Units{br}Average shipping cost: $1.7"
-		                    },
-		                    {
-		                        "from": "TX",
-		                        "to": "WI",
-		                        "label": "14890",
-		                    "tooltext": "<b>Shipping Details:</b>{br}Daily shipment: $label Units{br}Average shipping cost: $1.7"
-		                    },
-		                    {
-		                        "from": "TX",
-		                        "to": "IA",
-		                        "label": "15600",
-		                    "tooltext": "<b>Shipping Details:</b>{br}Daily shipment: $label Units{br}Average shipping cost: 1.3"
-		                    },
-		                    {
-		                        "from": "TX",
-		                        "to": "IL",
-		                        "label": "17650",
-		                    "tooltext": "<b>Shipping Details:</b>{br}Daily shipment: $label Units{br}Average shipping cost: $1.4"
-		                    },                    
-		                    {
-		                        "from": "NC",
-		                        "to": "IN",
-		                        "label": "14700",
-		                    "tooltext": "<b>Shipping Details:</b>{br}Daily shipment: $label Units{br}Average shipping cost: $4"
-		                    },
-		                    {
-		                        "from": "NC",
-		                        "to": "MI",
-		                        "label": "18200",
-		                    "tooltext": "<b>Shipping Details:</b>{br}Daily shipment: $label Units{br}Average shipping cost: $1"
-		                    },
-		                    {
-		                        "from": "NC",
-		                        "to": "OH",
-		                        "label": "16540",
-		                    "tooltext": "<b>Shipping Details:</b>{br}Daily shipment: $label Units{br}Average shipping cost: $1.3"
-		                    },
-		                    {
-		                        "from": "NC",
-		                        "to": "KY",
-		                        "label": "15850",
-		                    "tooltext": "<b>Shipping Details:</b>{br}Daily shipment: $label Units{br}Average shipping cost: $0.4"
-		                    },
-		                    {
-		                        "from": "NC",
-		                        "to": "WV",
-		                        "label": "16430",
-								"tooltext": "<b>Shipping Details:</b>{br}Daily shipment: $label Units{br}Average shipping cost: $0.3"
-		                    },
-		                    {
-		                        "from": "NC",
-		                        "to": "PA",
-		                        "label": "15600",
-								"tooltext": "<b>Shipping Details:</b>{br}Daily shipment: $label Units{br}Average shipping cost: $0.3"
-		                    },
-		                    {
-		                        "from": "NC",
-		                        "to": "VT",
-		                        "label": "18400",
-								"tooltext": "<b>Shipping Details:</b>{br}Daily shipment: $label Units{br}Average shipping cost: $1.4"
-		                    },
-		                    {
-		                        "from": "NC",
-		                        "to": "NH",
-		                        "label": "16900",
-								"tooltext": "<b>Shipping Details:</b>{br}Daily shipment: $label Units{br}Average shipping cost: $1.4"
-		                    },
-		                    {
-		                        "from": "NC",
-		                        "to": "MA",
-		                        "label": "16590",
-								"tooltext": "<b>Shipping Details:</b>{br}Daily shipment: $label Units{br}Average shipping cost: $1.2"
-		                    },
-		                    {
-		                        "from": "NC",
-		                        "to": "CT",
-		                        "label": "18340",
-								"tooltext": "<b>Shipping Details:</b>{br}Daily shipment: $label Units{br}Average shipping cost: $1.6"
-		                    },
-		                    {
-		                        "from": "NC",
-		                        "to": "ME",
-		                        "label": "14680",
-								"tooltext": "<b>Shipping Details:</b>{br}Daily shipment: $label Units{br}Average shipping cost: $1.7"
-		                    },
-		                    {
-		                        "from": "NC",
-		                        "to": "NY",
-		                        "label": "23600",
-								"tooltext": "<b>Shipping Details:</b>{br}Daily shipment: $label Units{br}Average shipping cost: $1.4"
-		                    },
-		                    {
-		                        "from": "NC",
-		                        "to": "TN",
-		                        "label": "19800",
-								"tooltext": "<b>Shipping Details:</b>{br}Daily shipment: $label Units{br}Average shipping cost: $0.6"
-		                    },
-		                    {
-		                        "from": "NC",
-		                        "to": "AL",
-		                        "label": "13400",
-								"tooltext": "<b>Shipping Details:</b>{br}Daily shipment: $label Units{br}Average shipping cost: $0.4"
-		                    },
-		                    {
-		                        "from": "NC",
-		                        "to": "VA",
-		                        "label": "17260",
-								"tooltext": "<b>Shipping Details:</b>{br}Daily shipment: $label Units{br}Average shipping cost: $0.2"
-		                    },
-		                    {
-		                        "from": "NC",
-		                        "to": "GA",
-		                        "label": "17400",
-								"tooltext": "<b>Shipping Details:</b>{br}Daily shipment: $label Units{br}Average shipping cost: $0.3"
-		                    },
-		                    {
-		                        "from": "NC",
-		                        "to": "SC",
-		                        "label": "16230",
-								"tooltext": "<b>Shipping Details:</b>{br}Daily shipment: $label Units{br}Average shipping cost: $0.2"
-		                    },
-		                    {
-		                        "from": "NC",
-		                        "to": "FL",
-		                        "label": "21200",
-								"tooltext": "<b>Shipping Details:</b>{br}Daily shipment: $label Units{br}Average shipping cost: $1.6"
-		                    }
-		                ]
-		            }                          
-		        }
-		    }).render();
-		});
-	}
-	
-	
-	 $scope.createChart1 = function(){
-		 FusionCharts.ready(function(){
-			  var revenueChart = new FusionCharts({
-			      "type": "line",
-			      "renderAt": "chartContainer",
-			      "width": "1000",
-			      "height": "400",
-			      "dataFormat": "json",
-			      "dataSource":  {
-			    	   "chart": {
-			    	        "caption":  $scope.chart.caption, 
-			    	        "subCaption": $scope.chart.subCaption,
-			    	        "xAxisName": $scope.chart.xAxisName,
-			    	        "yAxisName": $scope.chart.yAxisName,
-			    	        "lineThickness": "2",
-			    	        "paletteColors": "#0075c2",
-			    	        "baseFontColor": "#333333",
-			    	        "baseFont": "Helvetica Neue,Arial",
-			    	        "captionFontSize": "14",
-			    	        "subcaptionFontSize": "14",
-			    	        "subcaptionFontBold": "0",
-			    	        "showBorder": "0",
-			    	        "bgColor": "#ffffff",
-			    	        "showShadow": "0",
-			    	        "canvasBgColor": "#ffffff",
-			    	        "canvasBorderAlpha": "0",
-			    	        "divlineAlpha": "100",
-			    	        "divlineColor": "#999999",
-			    	        "divlineThickness": "1",
-			    	        "divLineDashed": "1",
-			    	        "divLineDashLen": "1",
-			    	        "divLineGapLen": "1",
-			    	        "showXAxisLine": "1",
-			    	        "xAxisLineThickness": "1",
-			    	        "xAxisLineColor": "#999999",
-			    	        "showAlternateHGridColor": "0"
-			    	    },
-			    	    "data":$scope.chart.data 
-			    	   }
-			});
-			revenueChart.render();
-			}) 
-	} 
-
-	$scope.filter = {};
-	
-	$scope.changedValue = function(){
-		$scope.filter = $scope.searchBy;
-	}
-	
-	$scope.searchFarmer = {			
-			fKey:'',fFirstName:'',fEmail:'',fLastName:'',fPhoneNumber:'',fAddress:'',fState:'',fCity:'',fZip:''			
-	};
-	$scope.searchCustomer = {			
-			cKey:'',cFirstName:'',cEmail:'',cLastName:'',cPhoneNumber:'',cAddress:'',cState:'',cCity:'',cZip:''
-	};
-	$scope.searchProduct = {			
-			fKey:'',pName:'',fName:'',pID:'',pPrice:'',pDesc:''			
-	};
- 	 $scope.searchBill = {	
- 			//console.log("hellooo");
-			bill_id:'',bDate:'',cKey:'',bPickupLocation:'',bExpectedDeliveryDate:'',bDropLocation:'',driver_id:''	
-	};
-	$scope.searchTruck = {			
-			truck_id:'',driver_id:'',tDropLocation:'',tPickupLocation:'',bill_id:''			
-	};   
-	
-});
-
-
-adminPage.filter('startFrom', function() {
-    return function(input, start) {
-        start = +start; //parse to int
-        return input.slice(start);
-    }
 });
 
 
@@ -1204,8 +141,8 @@ adminPage.filter('startFrom', function() {
 
 </head>
 <body ng-app="adminPage" ng-controller="adminPage">
-    <div style="width:100%;background-image: url(images/strip.png);">
-	<p><a ng-click="home1();"><img src="images/logo.png" style="margin-left:1%;margin-top: 0.5%;margin-bottom: 0.5%;"alt="Amazon Fresh" /></a>
+    <div style="width:100%;">
+	<p><a ng-click="home();"><img src="" style="margin-left:1%;margin-top: 0.5%;margin-bottom: 0.5%;"alt="Social Delivery Service" /></a>
             <a class="cur" ng-click="logout();" style='float: right;margin-right: 3%;margin-top: 1%;color: whitesmoke;'>SignOut</a>
         </p>
     </div>
@@ -1249,45 +186,19 @@ adminPage.filter('startFrom', function() {
 	<div class="header_bottom">
 	     	<div class="menu">
 	     		<ul>
-			    	<li><a class="cur" ng-click="home1();">Home</a></li>
-			    	<li><a class="cur" ng-click="farmers();">Farmer List</a></li>
-			    	 <li><a class="cur" ng-click="customers();">Customer List</a></li>
-			    	 <li><a class="cur" ng-click="products();">Products List</a></li>
-					<li><a class="cur" ng-click="showBills();">Bills</a></li>
-					<li><a class="cur" ng-click="adminGetTrucks()">Trips</a></li>
+			    	<!-- <li><a class="cur" ng-click="home();">Home</a></li> -->
+			    	 <li><a class="cur" ng-click="getCustomers()">Customer List</a></li>
+					<li><a class="cur" ng-click="showBills()">Completed Trips</a></li>
+					<li><a class="cur" ng-click="showOpenShipperRequests()">Open Shipper Requests</a></li>
+					<li><a class="cur" ng-click="showOpenTransporterRequests()">Open Transporter Requests</a></li>
+					<!-- <li><a class="cur" ng-click="adminGetTrucks()">Trips</a></li> -->
+
 					<li><a class="cur" ng-click="chartsShow();">Statics</a></li>
 			    	<div class="clear"></div>
      			</ul>
 	     	</div>
 			
-			
-	     	<div class="search_box" ng-show="farmerSearch" placeholder="search">
-	     		<table>
-					<tr>
-					<td>
-						<select ng-model="searchBy" ng-change="changedValue()">
-							<option value="">Search By:</option>
-							<option value="fKey">Farmer ID</option>
-							<option value="fFirstName">Farmer First Name</option>
-							<option value="fLastName">Farmer Last Name</option>
-							<option value="fEmail">Farmer Email</option>
-							<option value="fPhoneNumber">Farmer Phone Number</option>
-							<option value="fAddress">Farmer Address</option>
-							<option value="fCity">Farmer City</option>
-							<option value="fState">Farmer State</option>
-							<option value="fZip">Farmer Zip</option>
-						</select>
-					</td>
-					<td>
-						<form>
-							<input ng-model="searchFarmer[filter]" type="text" value="Search" Placeholder="Search">
-						</form>
-					</td>
-					
-					</tr>
-				</table>
-	     	</div>
-	     	
+	     	<!-- 
 	     	<div class="search_box" ng-show="customerSearch">
 	     		<table>
 					<tr>
@@ -1316,31 +227,6 @@ adminPage.filter('startFrom', function() {
 				</table>
 	     	</div>
 	     	
-	     	<div class="search_box" ng-show="productSearch">
-	     		<table>
-					<tr>
-					<td>
-						<select ng-model="searchBy" ng-change="changedValue()">
-							<option value="">Search By:</option>
-							<option value="fKey">Farmer ID</option>
-							<option value="pName">Product Name</option>
-							<option value="fName">Farmer Name</option>
-							<option value="pID">Product ID</option>
-							<option value="pPrice">Product Price</option>
-							<option value="pDesc">Product Description</option>
-							
-						</select>
-					</td>
-					<td>
-						<form>
-							<input ng-model="searchProduct[filter]" type="text" value="Search" maxlength="30" 
-					autocomplete=off required Placeholder="Search">
-						</form>
-					</td>
-					
-					</tr>
-				</table>
-	     	</div>
 	     	
 	     	<div class="search_box" ng-show="billSearch">
 	     		<table>
@@ -1351,7 +237,6 @@ adminPage.filter('startFrom', function() {
 							<option value="bill_id">Bill ID</option>
 							<option value="bDate">Bill Date</option>
 							<option value="cKey">Customer Key</option>
-							
 							<option value="bExpectedDeliveryDate">Expected Delivery Date</option>
 							<option value="bPickupLocation">Pickup Location</option>
 							<option value="bDropLocation">Drop off Location</option>
@@ -1367,186 +252,16 @@ adminPage.filter('startFrom', function() {
 					
 					</tr>
 				</table>
-	     	</div>
-		
-			<div class="search_box" ng-show="TripSearch_show">
-	     		<table>
-					<tr>
-					<td>
-						<select ng-model="searchBy" ng-change="changedValue()">
-							<option value="">Search By:</option>
-							<option value="truck_id">Truck ID</option>
-							<option value="driver_id">Driver ID</option>
-							<option value="tDropLocation">Drop Location</option>
-							<option value="tPickupLocation">Pick UP Location</option>
-							<option value="bill_id">Bill ID</option>
-						</select>
-					</td>
-					<td>
-						<form>
-							<input ng-model="searchTruck[filter]" type="text" value="Search" maxlength="30" 
-					autocomplete=off required Placeholder="Search">
-						</form>
-					</td>
-					
-					</tr>
-				</table>
-	     	</div>
-		
+	     	</div>   -->	
 	     	
-	     	
-			<div class="clear"></div>
 	     
-		 </div>	     
+	</div>	     
 	<div class="header_slide">
 			<div class="clear"></div>
 		</div>
    </div>
  <div class="main">
     <div class="content" style="width:92%; margin: 0 auto;">
-   
-
-    	<div ng-show="home" class="content_top" >
-    	<h3 class="top_heading">Notification List:</h3>
-		<div align="center">
-		<table width="93%" border="0" cellspacing="0" cellpadding="0" align="center">
-		  <tbody>
-			<tr>
-			  <td align="center"><a style="width:85%;" class="button cur" ng-click="showCustomerRequests();">Customer Requests</a></td>
-			  <td align="center"><a style="width:85%;" class="button cur" ng-click="showFarmerRequests();">Farmer Requests</a></td>
-			  <td align="center"><a style="width:85%;" class="button cur" ng-click="showProductRequests();">Product Requests</a></td>
-			</tr>
-		  </tbody>
-		</table>
-		</div>
-
-		<br/><br/>
-    	<div ng-show="customerRequests">
-		<div ng-repeat="names in pendingCustomerRequests | startFrom:currentPage*pageSize | limitTo:pageSize">
-			<div class="request_margin">
-    		<div class="heading content_name">
-    		
-                    <h3>{{names.name}}</h3>
-                    
-    		</div>
-    		
-    		<div align="center" class="content_email">
-    		<h3>{{names.email}}</h3>
-    		</div>
-    		<div align="right" class="content_add_delete">
-			<div align="center">
-    		 <a class="button btn1 cur" ng-click="acceptRequest(names.id, names.operationType);">Accept</a>
-    		  <a class="button btn2 cur" ng-click="declineRequest(names.id, names.operationType);">Decline</a>
-                  </div>
-    		</div>
-    		<div class="clear"></div>
-    		</div>
-			<div>
-				</div>
-			</div>
-			<center>
-			<button class="cur" ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">Previous</button>
-						{{currentPage+1}}/{{numberOfPages(pendingCustomerRequests)}}
-						<button class="cur" ng-disabled="currentPage >= pendingCustomerRequests.length/pageSize - 1" ng-click="currentPage=currentPage+1">
-						Next </button>
-						</center> 
-			</div>
-			<div ng-show="farmerRequests">
-    			<div ng-repeat="names in pendingFarmerRequests | startFrom:currentPage*pageSize | limitTo:pageSize">
-			<div class="request_margin">
-    		<div class="heading content_name">
-    		
-                    <h3>{{names.name}} </h3>
-                    
-    		</div>
-    		
-    		<div align="center"  class="content_email">
-    		<h3>{{names.email}}</h3>
-    		</div>
-    		<div align="right" class="content_add_delete">
-                   <div align="center">
-                    <a class="button btn1 cur" ng-click="acceptRequest(names.id, names.operationType);">Accept</a>
-                    <a class="button btn2 cur" ng-click="declineRequest(names.id, names.operationType);">Decline</a>
-    				</div>
-    		</div>
-    		<div class="clear"></div>
-    		</div>
-    		</div>
-    		<center>
-    		<button class="cur" ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">Previous</button>
-						{{currentPage+1}}/{{numberOfPages(pendingFarmerRequests)}}
-						<button class="cur" ng-disabled="currentPage >= pendingFarmerRequests.length/pageSize - 1" ng-click="currentPage=currentPage+1">
-						Next </button>
-						</center> 
-			</div>
-			<div  ng-show="productRequests">
-    		<div ng-repeat="names in pendingProductRequests | startFrom:currentPage*pageSize | limitTo:pageSize">
-			<div class="request_margin">
-    		<div class="heading content_name">
-    		
-                    <h3>{{names.name}} ID: {{names.id}}</h3>
-                    
-    		</div>
-
-    		<div align="right" class="content_add_delete">
-				<div align="center">
-    				<a class="button btn1 cur" ng-click="acceptRequest(names.id, names.operationType);">Accept</a>
-    				<a class="button btn2 cur" ng-click="declineRequest(names.id, names.operationType);">Decline</a>
-				</div>
-    		</div>
-    		<div class="clear"></div>
-    		</div>
-    		</div>
-			<div>
-			<center>
-<button class="cur" ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">Previous</button>
-						{{currentPage+1}}/{{numberOfPages(pendingProductRequests)}}
-						<button class="cur" ng-disabled="currentPage >= pendingProductRequests.length/pageSize - 1" ng-click="currentPage=currentPage+1">
-						Next </button>
-						</center> 
-						</div>
-			</div>			
-    	</div>
-    	
-    	<div ng-show="farmerList">
-    	<div class="content_top">
-    		<div class="heading">
-                    <h3 >Farmer List: </h3>
-    		</div>
-    		
-    		<div class="clear"></div>
-    	</div>
-    	
-    	<br></br>
-    	
-    	<div class="content_top content_top1" ng-repeat = "names in farmers1 | filter:searchFarmer | startFrom:currentPage*pageSize | limitTo:pageSize">
-    	
-    		<div class="heading content_name">
-                    <h3>{{names.fFirstName}} {{names.fLastName}}</h3>
-                 
-    		</div>
-    		<div align="center" class="content_email">
-    		<h3>{{names.fEmail}}</h3>
-    		<input type="text" ng-show="false" ng-model="names.fVideo">
-    		</div>
-			  <div align="right" class="content_add_delete">
-			  <div align="center">
-    				<a class="button btn1 cur" ng-click="showFarmerProfile(names.fKey,names.fFirstName,names.fLastName,names.fEmail,names.fPhoneNumber,names.fAddress,names.fState,names.fCity,names.fZip,names.fRatingReview,names.fDeliveryHistory,names.fVideo);">View Profile</a>
-    				<a class="button btn2 cur" ng-click="deleteFarmer(names.fKey);">Delete</a>
-				</div>
-    		</div>
-    		
-    		<div class="clear"></div>
-    	</div>
-		<div>
-			<center>
-<button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">Previous</button>
-						{{currentPage+1}}/{{numberOfPages(farmers1)}}
-						<button ng-disabled="currentPage >= farmers1.length/pageSize - 1" ng-click="currentPage=currentPage+1">
-						Next </button>
-						</center> 
-						</div>
-					 	</div>
     	
  		<div ng-show="customerList">
     	<div class="content_top">
@@ -1557,78 +272,25 @@ adminPage.filter('startFrom', function() {
     		<div class="clear"></div>
     	</div>
     	
-    	<br></br>
     	
-     	<div class="content_top content_top1" ng-repeat = "names in customers1 | filter:searchCustomer | startFrom:currentPage*pageSize | limitTo:pageSize">
+     	<div class="content_top content_top1" ng-repeat = "data in customers ">
      	
     		<div class="heading content_name">
-                    <h3>{{names.cFirstName}} {{names.cLastName}}</h3>
+                    <h3>{{data.firstName}} {{data.lastName}}</h3>
     		</div>
     		<div align="center" class="content_email">
-    		<h3>{{names.cEmail}}</h3>
+    		<h3>{{data.emailID}}</h3>
     		</div>
     		<div align="right" class="content_add_delete">
 			<div align="center">
-    			<a class="button btn1 cur" ng-click="showCustomerProfile(names.cKey,names.cFirstName,names.cLastName,names.cEmail,names.cPhoneNumber,names.cAddress,names.cState,names.cCity,names.cZip,names.cRatingReview);;">View Profile</a>
+    			<a class="button btn1 cur" ng-click="showCustomerProfile(data)">View Profile</a>
     				<a class="button btn2 cur" ng-click="deleteCustomer(names.cKey);">Delete</a>
     		</div>
 			</div>
     		
     		<div class="clear"></div>
     	</div> 
-			<div>
-			<center>
-<button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">Previous</button>
-						{{currentPage+1}}/{{numberOfPages(customers1)}}
-						<button ng-disabled="currentPage >= customers1.length/pageSize - 1" ng-click="currentPage=currentPage+1">
-						Next </button>
-						</center> 
-						</div>
-				    	</div>
-    	
-
-    	
-    	<div class="section group" id="cProducts" ng-show="productList">
-    	<div class="content_top">
-    		<div class="heading">
-                    <h3>Product List: </h3>
-    		</div>
-    		
-    		<div class="clear"></div>
-    	</div>
-    	
-    	<br></br>
-    	
-		<div  style="width:100%; display: block; clear: both;">
-				<div style="width:20%;" class="grid_1_of_4 images_1_of_4" ng-repeat = "names in products1 | filter:searchProduct | startFrom:currentPage*pageSize | limitTo:pageSize">
-					 <a><img src="/uploads/images/{{names.pImage}}" alt="" width="320" height="240"/></a>
-					 	<h2 style="height:42px;"><a ng-click="farmerGetProductDetails(prductID)">{{names.pName}} ( {{names.pID}} )</a></h2>
-						<div class="price-details">
-				      		 <div class="price-number">
-								<p><span class="rupees">${{names.pPrice}}</span></p>
-					    	</div>
-					    	<input type="text" ng-show=false ng-model="prductID">
-					    	<input type="text" ng-show=false ng-model="pImage">
-					       	<div class="add-cart" style="margin-top: -5%;">		
-					       							
-								<h4><a class="button cur" ng-click="showProductProfile(names.fName,names.pName,names.pPrice,names.pDesc,names.pReviewRatings,names.pImage);">Show Product Details</a>
-								<a class="button btn3 cur" ng-click="deleteProduct(names.pID);">Delete</a>
-								</h4>
-							</div>
-						<div class="clear"></div>
-					</div>
-					 
-				</div>
-				</div>
-<div style="display:block; width:100%; clear: both;">
-			<center>
-<button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">Previous</button>
-						{{currentPage+1}}/{{numberOfPages(products1)}}
-						<button ng-disabled="currentPage >= products1.length/pageSize - 1" ng-click="currentPage=currentPage+1">
-						Next </button>
-						</center> 
-						</div>				
-			</div>
+		</div>
     	
 
   		<div ng-show="Bills">
@@ -1640,15 +302,16 @@ adminPage.filter('startFrom', function() {
     		<div class="clear"></div>
     	</div>
     	
-    	<br></br>
     	
-    	<div class="content_top" ng-repeat="names in billList | filter:searchBill | startFrom:currentPage*pageSize | limitTo:pageSize">
+    	<div class="content_top" ng-repeat="data in billList | filter:searchBill">
     		<div class="heading">
-                    <h3>Bill ID:{{names.bill_id}}<br/> generated by Customer ID: {{names.cKey}}</h3>
+                    <h3>Bill ID:{{data.transporter.id}}{{data.shipper.id}}</h3>
+                    <h4>Tansporter: {{data.transporter.name}}</h4>
+                    <h4>Shipper: {{data.shipper.name}}</h4>
     		 </div>
     		
     		<div align="right">
-    		<a class="button btn1 cur" ng-click="showBill(names.bill_id,names.bDate,names.bExpectedDeliveryDate,names.cKey,names.bPickupLocation,names.bDropLocation,names.driver_id,names.billingProducts,names.bTotal);">View Bill</a>
+    		<a class="button btn1 cur" ng-click="openBillDetails(data);">View Bill</a>
     		<a class="button btn2 cur" ng-click="deleteBill(names.bill_id);">Delete</a>
     		</div>
     		
@@ -1656,337 +319,94 @@ adminPage.filter('startFrom', function() {
     		</div>
     		
     		<div>
-    	<center>
-    	<button class="cur" ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">Previous</button>
-					{{currentPage+1}}/{{numberOfPages(billList)}}
-					<button class="cur" ng-disabled="currentPage >= billList.length/pageSize - 1" ng-click="currentPage=currentPage+1">
-					Next </button>
-					</center> 
-				</div>
+			</div>
     	</div> 
     
     	
-    	
-    	<div ng-show="productProfileShow">
-					<div class="main">
-						<div class="content" style="padding: 0px;">
-							<div class="content_top">
-    							<div class="heading">
-                    				<h3 >Product Profile: </h3>
-    							</div>
-    		
-    							<div class="clear"></div>
-    						</div>
-    						
-    						<br>
-    						
-							<div class="section group">
-								<div class="cont-desc span_1_of_2">
-									<div class="product-details">
-										<div class="grid images_3_of_2">
-											<div id="container">
-												<div id="products_example">
-													<div id="products">
-														<div class="slides_container"
-															style="overflow: hidden; position: relative; display: block; width: 320px; height: 276px;">
-															
-															<img src="/uploads/images/{{p.pImage}}" alt="{{p.pImage}}" style="max-height: 275px; min-height: 320px;"/>
-															
-															<!--  <img src="images/feature-pic1.jpg"
-																style="max-height: 275px; min-height: 320px;" />  -->
-														</div>
-													</div>
-												</div>
-											</div>
+	<div ng-show="customerProfileShow">
+	<div class="main">
+		<div class="content">
+		
+			<div class="section group">
+				<div class="cont-desc span_1_of_2">
+					<div class="product-details">
+		<!-- 				<div class="grid images_3_of_2">
+							<div id="container">
+								<div id="products_example">
+									<div id="products">
+										<div class="slides_container"
+											style="overflow: hidden; position: relative; display: block; width: 320px; height: 276px;">
+											<img src="https://abs.twimg.com/a/1456787276/img/t1/highline/empty_state/owner_empty_avatar.png"
+												style="max-height: 275px; min-height: 320px;" />
 										</div>
-										<div class="desc span_3_of_2">
-												<p class="product_name pad_10">
-													<span style="color: #679900; font-size: 28px; font-weight: bold; text-transform: uppercase;">{{p.ProductName}}</span>
-												</p>
-												<p class="pad_10">
-													by: <span class="hname">{{p.FamerName}}</span>
-												</p><br/>
-												<p class="pad_10">
-													 Price:<span class="product_profile_price hname">${{p.Price}}</span>
-												</p>
-											<div class="share-desc" align="left">
-												<div class="clear"></div>
-											</div>
-										</div>
-										<div class="clear"></div>
-											<div style="display:block; float: left; clear: both;">
-										<h3 style="font-weight:bold;">Product Description:<br/><br/></h3>
-										<h4><span>{{p.Desc}}</span></h4>	
-									</div>
-									<div style="height:20px; clear:both;">&nbsp</div>
-									<div style="padding-top: 20px;">
-												<h3 style="font-weight:bold;">Reviews and Ratings:</h3>
-									<div ng-repeat="r in p.ReviewRatings" style="padding:10px 0 10px 0; clear: both;">
-												<p>
-													 <span style=" color:#23527c; font-size: 15px;">{{r.review}}</span> <br/>by <span style="color:#383838;">{{r.cName}}</span> <br/>Stars: <span style="color: #679900;">{{r.rating}}</span><br/>
-													
-												</p>
-												<hr/>
-											</div>
-											</div>
 									</div>
 								</div>
+							</div>
+						</div> -->
+
+						<div class="desc span_3_of_2" align="left">
+
+							<table class="table_fdesc" width="93%" border="0" cellspacing="10" cellpadding="10">
+
+							  <tbody>
+							  <tr>
+							  	 <td>Customer Profile</td>
+							  </tr>
+							  <tr>
+								  <td>Name: </td>
+								  <td class="td2_content name">{{customerDetails.firstName}} {{customerDetails.lastName}}</td>
+								</tr>
+								
+								<tr>
+								  <td>ID: </td>
+								  <td class="td2_content">{{customerDetails.userID}}</td>
+								</tr>
+								
+								<tr>
+								  <td>Email: </td>
+								  <td class="td2_content">{{customerDetails.emailID}}</td>
+								</tr>
+								
+								<tr>
+								  <td>Phone Number: </td>
+								  <td class="td2_content">{{customerDetails.cell}}</td>
+								</tr>
+								
+								<tr>
+								  <td>Address: </td>
+								  <td class="td2_content">{{customerDetails.address[0].street}}</td>
+								</tr>
+								
+								<tr>
+								  <td>City: </td>
+								  <td class="td2_content">{{customerDetails.address[0].city}}</td>
+								</tr>
+								
+								<tr>
+								  <td>State: </td>
+								  <td class="td2_content">{{customerDetails.address[0].state}}</td>
+								</tr>
+								
+								<tr>
+								  <td>Zip: </td>
+								  <td class="td2_content">{{customerDetails.address[0].zip}}</td>
+								</tr>
+							  </tbody>
+							</table>
+							<div class="share-desc" align="left">
+								<div class="clear"></div>
 							</div>
 						</div>
 					</div>
 
-
 				</div>
-	<div ng-show="customerProfileShow">
-	<div class="main">
-						<div class="content">
-							
-							<div class="content_top">
-    							<div class="heading">
-                    				<h3 >Customer Profile: </h3>
-    							</div>
-    		
-    							<div class="clear"></div>
-    						</div>
-						
-							<div class="section group">
-								<div class="cont-desc span_1_of_2">
-									<div class="product-details">
-										<div class="grid images_3_of_2">
-											<div id="container">
-												<div id="products_example">
-													<div id="products">
-														<div class="slides_container"
-															style="overflow: hidden; position: relative; display: block; width: 320px; height: 276px;">
-															<img src="https://abs.twimg.com/a/1456787276/img/t1/highline/empty_state/owner_empty_avatar.png"
-																style="max-height: 275px; min-height: 320px;" />
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-																				<div class="desc span_3_of_2" align="left">
-											<table class="table_fdesc" width="93%" border="0" cellspacing="10" cellpadding="10">
-											  <tbody>
-											  <tr>
-												  <td>Name: </td>
-												  <td class="td2_content name">{{c.FirstName}} {{c.LastName}}</td>
-												</tr>
-												
-												<tr>
-												  <td>ID: </td>
-												  <td class="td2_content">{{c.ID}}</td>
-												</tr>
-												
-												<tr>
-												  <td>Email: </td>
-												  <td class="td2_content">{{c.Email}}</td>
-												</tr>
-												
-												<tr>
-												  <td>Phone Number: </td>
-												  <td class="td2_content">{{c.PhoneNumber}}</td>
-												</tr>
-												
-												<tr>
-												  <td>Address: </td>
-												  <td class="td2_content">{{c.Address}}</td>
-												</tr>
-												
-												<tr>
-												  <td>City: </td>
-												  <td class="td2_content">{{c.City}}</td>
-												</tr>
-												
-												<tr>
-												  <td>State: </td>
-												  <td class="td2_content">{{c.State}}</td>
-												</tr>
-												
-												<tr>
-												  <td>Zip: </td>
-												  <td class="td2_content">{{c.Zip}}</td>
-												</tr>
-											  </tbody>
-											</table>
-											<div class="share-desc" align="left">
-												<div class="clear"></div>
-											</div>
-										</div>
-									</div>
-
-								</div>
-							</div>
-						</div>
+			</div>
+		</div>
 					</div>
 	</div>
 	
-	<div ng-show="farmerProfileShow">
-	<div class="main">
-						<div class="content">
-							<div class="section group">
-								<div class="cont-desc span_1_of_2">
-									<div class="product-details">
-										<div class="grid images_3_of_2">
-											<div id="container">
-												<div id="products_example">
-													<div id="products">
-														<div class="slides_container"
-															style="overflow: hidden; position: relative; display: block; width: 320px; height: 276px;">
-														
-															<video id='videoPlayer' width="320" height="240" controls>
-       															<source id='mp4Source' src="http://127.0.0.1:3000/uploads/videos/n2.mp4" type="video/mp4" />
-   									 						</video>
-														
-														<!-- 	<img src="images/feature-pic1.jpg"
-																style="max-height: 275px; min-height: 320px;" />   -->
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-										<div class="desc span_3_of_2" align="left">
-											<table class="table_fdesc" width="93%" border="0" cellspacing="10" cellpadding="10">
-											  <tbody>
-											  <tr>
-												  <td>Name: </td>
-												  <td class="td2_content name">{{f.FirstName}} {{f.LastName}}</td>
-												</tr>
-												
-												<tr>
-												  <td>ID: </td>
-												  <td class="td2_content">{{f.ID}}</td>
-												</tr>
-												
-												<tr>
-												  <td>Email: </td>
-												  <td class="td2_content">{{f.Email}}</td>
-												</tr>
-												
-												<tr>
-												  <td>Phone Number: </td>
-												  <td class="td2_content">{{f.PhoneNumber}}</td>
-												</tr>
-												
-												<tr>
-												  <td>Address: </td>
-												  <td class="td2_content">{{f.Address}}</td>
-												</tr>
-												
-												<tr>
-												  <td>City: </td>
-												  <td class="td2_content">{{f.City}}</td>
-												</tr>
-												
-												<tr>
-												  <td>State: </td>
-												  <td class="td2_content">{{f.State}}</td>
-												</tr>
-												
-												<tr>
-												  <td>Zip: </td>
-												  <td class="td2_content">{{f.Zip}}</td>
-												</tr>
-											  </tbody>
-											</table>
-											<div class="share-desc" align="left">
-												<div class="clear"></div>
-											</div>
-										</div>
-										<div class="clear"></div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-	</div>
-
-<!-- 
-	<div ng-show="billProfile">
-	 <div class="content_top">
-    					<div class="heading">
-                    		<h3 >Bill Information: </h3>
-    					</div>
-    		
-    					<div class="clear"></div>
-    				</div>   
-         <div style="width:35%; float:left;">
-				     							
-				<table class="table_fdesc" border="0" cellspacing="10" cellpadding="10">
-				  <tbody>
-				  <tr>
-					  <td>ID: </td>
-					  <td class="td2_content name">{{names.bill_id}}</td>
-				   </tr>
-				  <tr>
-					  <td>Date: </td>
-					  <td class="td2_content">{{names.bDate}}</td>
-				   </tr>
-				  <tr>
-					  <td>Delivery Date: </td>
-					  <td class="td2_content">{{names.bExpectedDeliveryDate}}</td>
-				   </tr>
-				  <tr>
-					  <td>Customer ID: </td>
-					  <td class="td2_content ">{{names.cKey}}</td>
-				   </tr>
-				  <tr>
-					  <td>Pickup Location: </td>
-					  <td class="td2_content">{{names.bPickupLocation}}</td>
-				   </tr>
-				  <tr>
-					  <td>Dropoff Location: </td>
-					  <td class="td2_content">{{names.bDropLocation}}</td>
-				   </tr>
-				  <tr>
-					  <td>Driver Assigned: </td>
-					  <td class="td2_content">{{names.driver_id}}</td>
-				   </tr>
-				     </tbody>
-				     
-				 </table>
-				  
-				   <div ng-repeat="productInfo in names.billingProducts">
-				   <table class="table_fdesc" border="0" cellspacing="10" cellpadding="10">
-				  <tbody>
-				  <tr>
-					  <td>Product Ordered: </td>
-					  <td class="td2_content"><h3>{{productInfo.bProductID}}</h3></td>
-				   </tr>
-				  <tr>
-					  <td>Product Name: </td>
-					  <td class="td2_content">{{productInfo.bProductName}}</td>
-				   </tr>
-				  <tr>
-					  <td>Product Price: </td>
-					  <td class="td2_content">{{productInfo.bProductPrice}}</td>
-				   </tr>
-				  <tr>
-					  <td>Product Quantity: </td>
-					  <td class="td2_content">{{productInfo.bProductQuantity}}</td>
-				   </tr>
-				    </tbody>
-				 </table>
-				   </div>
-                  </div>
-                  <div style="width:12%; float:left; display:inline-block;">
-                  	
-                  	<div ng-show="GoogleMaps_Show" style="width:1368px;height:400px;">
-		
-    				<div id="map"></div>
-		
-		
-				</div>
-                  
-                  </div>
-
-                  <div style="width:12%; float:right; display:inline-block;">
-		 				<a class="button cur" ng-click="GoogleMapsShow();">Show Map</a>
-                  </div>
-	</div>
- -->	
  
- 	 <div ng-show="billProfile">
+ 	 <div ng-show="showBillProfile">
 	 <div class="content_top">
     					<div class="heading">
                     		<h3 >Bill Information: </h3>
@@ -2000,37 +420,50 @@ adminPage.filter('startFrom', function() {
 				  <tbody>
 				  <tr>
 					  <td>ID: </td>
-					  <td class="td2_content name">{{names.bill_id}}</td>
+					  <td class="td2_content name">{{billInfo._id}}</td>
 				   </tr>
 				  <tr>
 				  
 				  <tr>
 					  <td>Total Amount: </td>
-					  <td class="td2_content name">${{names.bTotal}}</td>
+					  <td class="td2_content name">{{billInfo.packageDetails.price}}</td>
 				   </tr>
 				  <tr>
 					  <td>Date: </td>
-					  <td class="td2_content">{{names.bDate | date:"yyyy-MM-dd"}}</td>
+					  <td class="td2_content">{{billInfo.timestamp}}</td>
 				   </tr>
 				  <tr>
-					  <td>Delivery Date: </td>
-					  <td class="td2_content">{{names.bExpectedDeliveryDate}}</td>
+					  <td>Shipper ID: </td>
+					  <td class="td2_content ">{{billInfo.shipper.id}}</td>
+					  <td>Shipper Name: </td>
+					  <td class="td2_content ">{{billInfo.shipper.name}}</td>
 				   </tr>
-				  <tr>
-					  <td>Customer ID: </td>
-					  <td class="td2_content ">{{names.cKey}}</td>
+				   <tr>
+					  <td>Transporter ID: </td>
+					  <td class="td2_content ">{{billInfo.transporter.id}}</td>
+					  <td>Transporter Name: </td>
+					  <td class="td2_content ">{{billInfo.transporter.name}}</td>
 				   </tr>
 				  <tr>
 					  <td>Pickup Location: </td>
-					  <td class="td2_content">{{names.bPickupLocation}}</td>
+					  <td class="td2_content">{{billInfo.pickupLocation.street}},{{billInfo.pickupLocation.apt}}</td>
+					  <td class="td2_content">{{billInfo.pickupLocation.city}},{{billInfo.pickupLocation.state}}</td>
+					  <td class="td2_content">{{billInfo.pickupLocation.zip}},{{billInfo.pickupLocation.country}}</td>
 				   </tr>
 				  <tr>
 					  <td>Dropoff Location: </td>
-					  <td class="td2_content">{{names.bDropLocation}}</td>
+					  <td class="td2_content">{{billInfo.dropoffLocation.street}},{{billInfo.dropoffLocation.apt}}</td>
+					  <td class="td2_content">{{billInfo.dropoffLocation.city}},{{billInfo.dropoffLocation.state}}</td>
+					  <td class="td2_content">{{billInfo.dropoffLocation.zip}},{{billInfo.dropoffLocation.country}}</td>
 				   </tr>
 				  <tr>
-					  <td>Driver Assigned: </td>
-					  <td class="td2_content">{{names.driver_id}}</td>
+					  <td>Package Details: </td>
+					  <td>Title:</td>
+					  <td class="td2_content">{{billInfo.packageDetails.title}}</td>
+					  <td>Note:</td>
+					  <td class="td2_content">{{billInfo.packageDetails.note}}</td>
+					  <td>Size:</td>
+					  <td class="td2_content">{{billInfo.packageDetails.size}}</td>
 				   </tr>
 				     </tbody>
 				     
@@ -2048,10 +481,6 @@ adminPage.filter('startFrom', function() {
                   
                   </div>
 
-                  <div style="width:12%; float:right; display:inline-block;">
-		 <a class="button cur" ng-click="GoogleMapsShow();">Show Map</a>
-                  </div>
-                  
                   <div>
                    <div style="width:100%; display: block; clear: both;">
 				<div style="width:28%;" class="grid_1_of_4 images_1_of_4" ng-repeat = "productInfo in names.billingProducts">
@@ -2074,6 +503,31 @@ adminPage.filter('startFrom', function() {
                   
 	</div>
  
+
+				 <div ng-show="shipperRequests">
+					<div ng-repeat="data in pendingShipperRequests">
+						<div class="request_margin">
+				        	<h3>{{data.name}} </h3>
+				    		<h3>Pickup location: {{data.pickupLocation.zip}}</h3>
+				    		<h3>Dropoff location: {{data.dropoffLocation.zip}}</h3>
+				    		<h3>Desired Date of Shipping: {{data.desiredDate}}</h3>
+						</div>
+					</div>
+				</div>
+
+				<div ng-show="transporterRequests">
+					<div ng-repeat="data in pendingTransporterRequests">
+						<div class="request_margin">
+				        	<h3>{{data.name}} </h3>
+				    		<h3>Pickup location: {{data.sourceAddress.zip}}</h3>
+				    		<h3>Dropoff location: {{data.destinationAddress.zip}}</h3>
+				    		<h3>Flexible Commute Range: {{data.additionalDesiredCommuteRange}} miles</h3>
+				    		<h3>Travel Date: {{data.travelDate}}</h3>
+				    		<h3>Vehicle Type: {{data.vehicleType}}</h3>
+						</div>
+					</div>
+				</div>
+
 	
 	<div ng-show="charts_show">
 		 
@@ -2122,7 +576,7 @@ adminPage.filter('startFrom', function() {
    	<a class="button cur" ng-click="showTripsOfTruck();">Truck List</a><br/>
    	<br>
    	<div ng-show="tripsOfTruck">
-   		<div ng-repeat = "trucks in trucksArray | filter:searchTruck | startFrom:currentPage*pageSize | limitTo:pageSize" style="padding-top:15px;">
+   		<div ng-repeat = "trucks in trucksArray | filter:searchTruck" style="padding-top:15px;">
     		<div class="heading" style="width:25%; display: block; float: left;">
                     <h3>{{trucks.truck_id}} </h3>
     		</div>
@@ -2150,7 +604,7 @@ adminPage.filter('startFrom', function() {
     		<br/><br>
     		
     		<div ng-show="tripsOfDriver">
-    		<div ng-repeat = "trucks in trucksArray | filter:searchTruck | startFrom:currentPage*pageSize | limitTo:pageSize"  style="padding-top:15px;">
+    		<div ng-repeat = "trucks in trucksArray | filter:searchTruck "  style="padding-top:15px;">
     		<div class="heading" style="width:25%; display: block; float: left;">
                     <h3>{{trucks.driver_id}}</h3>
     		</div>
@@ -2180,11 +634,11 @@ adminPage.filter('startFrom', function() {
     </div>
  </div>
 </div>
-    <div class="footer" style="background-image:url(images/strip.png); display: block; clear: both;">
+   <!--  <div class="footer" style="background-image:url(images/strip.png); display: block; clear: both;">
    	  
         <div class="copy_right">
-				<p style="margin-top: 0.5%;margin-bottom: 0.5%;">All items sold by and ship from AmazonFresh unless otherwise specified </p>
+				<p style="margin-top: 0.5%;margin-bottom: 0.5%;">Social Delivery Service </p>
 		   </div>
-    </div>    
+    </div>  -->   
 </body>
 </html>

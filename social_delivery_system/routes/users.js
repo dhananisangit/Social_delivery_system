@@ -1,5 +1,3 @@
-var express = require('express');
-var router = express.Router();
 var mongo = require('./mongo')
 var mongoURL = "mongodb://localhost:27017/social_delivery_system";
 
