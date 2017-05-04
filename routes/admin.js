@@ -2,7 +2,7 @@ var mongo = require('./mongo')
 var mongoURL = "mongodb://localhost:27017/social_delivery_system";
 
 function home(req,res){
-	res.render('adminHome');	
+	res.render('adminHome');
 }
 
 
@@ -13,11 +13,11 @@ function getCustomerList(req,res){
 			coll.find({}).toArray(function(err, customers){
 			if(customers){
 				var result = {"status":"200","customerList":customers};
-				
+
 			}
 			else{
 				var result = {"status":"400"};
-				
+
 			}
 			res.send(result)
 		});
@@ -31,11 +31,11 @@ function getBillList(req,res){
 			coll.find({}).toArray(function(err, bills){
 			if(bills){
 				var result = {"status":"200","billList":bills};
-				
+
 			}
 			else{
 				var result = {"status":"400"};
-				
+
 			}
 			res.send(result)
 		});
@@ -49,11 +49,11 @@ function getOpenShipperRequests(req,res){
 			coll.find({}).toArray(function(err, req){
 			if(req){
 				var result = {"status":"200","shipperRequests":req};
-				
+
 			}
 			else{
 				var result = {"status":"400"};
-				
+
 			}
 			res.send(result)
 		});
@@ -67,11 +67,11 @@ function getOpenTransporterRequests(req,res){
 			coll.find({}).toArray(function(err, req){
 			if(req){
 				var result = {"status":"200","transporterRequests":req};
-				
+
 			}
 			else{
 				var result = {"status":"400"};
-				
+
 			}
 			res.send(result)
 		});
@@ -85,7 +85,7 @@ function revenuePerLocation(req,res){
 		coll.aggregate([{ $group: { _id: {pickupState:"$pickupLocation.state"}, count: { $sum:"$packageDetails.price" } } }]).toArray(function(err, revenuePerLocation){
 			if(revenuePerLocation){
 				for(var i=0;i<revenuePerLocation.length;i++){
-					
+
 					data[i] = {"label": revenuePerLocation[i]._id.pickupState, "value": revenuePerLocation[i].count};
 				}
 				var result = {"status":"200","revenuePerLocation":data};
@@ -95,7 +95,7 @@ function revenuePerLocation(req,res){
 			}
 			// console.log(result)
 			res.send(result)
-		});	
+		});
 	});
 }
 
@@ -115,7 +115,7 @@ function tripsPerLocation(req,res){
 				var result = {"status":"400"};
 			}
 			res.send(result)
-		});	
+		});
 	});
 }
 
@@ -134,7 +134,7 @@ function ridesPerArea(req,res){
 				var result = {"status":"400"};
 			}
 			res.send(result)
-		});	
+		});
 	});
 }
 
@@ -154,7 +154,7 @@ function ridesPerDriver(req,res){
 				var result = {"status":"400"};
 			}
 			res.send(result)
-		});	
+		});
 	});
 }
 
@@ -167,5 +167,3 @@ exports.revenuePerLocation = revenuePerLocation;
 exports.tripsPerLocation = tripsPerLocation;
 exports.ridesPerArea = ridesPerArea;
 exports.ridesPerDriver = ridesPerDriver;
-
-
