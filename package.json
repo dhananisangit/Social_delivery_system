@@ -13,6 +13,7 @@
     "ejs": "~2.3.3",
     "express": "~4.15.2",
     "express-session": "~1.15.2",
+    "fusioncharts": "^3.12.0",
     "mongodb": "^2.2.26",
     "morgan": "~1.8.1",
     "passport": "~0.3.2",

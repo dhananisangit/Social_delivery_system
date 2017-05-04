@@ -40,16 +40,16 @@ body, html {
       
     }
 
-    $scope.checkuser = function(){
-      $http({
-        method:'get',
-        url:'/v1/authenticateuser'
-      }).then(function(res){
-        if(res.data.status == "200"){
+    // $scope.checkuser = function(){
+    //   $http({
+    //     method:'get',
+    //     url:'/v1/authenticateuser'
+    //   }).then(function(res){
+    //     if(res.data.status == "200"){
           
            
-        }
-      });
+    //     }
+    //   });
     }
 
 });
@@ -84,12 +84,12 @@ body, html {
            <div class="hm-content hm-content--main text-center">
           <div class="hm-main-cta-wrapper animated animation-delay2500 fadeIn half-time">
             <a class="hm-cta metric-home-click-send js-tracking" href="send">
-              <b class="hm-cta__title" ng-click="checkuser()">Send</b>
+              <b class="hm-cta__title" >Send</b>
               <!-- <span class="hm-cta__subtitle">What would you like to send?</span> -->
             <!--   <span class="hm-cta__icon">{</span> -->
             </a>
             <a class="hm-cta metric-home-click-bring js-tracking" href="/tasks/search">
-              <b class="hm-cta__title" ng-click="checkuser()">Bring</b>
+              <b class="hm-cta__title">Bring</b>
               <!-- <span class="hm-cta__subtitle">Make money on your travels</span> -->
               <!-- <span class="hm-cta__icon">}</span> -->
 </a>          </div><!-- hm-main-cta-wrapper -->

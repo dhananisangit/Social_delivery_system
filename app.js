@@ -43,6 +43,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/login', index);
+app.use('/signout', index);
 app.use('/register', index);
 
 app.use('/send', sendPackage.sendPackage);
@@ -56,6 +57,10 @@ app.get('/v1/getcustomerlist', admin.getCustomerList)
 app.get('/v1/getbilllist', admin.getBillList)
 app.get('/v1/getopenshipperrequests', admin.getOpenShipperRequests)
 app.get('/v1/getopentransporterrequests', admin.getOpenTransporterRequests)
+app.get('/v1/revenueperlocation', admin.revenuePerLocation)
+app.get('/v1/tripsperlocation', admin.tripsPerLocation)
+app.get('/v1/ridesperarea', admin.ridesPerArea)
+app.get('/v1/ridesperdriver', admin.ridesPerDriver)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
