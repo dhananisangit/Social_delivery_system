@@ -8,13 +8,13 @@ var bodyParser = require('body-parser');
 var index = require('./routes/index');
 var users = require('./routes/users');
 var admin = require('./routes/admin');
-<<<<<<< HEAD
+
 // var sendPackage = require('./routes/sendPackage.js');
 var mongoSessionURL = "mongodb://localhost:27017/social_delivery_system";
-=======
-var sendPackage = require('./routes/sendPackage.js');
-var mongoSessionURL = "mongodb://sangitdhanani:sjsu1234@ds133211.mlab.com:33211/sds_mongo"
->>>>>>> 0fe7a26be286290b893162658c20c024cdf0e412
+
+// var sendPackage = require('./routes/sendPackage.js');
+// var mongoSessionURL = "mongodb://sangitdhanani:sjsu1234@ds133211.mlab.com:33211/sds_mongo"
+
 var expressSessions = require("express-session");
 var passport = require('passport');
 var mongoStore = require("connect-mongo/es5")(expressSessions);
