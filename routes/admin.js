@@ -78,6 +78,26 @@ function getOpenTransporterRequests(req,res){
 	});
 }
 
+<<<<<<< HEAD
+=======
+function getCustomerFeedback(req,res){
+	mongo.connect(mongoURL, function(){
+			var coll = mongo.collection('customerFeedback');
+			coll.find({userID:req.body.userID}).toArray(function(err, reviews){
+			if(reviews){
+				var result = {"status":"200","reviews":reviews};
+
+			}
+			else{
+				var result = {"status":"400"};
+
+			}
+			res.send(result)
+		});
+	});
+}
+
+>>>>>>> sthakker
 function revenuePerLocation(req,res){
 	var data = [];
 	mongo.connect(mongoURL, function(){
@@ -167,3 +187,4 @@ exports.revenuePerLocation = revenuePerLocation;
 exports.tripsPerLocation = tripsPerLocation;
 exports.ridesPerArea = ridesPerArea;
 exports.ridesPerDriver = ridesPerDriver;
+exports.getCustomerFeedback = getCustomerFeedback;
