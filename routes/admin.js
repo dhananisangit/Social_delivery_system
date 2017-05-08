@@ -1,5 +1,6 @@
 var mongo = require('./mongo')
-var mongoURL = "mongodb://localhost:27017/social_delivery_system";
+// var mongoURL = "mongodb://localhost:27017/social_delivery_system";
+var mongoURL = "mongodb://sangitdhanani:sjsu1234@ds133211.mlab.com:33211/sds_mongo";
 
 function home(req,res){
 	res.render('adminHome');
@@ -78,6 +79,23 @@ function getOpenTransporterRequests(req,res){
 	});
 }
 
+function getCustomerFeedback(req,res){
+	mongo.connect(mongoURL, function(){
+			var coll = mongo.collection('customerFeedback');
+			coll.find({userID:req.body.userID}).toArray(function(err, reviews){
+			if(reviews){
+				var result = {"status":"200","reviews":reviews};
+
+			}
+			else{
+				var result = {"status":"400"};
+
+			}
+			res.send(result)
+		});
+	});
+}
+
 function revenuePerLocation(req,res){
 	var data = [];
 	mongo.connect(mongoURL, function(){
@@ -143,10 +161,10 @@ function ridesPerDriver(req,res){
 	var data = [];
 	mongo.connect(mongoURL, function(){
 		var coll = mongo.collection('tripDetails');
-		coll.aggregate([{ $group: { _id: {transporterID:"$transporter.id",driver_name:"$transporter.name"}, count: { $sum: 1 } } }]).toArray(function(err, ridesPerDriverArray){
+		coll.aggregate([{ $group: { _id: {transporterID:"$transporter.id",driver_name:"$transporter.name"}, count: { $sum: "$packageDetails.price" } } }]).limit(20).toArray(function(err, ridesPerDriverArray){
 			if(ridesPerDriverArray){
 				for(var i=0;i<ridesPerDriverArray.length;i++){
-					data[i] = {"label": ridesPerDriverArray[i]._id.driver_name, "value": ridesPerDriverArray[i].count};
+					data[i] = {"label": ridesPerDriverArray[i]._id.transporterID, "value": ridesPerDriverArray[i].count};
 				}
 				var result = {"status":"200","ridesPerDriver":data};
 			}
@@ -167,3 +185,4 @@ exports.revenuePerLocation = revenuePerLocation;
 exports.tripsPerLocation = tripsPerLocation;
 exports.ridesPerArea = ridesPerArea;
 exports.ridesPerDriver = ridesPerDriver;
+exports.getCustomerFeedback = getCustomerFeedback;

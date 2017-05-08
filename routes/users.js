@@ -1,5 +1,6 @@
 var mongo = require('./mongo')
-var mongoURL = "mongodb://localhost:27017/social_delivery_system";
+// var mongoURL = "mongodb://localhost:27017/social_delivery_system";
+var mongoURL = "mongodb://sangitdhanani:sjsu1234@ds133211.mlab.com:33211/sds_mongo";
 
 
 function home(req,res){
@@ -8,6 +9,7 @@ function home(req,res){
 
 function login(req,res){
 	mongo.connect(mongoURL, function(){
+<<<<<<< HEAD
 			var coll = mongo.collection('customerDetails');
 			coll.findOne({emailID:req.body.emailID, password:req.body.password}, function(err, user){
 				// console.log(user);
