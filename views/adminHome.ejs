@@ -20,7 +20,7 @@
 
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/js/angular-fusioncharts.min.js"></script>
-<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>	
+<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
@@ -43,14 +43,14 @@
     <link rel="stylesheet" href="/css/chosen-bootstrap.css">
 
 
-	
+
 <style>
 	.pad_10
 	{
 		padding: 10px 0 10px 0px !important;
 	}
 	.hname{
-	    font-size:22px !important; 
+	    font-size:22px !important;
 		color: #232323 !important;
 	   }
 	   body {
@@ -81,7 +81,7 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 		$scope.charts_show = true
 		$scope.charts()
 	}
-	
+
 	$scope.getCustomers= function(){
 		if($scope.customerList)$scope.customerList = false;
 		else{
@@ -90,7 +90,7 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 				method:'get',
 				url:'/v1/getcustomerlist'
 			}).then(function(res){
-				
+
 				$scope.customers = res.data.customerList
 				$scope.generic()
 				$scope.customerList = true
@@ -106,7 +106,7 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 				method:'get',
 				url:'/v1/getbilllist'
 			}).then(function(res){
-				
+
 				$scope.billList = res.data.billList
 				$scope.generic()
 				$scope.Bills = true
@@ -163,11 +163,11 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 
 
 	$scope.charts = function(graphType){
-		
+
 		$scope.generic();
 		$scope.charts_show = true;
 		$scope.chats1_show = true;
-			
+
 			var revenuePerLocation = [];
 			$http({
 				method:'get',
@@ -203,12 +203,12 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 			})
 			})
 			})})
-		
+
 			// var data = [];
 			$scope.createMapChart();
-			// $scope.chart = {"1":"1"};	
+			// $scope.chart = {"1":"1"};
 	}
-		
+
 
 
 	$scope.createChart = function(type, details){
@@ -221,7 +221,7 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 			      "dataFormat": "json",
 			      "dataSource":  {
 			    	   "chart": {
-			    	        "caption":  details.caption, 
+			    	        "caption":  details.caption,
 			    	        "subCaption": details.subCaption,
 			    	        "xAxisName": details.xAxisName,
 			    	        "yAxisName": details.yAxisName,
@@ -248,12 +248,12 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 			    	        "xAxisLineColor": "#999999",
 			    	        "showAlternateHGridColor": "0"
 			    	    },
-			    	    "data":details.data 
+			    	    "data":details.data
 			    	   }
 			});
 			revenueChart.render();
-			}) 
-	} 
+			})
+	}
 
 
 
@@ -267,9 +267,9 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 		        dataFormat: 'json',
 		        dataSource: {
 		            "chart": {
-		                "theme": "fint",                
+		                "theme": "fint",
 		                "caption": "Total delivery Report",
-		                "subcaption": "Today",                
+		                "subcaption": "Today",
 		                "showMarkerLabels":"0",
 		                "numberSuffix": "%",
 		                //Changing connector hover color
@@ -342,7 +342,7 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 		                        "x": "170",
 		                        "y": "178",
 		                        "radius": "1"
-		                        
+
 		                    },
 		                    {
 		                        "shapeid": "myCustomShape",
@@ -350,7 +350,7 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 		                        "x": "101",
 		                        "y": "193",
 		                        "radius": "1"
-		                    },                    
+		                    },
 		                    {
 		                        "shapeid": "myCustomShape",
 		                        "id": "LA",
@@ -455,7 +455,7 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 		                        "x": "445",
 		                        "y": "174",
 		                        "radius": "1"
-		                    },                    
+		                    },
 		                    {
 		                        "shapeid": "myCustomShape",
 		                        "id": "MI",
@@ -532,7 +532,7 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 		                        "x": "666",
 		                        "y": "114",
 		                        "radius": "1"
-		                        
+
 		                    },
 		                    {
 		                        "shapeid": "myCustomShape",
@@ -584,7 +584,7 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 		                        "label": "Texas",
 		                        "value": "75",
 		                        "tooltext": "Capacity utilization:$value% {br}Packages shipped/day : 253240 Units(avg) {br}Packages received/day: 253400 Units(avg){br}Daily operational cost: $4000(avg)"
-		                    },                    
+		                    },
 		                    {
 		                        "shapeid": "myCustomShape",
 		                        "id": "NC",
@@ -647,7 +647,7 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 		                        "to": "AZ",
 		                        "label": "18400",
 		                    "tooltext": "<b>Shipping Details:</b>{br}Daily shipment: $label Units{br}Average shipping cost: $0.5"
-		                    },                    
+		                    },
 		                    {
 		                        "from": "TX",
 		                        "to": "NM",
@@ -666,7 +666,7 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 		                        "label": "16800",
 		                    "tooltext": "<b>Shipping Details:</b>{br}Daily shipment: $label Units{br}Average shipping cost: $0.3"
 		                    },
-		                    
+
 		                    {
 		                        "from": "TX",
 		                        "to": "CO",
@@ -738,7 +738,7 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 		                        "to": "IL",
 		                        "label": "17650",
 		                    "tooltext": "<b>Shipping Details:</b>{br}Daily shipment: $label Units{br}Average shipping cost: $1.4"
-		                    },                    
+		                    },
 		                    {
 		                        "from": "NC",
 		                        "to": "IN",
@@ -848,7 +848,7 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 								"tooltext": "<b>Shipping Details:</b>{br}Daily shipment: $label Units{br}Average shipping cost: $1.6"
 		                    }
 		                ]
-		            }                          
+		            }
 		        }
 		    }).render();
 		});
@@ -882,7 +882,7 @@ adminPage.controller('adminPage', function($scope,$http,$window){
         </p>
     </div> -->
   <div class="wrap" style="width:95%" ng-init="getHomeStats()">
-      
+
 	<!-- <div class="header">
 		<div class="header_bottom">
 		 	<div class="menu">
@@ -894,8 +894,8 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 					<li><a class="cur" ng-click="chartsShow();">Statics</a></li>
 				</ul>
 		 	</div>
-		     
-		</div>	     
+
+		</div>
    </div> -->
 
    <!-- navigation -->
@@ -906,7 +906,7 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 		    <a href="" class="w3-bar-item w3-button w3-padding-large w3-hide-small" ng-click="getCustomers()">Customers</a>
 		    <a href="" class="w3-bar-item w3-button w3-padding-large w3-hide-small" ng-click="showBills()">Successfull Trips</a>
 		    <div class="w3-dropdown-hover w3-hide-small">
-		      	<button class="w3-padding-large w3-button" title="More">Pending Requests <i class="fa fa-caret-down"></i></button>     
+		      	<button class="w3-padding-large w3-button" title="More">Pending Requests <i class="fa fa-caret-down"></i></button>
 		      	<div class="w3-dropdown-content w3-bar-block w3-card-4">
 			        <a href="#" class="w3-bar-item w3-button" ng-click="showOpenShipperRequests()">Shipper Requests</a>
 			        <a href="#" class="w3-bar-item w3-button" ng-click="showOpenTransporterRequests()">Transporter Requests</a>
@@ -922,12 +922,12 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 <!-- cards -->
 
             <div class="row cards" ng-show="showHome">
-              
+
               <div class="card-container col-lg-3 col-sm-6 col-sm-12">
                 <div class="card card-redbrown hover">
-                  <div class="front"> 
+                  <div class="front">
 
-                    <div class="media">        
+                    <div class="media">
                       <span class="pull-left">
                         <i class="fa fa-users media-object"></i>
                       </span>
@@ -936,7 +936,7 @@ adminPage.controller('adminPage', function($scope,$http,$window){
                         <small>New Users</small>
                         <h2 class="media-heading animate-number" data-value="3659" data-animation-duration="1500">0</h2>
                       </div>
-                    </div> 
+                    </div>
 
                     <div class="progress-list">
                       <div class="details">
@@ -957,9 +957,9 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 
               <div class="card-container col-lg-3 col-sm-6 col-sm-12">
                 <div class="card card-blue hover">
-                  <div class="front">        
-                    
-                    <div class="media">                  
+                  <div class="front">
+
+                    <div class="media">
                       <span class="pull-left">
                         <i class="fa fa-shopping-cart media-object"></i>
                       </span>
@@ -968,7 +968,7 @@ adminPage.controller('adminPage', function($scope,$http,$window){
                         <small>New Orders</small>
                         <h2 class="media-heading animate-number" data-value="19214" data-animation-duration="1500">0</h2>
                       </div>
-                    </div> 
+                    </div>
 
                     <div class="progress-list">
                       <div class="details">
@@ -991,8 +991,8 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 
               <div class="card-container col-lg-3 col-sm-6 col-sm-12">
                 <div class="card card-greensea hover">
-                  <div class="front">        
-                    
+                  <div class="front">
+
                     <div class="media">
                       <span class="pull-left">
                         <i class="fa fa-usd media-object"></i>
@@ -1024,9 +1024,9 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 
               <div class="card-container col-lg-3 col-sm-6 col-xs-12">
                 <div class="card card-slategray hover">
-                  <div class="front"> 
+                  <div class="front">
 
-                    <div class="media">                   
+                    <div class="media">
                       <span class="pull-left">
                         <i class="fa fa-eye media-object"></i>
                       </span>
@@ -1035,7 +1035,7 @@ adminPage.controller('adminPage', function($scope,$http,$window){
                         <small>Visits</small>
                         <h2 class="media-heading animate-number" data-value="9634" data-animation-duration="1500">0</h2>
                       </div>
-                    </div> 
+                    </div>
 
                     <div class="progress-list">
                       <div class="details">
@@ -1062,19 +1062,19 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 
  <div class="main">
     <div class="content" style="width:92%; margin: 0 auto;">
-    	
+
  		<div ng-show="customerList">
     	<div class="content_top">
     		<div class="heading">
                     <h3>Customer List: </h3>
     		</div>
-    		
+
     		<div class="clear"></div>
     	</div>
-    	
-    	
+
+
      	<div class="content_top content_top1" ng-repeat = "data in customers ">
-     	
+
     		<div class="heading content_name">
                     <h3>{{data.firstName}} {{data.lastName}}</h3>
     		</div>
@@ -1087,46 +1087,46 @@ adminPage.controller('adminPage', function($scope,$http,$window){
     				<a class="button btn2 cur" ng-click="deleteCustomer(names.cKey);">Delete</a>
     		</div>
 			</div>
-    		
+
     		<div class="clear"></div>
-    	</div> 
+    	</div>
 		</div>
-    	
+
 
   		<div ng-show="Bills">
     	<div class="content_top">
     		<div class="heading">
                     <h3>Bills :</h3>
     		</div>
-    		
+
     		<div class="clear"></div>
     	</div>
-    	
-    	
+
+
     	<div class="content_top" ng-repeat="data in billList | filter:searchBill">
     		<div class="heading">
                     <h3>Bill ID:{{data.transporter.id}}{{data.shipper.id}}</h3>
                     <h4>Tansporter: {{data.transporter.name}}</h4>
                     <h4>Shipper: {{data.shipper.name}}</h4>
     		 </div>
-    		
+
     		<div align="right">
     		<a class="button btn1 cur" ng-click="openBillDetails(data);">View Bill</a>
     		<a class="button btn2 cur" ng-click="deleteBill(names.bill_id);">Delete</a>
     		</div>
-    		
+
     		<div class="clear"></div>
     		</div>
-    		
+
     		<div>
 			</div>
-    	</div> 
-    
-    	
+    	</div>
+
+
 	<div ng-show="customerProfileShow">
 	<div class="main">
 		<div class="content">
-		
+
 			<div class="section group">
 				<div class="cont-desc span_1_of_2">
 					<div class="product-details">
@@ -1156,37 +1156,37 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 								  <td>Name: </td>
 								  <td class="td2_content name">{{customerDetails.firstName}} {{customerDetails.lastName}}</td>
 								</tr>
-								
+
 								<tr>
 								  <td>ID: </td>
 								  <td class="td2_content">{{customerDetails.userID}}</td>
 								</tr>
-								
+
 								<tr>
 								  <td>Email: </td>
 								  <td class="td2_content">{{customerDetails.emailID}}</td>
 								</tr>
-								
+
 								<tr>
 								  <td>Phone Number: </td>
 								  <td class="td2_content">{{customerDetails.cell}}</td>
 								</tr>
-								
+
 								<tr>
 								  <td>Address: </td>
 								  <td class="td2_content">{{customerDetails.address[0].street}}</td>
 								</tr>
-								
+
 								<tr>
 								  <td>City: </td>
 								  <td class="td2_content">{{customerDetails.address[0].city}}</td>
 								</tr>
-								
+
 								<tr>
 								  <td>State: </td>
 								  <td class="td2_content">{{customerDetails.address[0].state}}</td>
 								</tr>
-								
+
 								<tr>
 								  <td>Zip: </td>
 								  <td class="td2_content">{{customerDetails.address[0].zip}}</td>
@@ -1204,18 +1204,18 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 		</div>
 					</div>
 	</div>
-	
- 
+
+
  	 <div ng-show="showBillProfile">
 	 <div class="content_top">
     					<div class="heading">
                     		<h3 >Bill Information: </h3>
     					</div>
-    		
+
     					<div class="clear"></div>
-    				</div>   
+    				</div>
          <div style="width:35%; float:left; display:inline-block;">
-				     							
+
 				<table class="table_fdesc" border="0" cellspacing="10" cellpadding="10">
 				  <tbody>
 				  <tr>
@@ -1223,7 +1223,7 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 					  <td class="td2_content name">{{billInfo._id}}</td>
 				   </tr>
 				  <tr>
-				  
+
 				  <tr>
 					  <td>Total Amount: </td>
 					  <td class="td2_content name">{{billInfo.packageDetails.price}}</td>
@@ -1266,25 +1266,25 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 					  <td class="td2_content">{{billInfo.packageDetails.size}}</td>
 				   </tr>
 				     </tbody>
-				     
+
 				 </table>
-				  	 
+
                   </div>
 		 		 <div style="width:12%; float:left; display:inline-block;">
-                  	
+
                   	<div ng-show="GoogleMaps_Show" style="width:1368px;height:400px;">
-		
+
     				<div id="map"></div>
-		
-		
+
+
 				</div>
-                  
+
                   </div>
 
                   <div>
                    <div style="width:100%; display: block; clear: both;">
 				<div style="width:28%;" class="grid_1_of_4 images_1_of_4" ng-repeat = "productInfo in names.billingProducts">
-					
+
 					 	<h2>{{productInfo.bProductName}} ( {{productInfo.bProductID}} )</h2>
 						<div class="price-details">
 				      		 <div class="price-number">
@@ -1292,17 +1292,17 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 								<p><span class="rupees"> Quantity:{{productInfo.bProductQuantity}}</span></p>
 								<p><span class="rupees">Sub Total:${{productInfo.pTotal}}</span></p>
 					    	</div>
-					
+
 						<div class="clear"></div>
 					</div>
-					 
+
 				</div>
-				</div> 
-                  
+				</div>
+
                   </div>
-                  
+
 	</div>
- 
+
 
 				 <div ng-show="shipperRequests">
 					<div ng-repeat="data in pendingShipperRequests">
@@ -1328,7 +1328,7 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 					</div>
 				</div>
 
-	
+
 	<div ng-show="charts_show">
 		<h3 align="center">Total stats by Map</h3><br/>
 		<div id="chartContainer">
@@ -1365,18 +1365,18 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 			</div>
 
 		</div>
-		 
+
     </div>
-    	
-			
+
+
     </div>
  </div>
 </div>
    <!--  <div class="footer" style="background-image:url(images/strip.png); display: block; clear: both;">
-   	  
+
         <div class="copy_right">
 				<p style="margin-top: 0.5%;margin-bottom: 0.5%;">Social Delivery Service </p>
 		   </div>
-    </div>  -->   
+    </div>  -->
 </body>
 </html>
