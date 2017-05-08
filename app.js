@@ -50,6 +50,8 @@ app.use('/send', sendPackage.sendPackage);
 // app.get('/users', users);
 app.post('/v1/authenticateuser', users.login)
 
+//customer
+app.post('/v1/getcustomerfeedback', admin.getCustomerFeedback)
 
 // admin
 app.use('/admin', admin.home);
