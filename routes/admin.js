@@ -1,5 +1,6 @@
 var mongo = require('./mongo')
-var mongoURL = "mongodb://localhost:27017/social_delivery_system";
+// var mongoURL = "mongodb://localhost:27017/social_delivery_system";
+var mongoURL = "mongodb://sangitdhanani:sjsu1234@ds133211.mlab.com:33211/sds_mongo";
 
 function home(req,res){
 	res.render('adminHome');	
