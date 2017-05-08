@@ -1,0 +1,458 @@
+<!DOCTYPE HTML>
+<head>
+<title>Amazon Fresh | Home </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link href="https://images-na.ssl-images-amazon.com/images/G/01/omaha/css/default._V1455922598_.css" type="text/css" rel="stylesheet" />    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+ <link rel="shortcut icon"
+	href="https://images-na.ssl-images-amazon.com/images/G/01/omaha/images/ui/favicon.ico"
+	type="image/vnd.microsoft.icon" />
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+	<!-- <link href="/css/style.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/slider.css" rel="stylesheet" type="text/css" media="all"/>
+	<script type="text/javascript" src="/js/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="/js/move-top.js"></script>
+	<script type="text/javascript" src="/js/easing.js"></script>
+	<script type="text/javascript" src="/js/startstop-slider.js"></script> -->
+	<link href="https://images-na.ssl-images-amazon.com/images/G/01/omaha/css/default._V1455922598_.css" type="text/css" rel="stylesheet" />
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+		<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDKFu5RJEbw7m_TNta9p2aZqwzP0Dq801M&signed_in=true&callback=initMap" async defer></script> -->
+
+    <script>
+
+    var userPage = angular.module('userPage', []);
+
+    userPage.controller("UserController", function($scope, $http, $window){
+
+      $scope.pwd = {oldPassword:"", newPassword:""};
+
+      $scope.sendPackage = function(){
+        $http({
+          method:'POST',
+          url:'/v1/sendpackage',
+          data:{deliveryRequest: $scope.deliveryRequest},
+        }).then(function(res){
+          if(res.data.status == "200"){
+            console.log(res.data);
+          }
+          else if(res.data.status=="400"){
+            console.log(res.data);
+          }
+        });
+      };
+
+      $scope.getUserProfile = function(){
+        $http({
+          method:'get',
+          url:'/v1/getuserprofile'
+        }).then(function(res){
+          if(res.data.status == "200"){
+            $scope.userDetails = res.data.userDetails;
+            $scope.updateForm = true;
+          }
+          else if(res.data.status=="400"){
+            // console.log(res.data);
+          }
+        });
+      };
+
+      $scope.editUserProfile = function(){
+        $http({
+          method:'POST',
+          url:'/v1/edituserprofile',
+          data:{profile: $scope.userDetails}
+        }).then(function(res){
+          if(res.data.status == "200"){
+            // console.log(res.data);
+          }
+          else if(res.data.status=="400"){
+            // console.log(res.data);
+          }
+        });
+      };
+
+      $scope.editCCInfo = function(){
+        $http({
+          method:'POST',
+          url:'/v1/editusercc',
+          data:{ccInfo: $scope.userDetails.ccInfo[0]}
+        }).then(function(res){
+          if(res.data.status == "200"){
+            // console.log(res.data);
+          }
+          else if(res.data.status=="400"){
+            // console.log(res.data);
+          }
+        });
+      };
+
+      $scope.changeUserPassword = function(){
+        $http({
+          method:'POST',
+          url:'/v1/changeuserpassword',
+          data:{
+            oldPassword: $scope.pwd.oldPassword,
+            newPassword: $scope.pwd.newPassword
+          }
+        }).then(function(res){
+          if(res.data.status == "200"){
+            // console.log(res.data);
+          }
+          else if(res.data.status=="400"){
+            // console.log(res.data);
+          }
+        });
+      };
+
+      $scope.getDeliveryList = function(){
+        $http({
+          method:'get',
+          url:'/v1/getdeliverylist'
+        }).then(function(res){
+          if(res.data.status == "200"){
+            // console.log(res.data);
+            $scope.deliveryList = res.data.deliveries;
+          }
+          else if(res.data.status=="400"){
+            // console.log(res.data);
+          }
+        });
+      };
+
+      $scope.getDeliveryDetails = function(reqID){
+        $http({
+          method:'get',
+          url:'/v1/getdeliverydetails?requestID='+reqID
+        }).then(function(res){
+          if(res.data.status == "200"){
+            // console.log(res.data);
+            $scope.deliveryDetails = res.data.delivery;
+            $scope.deliveryForm = true;
+          }
+          else if(res.data.status=="400"){
+            // console.log(res.data);
+          }
+        });
+      };
+
+      $scope.editDeliveryDetails = function(){
+        $http({
+          method:'POST',
+          url:'/v1/editdeliverydetails',
+          data:{deliveryDetails: $scope.deliveryDetails}
+        }).then(function(res){
+          if(res.data.status == "200"){
+            // console.log(res.data);
+          }
+          else if(res.data.status=="400"){
+            // console.log(res.data);
+          }
+        });
+      };
+
+      $scope.deleteDeliveryRequest = function(reqID){
+        $http({
+          method:'get',
+          url:'/v1/deletedeliveryrequest?requestID='+reqID,
+          data:{deliveryDetails: $scope.deliveryDetails}
+        }).then(function(res){
+          if(res.data.status == "200"){
+            console.log(res.data);
+            $scope.deliveryDetails = null;
+          }
+          else if(res.data.status=="400"){
+            // console.log(res.data);
+          }
+        });
+      };
+
+    });
+
+    </script>
+
+  </head>
+  <body ng-app="userPage" ng-controller="UserController">
+    <div class="container">
+      <div class="raw">
+        <div class="col-sm-4">
+          <form>
+            <div class="form-group">
+              <label>Title</label>
+              <input type="text" class="form-control" ng-model="deliveryRequest.packageDetails.title">
+            </div>
+            <div class="form-group">
+              <label>note:</label>
+              <input type="text" class="form-control" ng-model="deliveryRequest.packageDetails.note">
+            </div>
+            <div class="form-group">
+              <label>size:</label>
+              <input type="text" class="form-control" ng-model="deliveryRequest.packageDetails.size">
+            </div>
+            <div class="form-group">
+              <label>price:</label>
+              <input type="text" class="form-control" ng-model="deliveryRequest.packageDetails.price">
+            </div>
+
+            <h4>Pickup location</h4>
+            <div class="form-group">
+              <label>street:</label>
+              <input type="text" class="form-control" ng-model="deliveryRequest.pickupLocation.street">
+            </div>
+            <div class="form-group">
+              <label>apt:</label>
+              <input type="text" class="form-control" ng-model="deliveryRequest.pickupLocation.apt">
+            </div>
+            <div class="form-group">
+              <label>city:</label>
+              <input type="text" class="form-control" ng-model="deliveryRequest.pickupLocation.city">
+            </div>
+            <div class="form-group">
+              <label>state:</label>
+              <input type="text" class="form-control" ng-model="deliveryRequest.pickupLocation.state">
+            </div>
+            <div class="form-group">
+              <label>zip:</label>
+              <input type="text" class="form-control" ng-model="deliveryRequest.pickupLocation.zip">
+            </div>
+            <div class="form-group">
+              <label>country:</label>
+              <input type="text" class="form-control" ng-model="deliveryRequest.pickupLocation.country">
+            </div>
+
+            <h4>Dropoff location</h4>
+            <div class="form-group">
+              <label>street:</label>
+              <input type="text" class="form-control" ng-model="deliveryRequest.dropoffLocation.street">
+            </div>
+            <div class="form-group">
+              <label>apt:</label>
+              <input type="text" class="form-control" ng-model="deliveryRequest.dropoffLocation.apt">
+            </div>
+            <div class="form-group">
+              <label>city:</label>
+              <input type="text" class="form-control"  ng-model="deliveryRequest.dropoffLocation.city">
+            </div>
+            <div class="form-group">
+              <label>state:</label>
+              <input type="text" class="form-control" ng-model="deliveryRequest.dropoffLocation.state">
+            </div>
+            <div class="form-group">
+              <label>zip:</label>
+              <input type="text" class="form-control" ng-model="deliveryRequest.dropoffLocation.zip">
+            </div>
+            <div class="form-group">
+              <label>country:</label>
+              <input type="text" class="form-control" ng-model="deliveryRequest.dropoffLocation.country">
+            </div>
+
+            <div class="form-group">
+              <label>when:</label>
+              <input type="date" class="form-control" ng-model="deliveryRequest.desiredDate">
+            </div>
+
+            <button type="submit" class="btn btn-default" ng-click="sendPackage()">Submit</button>
+          </form>
+        </div>
+
+        <div class="col-sm-4">
+          <button type="submit" class="btn btn-default" ng-click="getUserProfile()">show profile</button>
+          <form>
+            <div ng-if="updateForm">
+            <div class="form-group">
+              <label>firstName</label>
+              <input type="text" class="form-control" ng-model="userDetails.firstName">
+            </div>
+            <div class="form-group">
+              <label>lastName:</label>
+              <input type="text" class="form-control" ng-model="userDetails.lastName">
+            </div>
+            <h4>adress</h4>
+            <div class="form-group">
+              <label>street:</label>
+              <input type="text" class="form-control" ng-model="userDetails.address[0].street">
+            </div>
+            <div class="form-group">
+              <label>apt:</label>
+              <input type="text" class="form-control" ng-model="userDetails.address[0].apt">
+            </div>
+            <div class="form-group">
+              <label>city</label>
+              <input type="text" class="form-control" ng-model="userDetails.address[0].city">
+            </div>
+            <div class="form-group">
+              <label>state:</label>
+              <input type="text" class="form-control" ng-model="userDetails.address[0].state">
+            </div>
+            <div class="form-group">
+              <label>zip:</label>
+              <input type="text" class="form-control" ng-model="userDetails.address[0].zip">
+            </div>
+            <div class="form-group">
+              <label>country:</label>
+              <input type="text" class="form-control" ng-model="userDetails.address[0].country">
+            </div>
+            <button type="submit" class="btn btn-default" ng-click="editUserProfile()">update profile</button>
+
+            <h4>Update cc</h4>
+            <div class="form-group">
+              <label>number:</label>
+              <input type="text" class="form-control" ng-model="userDetails.ccInfo[0].number">
+            </div>
+            <div class="form-group">
+              <label>cvv:</label>
+              <input type="text" class="form-control" ng-model="userDetails.ccInfo[0].cvv">
+            </div>
+            <div class="form-group">
+              <label>expMonth:</label>
+              <input type="text" class="form-control" ng-model="userDetails.ccInfo[0].expMonth">
+            </div>
+            <div class="form-group">
+              <label>expYear:</label>
+              <input type="text" class="form-control" ng-model="userDetails.ccInfo[0].expYear">
+            </div>
+            <div class="form-group">
+              <label>street:</label>
+              <input type="text" class="form-control" ng-model="userDetails.ccInfo[0].billingAddress.street">
+            </div>
+            <div class="form-group">
+              <label>apt:</label>
+              <input type="text" class="form-control" ng-model="userDetails.ccInfo[0].billingAddress.apt">
+            </div>
+            <div class="form-group">
+              <label>city:</label>
+              <input type="text" class="form-control" ng-model="userDetails.ccInfo[0].billingAddress.city">
+            </div>
+            <div class="form-group">
+              <label>state:</label>
+              <input type="text" class="form-control" ng-model="userDetails.ccInfo[0].billingAddress.state">
+            </div>
+            <div class="form-group">
+              <label>zip:</label>
+              <input type="text" class="form-control" ng-model="userDetails.ccInfo[0].billingAddress.zip">
+            </div>
+            <div class="form-group">
+              <label>country:</label>
+              <input type="text" class="form-control" ng-model="userDetails.ccInfo[0].billingAddress.country">
+            </div>
+            <button type="submit" class="btn btn-default" ng-click="editCCInfo()">update ccInfo</button>
+
+            <br><br>
+            <h4>Change Password</h4>
+            <div class="form-group">
+              <label>old Password:</label>
+              <input type="password" class="form-control" ng-model="pwd.oldPassword">
+            </div>
+            <div class="form-group">
+              <label>new Password:</label>
+              <input type="password" class="form-control" ng-model="pwd.newPassword">
+            </div>
+            <button type="submit" class="btn btn-default" ng-click="changeUserPassword()">change password</button>
+            </div>
+
+          </form>
+        </div>
+
+        <div class="col-sm-4">
+          <button type="submit" class="btn btn-default" ng-click="getDeliveryList()">delivery list</button>
+          <p ng-repeat="delivery in deliveryList" ng-click="getDeliveryDetails(delivery.requestID)">
+            {{delivery.packageDetails.title}}
+            <div ng-if="deliveryForm">
+              <form>
+                <div class="form-group">
+                  <label>desiredDate</label>
+                  <input type="text" class="form-control" ng-model="deliveryDetails.desiredDate">
+                </div>
+                <br>
+                <h4>pickup adress</h4>
+                <div class="form-group">
+                  <label>street:</label>
+                  <input type="text" class="form-control" ng-model="deliveryDetails.pickupLocation.street">
+                </div>
+                <div class="form-group">
+                  <label>apt:</label>
+                  <input type="text" class="form-control" ng-model="deliveryDetails.pickupLocation.apt">
+                </div>
+                <div class="form-group">
+                  <label>city</label>
+                  <input type="text" class="form-control" ng-model="deliveryDetails.pickupLocation.city">
+                </div>
+                <div class="form-group">
+                  <label>state:</label>
+                  <input type="text" class="form-control" ng-model="deliveryDetails.pickupLocation.state">
+                </div>
+                <div class="form-group">
+                  <label>zip:</label>
+                  <input type="text" class="form-control" ng-model="deliveryDetails.pickupLocation.zip">
+                </div>
+                <div class="form-group">
+                  <label>country:</label>
+                  <input type="text" class="form-control" ng-model="deliveryDetails.pickupLocation.country">
+                </div>
+                <br>
+                <h4>dropoffLocation</h4>
+                <div class="form-group">
+                  <label>street:</label>
+                  <input type="text" class="form-control" ng-model="deliveryDetails.dropoffLocation.street">
+                </div>
+                <div class="form-group">
+                  <label>apt:</label>
+                  <input type="text" class="form-control" ng-model="deliveryDetails.dropoffLocation.apt">
+                </div>
+                <div class="form-group">
+                  <label>city:</label>
+                  <input type="text" class="form-control" ng-model="deliveryDetails.dropoffLocation.city">
+                </div>
+                <div class="form-group">
+                  <label>state:</label>
+                  <input type="text" class="form-control" ng-model="deliveryDetails.dropoffLocation.state">
+                </div>
+                <div class="form-group">
+                  <label>zip:</label>
+                  <input type="text" class="form-control" ng-model="deliveryDetails.dropoffLocation.zip">
+                </div>
+                <div class="form-group">
+                  <label>country:</label>
+                  <input type="text" class="form-control" ng-model="deliveryDetails.dropoffLocation.country">
+                </div>
+
+                <br><br>
+                <h4>Package Details</h4>
+                <div class="form-group">
+                  <label>note</label>
+                  <input type="text" class="form-control" ng-model="deliveryDetails.packageDetails.note">
+                </div>
+                <div class="form-group">
+                  <label>price</label>
+                  <input type="text" class="form-control" ng-model="deliveryDetails.packageDetails.price">
+                </div>
+                <div class="form-group">
+                  <label>size</label>
+                  <input type="text" class="form-control" ng-model="deliveryDetails.packageDetails.size">
+                </div>
+                <div class="form-group">
+                  <label>title</label>
+                  <input type="text" class="form-control" ng-model="deliveryDetails.packageDetails.title">
+                </div>
+                <button type="submit" class="btn btn-default" ng-click="editDeliveryDetails()">edit detail</button>
+                <br>
+                <button type="submit" class="btn btn-default" ng-click="deleteDeliveryRequest(deliveryDetails.requestID)">Delete</button>
+              </form>
+            </div>
+          </p>
+
+        </div>
+      </div>
+    </div>
+
+
+  </body>

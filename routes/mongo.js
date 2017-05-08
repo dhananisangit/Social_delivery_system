@@ -15,7 +15,7 @@ for(var i=0;i<100;i++){
 	      //console.log(connected +" is connected?");
 	      arrayOfPools.push(db);
 	  });
-	
+
 }
 function getConnectionFromPool(){
 	var connection = arrayOfPools.pop();
@@ -42,7 +42,7 @@ exports.disconnect = function(db, callback){
 exports.collection = function(name){
     if (!connected) {
       throw new Error('Must connect to Mongo before calling "collection"');
-    } 
+    }
     return db.collection(name);
-  
+
 };
