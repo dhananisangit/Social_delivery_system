@@ -1,9 +1,8 @@
 var mongo = require('./mongo')
-// var mongoURL = "mongodb://localhost:27017/social_delivery_system";
-var mongoURL = "mongodb://sangitdhanani:sjsu1234@ds133211.mlab.com:33211/sds_mongo";
+var mongoURL = "mongodb://localhost:27017/social_delivery_system";
 
 function home(req,res){
-	res.render('adminHome');	
+	res.render('adminHome');
 }
 
 
@@ -14,11 +13,11 @@ function getCustomerList(req,res){
 			coll.find({}).toArray(function(err, customers){
 			if(customers){
 				var result = {"status":"200","customerList":customers};
-				
+
 			}
 			else{
 				var result = {"status":"400"};
-				
+
 			}
 			res.send(result)
 		});
@@ -32,11 +31,11 @@ function getBillList(req,res){
 			coll.find({}).toArray(function(err, bills){
 			if(bills){
 				var result = {"status":"200","billList":bills};
-				
+
 			}
 			else{
 				var result = {"status":"400"};
-				
+
 			}
 			res.send(result)
 		});
@@ -50,11 +49,11 @@ function getOpenShipperRequests(req,res){
 			coll.find({}).toArray(function(err, req){
 			if(req){
 				var result = {"status":"200","shipperRequests":req};
-				
+
 			}
 			else{
 				var result = {"status":"400"};
-				
+
 			}
 			res.send(result)
 		});
@@ -68,34 +67,37 @@ function getOpenTransporterRequests(req,res){
 			coll.find({}).toArray(function(err, req){
 			if(req){
 				var result = {"status":"200","transporterRequests":req};
-				
+
 			}
 			else{
 				var result = {"status":"400"};
-				
+
 			}
 			res.send(result)
 		});
 	});
 }
 
+<<<<<<< HEAD
+=======
 function getCustomerFeedback(req,res){
 	mongo.connect(mongoURL, function(){
 			var coll = mongo.collection('customerFeedback');
 			coll.find({userID:req.body.userID}).toArray(function(err, reviews){
 			if(reviews){
 				var result = {"status":"200","reviews":reviews};
-				
+
 			}
 			else{
 				var result = {"status":"400"};
-				
+
 			}
 			res.send(result)
 		});
 	});
 }
 
+>>>>>>> sthakker
 function revenuePerLocation(req,res){
 	var data = [];
 	mongo.connect(mongoURL, function(){
@@ -103,7 +105,7 @@ function revenuePerLocation(req,res){
 		coll.aggregate([{ $group: { _id: {pickupState:"$pickupLocation.state"}, count: { $sum:"$packageDetails.price" } } }]).toArray(function(err, revenuePerLocation){
 			if(revenuePerLocation){
 				for(var i=0;i<revenuePerLocation.length;i++){
-					
+
 					data[i] = {"label": revenuePerLocation[i]._id.pickupState, "value": revenuePerLocation[i].count};
 				}
 				var result = {"status":"200","revenuePerLocation":data};
@@ -113,7 +115,7 @@ function revenuePerLocation(req,res){
 			}
 			// console.log(result)
 			res.send(result)
-		});	
+		});
 	});
 }
 
@@ -133,7 +135,7 @@ function tripsPerLocation(req,res){
 				var result = {"status":"400"};
 			}
 			res.send(result)
-		});	
+		});
 	});
 }
 
@@ -152,7 +154,7 @@ function ridesPerArea(req,res){
 				var result = {"status":"400"};
 			}
 			res.send(result)
-		});	
+		});
 	});
 }
 
@@ -161,10 +163,10 @@ function ridesPerDriver(req,res){
 	var data = [];
 	mongo.connect(mongoURL, function(){
 		var coll = mongo.collection('tripDetails');
-		coll.aggregate([{ $group: { _id: {transporterID:"$transporter.id",driver_name:"$transporter.name"}, count: { $sum: "$packageDetails.price" } } }]).limit(20).toArray(function(err, ridesPerDriverArray){
+		coll.aggregate([{ $group: { _id: {transporterID:"$transporter.id",driver_name:"$transporter.name"}, count: { $sum: 1 } } }]).toArray(function(err, ridesPerDriverArray){
 			if(ridesPerDriverArray){
 				for(var i=0;i<ridesPerDriverArray.length;i++){
-					data[i] = {"label": ridesPerDriverArray[i]._id.transporterID, "value": ridesPerDriverArray[i].count};
+					data[i] = {"label": ridesPerDriverArray[i]._id.driver_name, "value": ridesPerDriverArray[i].count};
 				}
 				var result = {"status":"200","ridesPerDriver":data};
 			}
@@ -172,7 +174,7 @@ function ridesPerDriver(req,res){
 				var result = {"status":"400"};
 			}
 			res.send(result)
-		});	
+		});
 	});
 }
 
@@ -186,5 +188,3 @@ exports.tripsPerLocation = tripsPerLocation;
 exports.ridesPerArea = ridesPerArea;
 exports.ridesPerDriver = ridesPerDriver;
 exports.getCustomerFeedback = getCustomerFeedback;
-
-

@@ -15,7 +15,7 @@ var arrayOfPools= [];
 // 	      //console.log(connected +" is connected?");
 // 	      arrayOfPools.push(db);
 // 	  });
-	
+
 // }
 
 // MongoClient.connect('mongodb://gohan:gohan@ds129038.mlab.com:29038/todo-posting', (err, database) => {
@@ -35,30 +35,27 @@ var arrayOfPools= [];
 // function releaseConnectionFromPool(connection){
 // 	arrayOfPools.push(connection);
 // }
+>>>>>>> 0fe7a26be286290b893162658c20c024cdf0e412
+>>>>>>> sthakker
 
 exports.connect = function(url, callback){
-	MongoClient.connect("mongodb://sangitdhanani:sjsu1234@ds133211.mlab.com:33211/sds_mongo",function(err, _db){
-	if (err) { throw new Error('Could not connect: '+err); }
-	  db = _db;
+	connected=getConnectionFromPool();
+	callback(connected);
 
-	  connected = true;
-	  // arrayOfPools.push(db);
-	  callback(db);
-	});
 };
 
-// exports.disconnect = function(db, callback){
-// 	releaseConnectionFromPool(connected);
+exports.disconnect = function(db, callback){
+	releaseConnectionFromPool(connected);
 
-// };
+};
 
-// /**
-//  * Returns the collection on the selected database
-//  */
+/**
+ * Returns the collection on the selected database
+ */
 exports.collection = function(name){
     if (!connected) {
       throw new Error('Must connect to Mongo before calling "collection"');
-    } 
+    }
     return db.collection(name);
-  
+
 };

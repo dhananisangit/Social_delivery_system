@@ -21,7 +21,7 @@
 <!-- Facebook Settings Code -->
 <meta property="og:title" content="
     Nimber - Going your way, anyway!
-" />  
+" />
 <meta property="og:site_name" content="Nimber" />
 <meta property="og:type" content="website" />
 <meta property="og:image:url" content="
@@ -40,20 +40,20 @@
 <!-- Stylesheets -->
 <link rel="stylesheet" media="all" href="https://d1112petr9ji1a.cloudfront.net/assets/application-bac74edb05b8d09242307623247b39e57872aca9abbde84ab37667ba59ba3a68.css" />
 <link rel="stylesheet" media="all" href="https://d1112petr9ji1a.cloudfront.net/assets/app-2a7eb28789d541ecb4e68b87c8793bceb04d9b85ee51cf52b7eae9e4aa8c7a71.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
  <script>
 
-  var app = angular.module("schmuber_index_app", []); 
+  var app = angular.module("schmuber_index_app", []);
   app.controller("schmuber_index_controller", function($scope,$http,$window,$location) {
 
     $scope.navigate = function(type){
       if(type=='login') $window.location.href='login'
       else if(type=='register')$window.location.href='register'
-      
+
     }
 
     $scope.login = function(){
@@ -67,7 +67,11 @@
       }).then(function(res){
         if(res.data.status == "200"){
           // $scope.userName = res.data.name
-          $window.location.href = '/admin';
+          if (res.data.role === "admin") {
+            $window.location.href = '/admin';
+          } else {
+            $window.location.href = '/user';
+          }
         }
         else if(res.data.status=="400"){
           swal("Failed", "Wrong username or password. Please try again!", "error")
@@ -93,7 +97,7 @@
 </a>
             <nav class="top-nav-wrapper longer">
                     <ul class="top-nav pull-right cf js-replace-avatar">
-                        
+
                             <li class="item">
                                 <a class="login-link js-login-link" href="">Login</a>
                             </li>
@@ -152,7 +156,7 @@
                             <p class="submit-text">Can't login? <a href='/users/forgot_password' class='gray-link'>Recover your password</a></p>
                         </fieldset>
 
-                        
+
 
                     </section><!-- end of send content -->
 </form>
