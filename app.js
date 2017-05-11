@@ -10,6 +10,7 @@ var users = require('./routes/users');
 var admin = require('./routes/admin');
 var sendPackage = require('./routes/sendPackage.js');
 var mongoSessionURL = "mongodb://sangitdhanani:sjsu1234@ds133211.mlab.com:33211/sds_mongo"
+// var mongoSessionURL = "mongodb://localhost:27017/social_delivery_system"
 var expressSessions = require("express-session");
 var passport = require('passport');
 var mongoStore = require("connect-mongo/es5")(expressSessions);
@@ -50,7 +51,7 @@ app.use('/register', index);
 // app.get('/users', users);
 app.post('/v1/authenticateuser', users.login)
 
-
+app.post('/v1/getcustomerfeedback', admin.getCustomerFeedback)
 // admin
 app.use('/admin', admin.home);
 app.get('/v1/getcustomerlist', admin.getCustomerList)

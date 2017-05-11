@@ -78,8 +78,6 @@ function getOpenTransporterRequests(req,res){
 	});
 }
 
-<<<<<<< HEAD
-=======
 function getCustomerFeedback(req,res){
 	mongo.connect(mongoURL, function(){
 			var coll = mongo.collection('customerFeedback');
@@ -97,9 +95,12 @@ function getCustomerFeedback(req,res){
 	});
 }
 
->>>>>>> sthakker
+
+
+
 function revenuePerLocation(req,res){
 	var data = [];
+
 	mongo.connect(mongoURL, function(){
 		var coll = mongo.collection('tripDetails');
 		coll.aggregate([{ $group: { _id: {pickupState:"$pickupLocation.state"}, count: { $sum:"$packageDetails.price" } } }]).toArray(function(err, revenuePerLocation){
@@ -163,7 +164,7 @@ function ridesPerDriver(req,res){
 	var data = [];
 	mongo.connect(mongoURL, function(){
 		var coll = mongo.collection('tripDetails');
-		coll.aggregate([{ $group: { _id: {transporterID:"$transporter.id",driver_name:"$transporter.name"}, count: { $sum: 1 } } }]).toArray(function(err, ridesPerDriverArray){
+		coll.aggregate([{ $group: { _id: {transporterID:"$transporter.id",driver_name:"$transporter.name"}, count: { $sum: "$packageDetails.price" } } }]).limit(20).toArray(function(err, ridesPerDriverArray){
 			if(ridesPerDriverArray){
 				for(var i=0;i<ridesPerDriverArray.length;i++){
 					data[i] = {"label": ridesPerDriverArray[i]._id.driver_name, "value": ridesPerDriverArray[i].count};

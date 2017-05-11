@@ -1,5 +1,5 @@
 var mongo = require('./mongo')
-var mongoURL = "mongodb://localhost:27017/social_delivery_system";
+var mongoURL = "mongodb://sangitdhanani:sjsu1234@ds133211.mlab.com:33211/sds_mongo";
 
 
 function home(req,res){
@@ -50,7 +50,6 @@ function updateCustomerProfile(req,res){
 				}
 				res.send(result);
 			});
-<<<<<<< HEAD
 	});
 }
 
@@ -125,9 +124,6 @@ function getSingleDeliveryRequest(req,res){
 	});
 }
 
-=======
-	});
-}
 
 function updateCustomerCC(req,res){
 	mongo.connect(mongoURL, function(){
@@ -200,7 +196,6 @@ function getSingleDeliveryRequest(req,res){
 	});
 }
 
->>>>>>> 7a5b5e0a8f702030216eb03290de4fc8cfa39b85
 function getAllDeliveryRequests(req,res){
 	mongo.connect(mongoURL, function(){
 			var coll = mongo.collection('shipperRequestPool');
