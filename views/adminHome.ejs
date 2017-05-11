@@ -6,22 +6,21 @@
 <link rel="shortcut icon"
 	href="https://images-na.ssl-images-amazon.com/images/G/01/omaha/images/ui/favicon.ico"
 	type="image/vnd.microsoft.icon" /><link href="/css/style.css" rel="stylesheet" type="text/css" media="all"/>
-<link rel="stylesheet" media="all" href="/css/admin1.css" />
-<link rel="stylesheet" media="all" href="/css/admin2.css" />
 
 <link href="/css/slider.css" rel="stylesheet" type="text/css" media="all"/>
 <link href="/css/adminHome.css" rel="stylesheet" type="text/css" media="all"/>
 
-<script src="/js/angular.js"></script>
-<script src="/js/jquery.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script type="text/javascript" src="/js/move-top.js"></script>
 <script type="text/javascript" src="/js/easing.js"></script>
 <script type="text/javascript" src="/js/startstop-slider.js"></script>
 <script type="text/javascript" src="/js/fusioncharts.js"></script>
 <script type="text/javascript" src="/js/themes/fusioncharts.theme.fint.js"></script>
 
-<script src="/js/bootstrap.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/js/angular-fusioncharts.min.js"></script>
+<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
@@ -44,14 +43,14 @@
     <link rel="stylesheet" href="/css/chosen-bootstrap.css">
 
 
-	
+
 <style>
 	.pad_10
 	{
 		padding: 10px 0 10px 0px !important;
 	}
 	.hname{
-	    font-size:22px !important; 
+	    font-size:22px !important;
 		color: #232323 !important;
 	   }
 	   body {
@@ -59,7 +58,7 @@
 }
 
 	</style>
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB5sfbUPXiX4jbxe_a9OHuvkCNN6-tXiHQ" async defer></script>
+	<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDKFu5RJEbw7m_TNta9p2aZqwzP0Dq801M&signed_in=true&callback=initMap" async defer></script> -->
 
 <script>
 
@@ -75,7 +74,6 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 		$scope.transporterRequests = false
 		$scope.showHome = false
 		$scope.charts_show = false
-		$scope.GoogleMaps_Show = false;
 	}
 
 	$scope.getHomeStats = function(){
@@ -83,7 +81,7 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 		$scope.charts_show = true
 		$scope.charts()
 	}
-	
+
 	$scope.getCustomers= function(){
 		if($scope.customerList)$scope.customerList = false;
 		else{
@@ -92,7 +90,7 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 				method:'get',
 				url:'/v1/getcustomerlist'
 			}).then(function(res){
-				
+
 				$scope.customers = res.data.customerList
 				$scope.generic()
 				$scope.customerList = true
@@ -108,7 +106,7 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 				method:'get',
 				url:'/v1/getbilllist'
 			}).then(function(res){
-				
+
 				$scope.billList = res.data.billList
 				$scope.generic()
 				$scope.Bills = true
@@ -117,36 +115,18 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 	}
 
 	$scope.openBillDetails = function(billDetails){
-
 		if ($scope.showBillProfile) $scope.showBillProfile = false
 		else{
-			$scope.generic()
 			$scope.billInfo = billDetails
-			$scope.shipperReward = billDetails.packageDetails.price-(billDetails.packageDetails.price-(billDetails.packageDetails.price*0.75))
-			$scope.insurance = billDetails.packageDetails.price - $scope.shipperReward 
 			$scope.showBillProfile = true
-			$scope.GoogleMaps_Show = true
-			$scope.initMap(billDetails)
 		}
 	}
 
 	$scope.showCustomerProfile = function(customerDetails){
 		if($scope.customerProfileShow) $scope.customerProfileShow = false
 		else{
-			
-			$http({
-		        method:'post',
-		        url:'/v1/getcustomerfeedback',
-		        data:{
-		            userID:customerDetails.userID,
-		        },
-		    }).then(function(res){
-		    	$scope.customerFeedback = res.data.reviews[0].reviewsReceived
-		        $scope.generic()
-				$scope.customerProfileShow = true;
-				$scope.customerDeliveries = Math.floor(Math.random()*5)
-				$scope.customerDetails = customerDetails
-		    });
+			$scope.customerProfileShow = true;
+			$scope.customerDetails = customerDetails
 		}
 	}
 
@@ -158,7 +138,6 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 				method:'get',
 				url:'/v1/getopenshipperrequests'
 			}).then(function(res){
-				console.log(res.data)
 				$scope.pendingShipperRequests = res.data.shipperRequests
 				$scope.generic()
 				$scope.shipperRequests = true
@@ -174,7 +153,6 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 				method:'get',
 				url:'/v1/getopentransporterrequests'
 			}).then(function(res){
-				console.log(res.data)
 				$scope.pendingTransporterRequests = res.data.transporterRequests
 				$scope.generic()
 				$scope.transporterRequests = true
@@ -184,54 +162,19 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 	}
 
 
-	$scope.initMap = function(billDetails) {
-		var directionsService = new google.maps.DirectionsService;
-        var directionsDisplay = new google.maps.DirectionsRenderer;
-        var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 1,
-          center: {lat: 41.85, lng: -87.65}
-        });
-		
-		// var geocoder = new google.maps.Geocoder();
-		// geocoder.geocode({'address': ""}, function(results, status) {
-		// 	if (status === google.maps.GeocoderStatus.OK) {
-		// 		// var image = 'https://i.imgsafe.org/0e650f6.jpg';
-		// 		var marker = new google.maps.Marker({
-		// 			position: results[0].geometry.location,
-		// 			map:map
-		// 			// icon: image
-		// 		});
-		// 	} else {
-		// 		alert('Geocode was not successful for the following reason: ' + status);
-		// 	}
-		// });
-		
-        directionsDisplay.setMap(map);
-		 directionsService.route({
-          origin: billDetails.pickupLocation.city,
-          destination: billDetails.dropoffLocation.city,
-          travelMode: google.maps.TravelMode.DRIVING
-        }, function(response, status) {
-          if (status === google.maps.DirectionsStatus.OK) {
-            directionsDisplay.setDirections(response);
-          } else {
-            window.alert('Directions request failed due to ' + status);
-          }
-        });
-    }
 	$scope.charts = function(graphType){
-		
+
 		$scope.generic();
 		$scope.charts_show = true;
 		$scope.chats1_show = true;
-			
+
 			var revenuePerLocation = [];
 			$http({
 				method:'get',
 				url:'/v1/revenueperlocation'
 			}).then(function(res){
 				revenuePerLocation = res.data.revenuePerLocation;
-				chartDetails = {"caption":"Total Revenue Per Location","xAxisName":"State","yAxisName":"Revenue","data":revenuePerLocation};
+				chartDetails = {"caption":"Total Revenue Per Location","subCaption":"Today","xAxisName":"Location","yAxisName":"Revenue","data":revenuePerLocation};
 				$scope.createChart("revenuePerLocation", chartDetails);
 			}).then(function(){
 				$http({
@@ -239,7 +182,7 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 				url:'/v1/tripsperlocation'
 			}).then(function(res){
 				data = res.data.tripsPerLocation;
-				chartDetails = {"caption":"Total trips per pickup location","xAxisName":"State","yAxisName":"Number of Trips","data":data};
+				chartDetails = {"caption":"Total trips per pickup location","subCaption":"Today","xAxisName":"Name of State","yAxisName":"Number of Trips","data":data};
 				$scope.createChart("tripsPerLocation", chartDetails);
 			}).then(function(){
 				$http({
@@ -247,7 +190,7 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 				url:'/v1/ridesperarea'
 			}).then(function(res){
 				data = res.data.ridesPerArea;
-				chartDetails = {"caption":"Total Rides per drop off location","xAxisName":"State","yAxisName":"Number of Trips","data":data};
+				chartDetails = {"caption":"Total Rides per drop off location","subCaption":"Today","xAxisName":"Driver ID","yAxisName":"Number of Trips","data":data};
 				$scope.createChart("ridesPerArea", chartDetails);
 			}).then(function(){
 				$http({
@@ -255,17 +198,17 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 				url:'/v1/ridesperdriver'
 			}).then(function(res){
 				data = res.data.ridesPerDriver;
-				chartDetails = {"caption":"Top 20 Riders","xAxisName":"Driver ID","yAxisName":"Number of Trips","data":data};
+				chartDetails = {"caption":"Total Rides per Driver","subCaption":"","xAxisName":"Driver ID","yAxisName":"Number of Trips","data":data};
 				$scope.createChart("ridesPerDriver", chartDetails);
 			})
 			})
 			})})
-		
+
 			// var data = [];
 			$scope.createMapChart();
-			// $scope.chart = {"1":"1"};	
+			// $scope.chart = {"1":"1"};
 	}
-		
+
 
 
 	$scope.createChart = function(type, details){
@@ -278,8 +221,8 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 			      "dataFormat": "json",
 			      "dataSource":  {
 			    	   "chart": {
-			    	        "caption":  details.caption, 
-			    	        "subCaption": "Yearly",
+			    	        "caption":  details.caption,
+			    	        "subCaption": details.subCaption,
 			    	        "xAxisName": details.xAxisName,
 			    	        "yAxisName": details.yAxisName,
 			    	        "lineThickness": "2",
@@ -305,12 +248,12 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 			    	        "xAxisLineColor": "#999999",
 			    	        "showAlternateHGridColor": "0"
 			    	    },
-			    	    "data":details.data 
+			    	    "data":details.data
 			    	   }
 			});
 			revenueChart.render();
-			}) 
-	} 
+			})
+	}
 
 
 
@@ -324,9 +267,9 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 		        dataFormat: 'json',
 		        dataSource: {
 		            "chart": {
-		                "theme": "fint",                
-		                "caption": "Most frequent trips",
-		                "subcaption": "",                
+		                "theme": "fint",
+		                "caption": "Total delivery Report",
+		                "subcaption": "Today",
 		                "showMarkerLabels":"0",
 		                "numberSuffix": "%",
 		                //Changing connector hover color
@@ -399,7 +342,7 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 		                        "x": "170",
 		                        "y": "178",
 		                        "radius": "1"
-		                        
+
 		                    },
 		                    {
 		                        "shapeid": "myCustomShape",
@@ -407,7 +350,7 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 		                        "x": "101",
 		                        "y": "193",
 		                        "radius": "1"
-		                    },                    
+		                    },
 		                    {
 		                        "shapeid": "myCustomShape",
 		                        "id": "LA",
@@ -512,7 +455,7 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 		                        "x": "445",
 		                        "y": "174",
 		                        "radius": "1"
-		                    },                    
+		                    },
 		                    {
 		                        "shapeid": "myCustomShape",
 		                        "id": "MI",
@@ -589,7 +532,7 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 		                        "x": "666",
 		                        "y": "114",
 		                        "radius": "1"
-		                        
+
 		                    },
 		                    {
 		                        "shapeid": "myCustomShape",
@@ -641,7 +584,7 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 		                        "label": "Texas",
 		                        "value": "75",
 		                        "tooltext": "Capacity utilization:$value% {br}Packages shipped/day : 253240 Units(avg) {br}Packages received/day: 253400 Units(avg){br}Daily operational cost: $4000(avg)"
-		                    },                    
+		                    },
 		                    {
 		                        "shapeid": "myCustomShape",
 		                        "id": "NC",
@@ -704,7 +647,7 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 		                        "to": "AZ",
 		                        "label": "18400",
 		                    "tooltext": "<b>Shipping Details:</b>{br}Daily shipment: $label Units{br}Average shipping cost: $0.5"
-		                    },                    
+		                    },
 		                    {
 		                        "from": "TX",
 		                        "to": "NM",
@@ -723,7 +666,7 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 		                        "label": "16800",
 		                    "tooltext": "<b>Shipping Details:</b>{br}Daily shipment: $label Units{br}Average shipping cost: $0.3"
 		                    },
-		                    
+
 		                    {
 		                        "from": "TX",
 		                        "to": "CO",
@@ -795,7 +738,7 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 		                        "to": "IL",
 		                        "label": "17650",
 		                    "tooltext": "<b>Shipping Details:</b>{br}Daily shipment: $label Units{br}Average shipping cost: $1.4"
-		                    },                    
+		                    },
 		                    {
 		                        "from": "NC",
 		                        "to": "IN",
@@ -905,7 +848,7 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 								"tooltext": "<b>Shipping Details:</b>{br}Daily shipment: $label Units{br}Average shipping cost: $1.6"
 		                    }
 		                ]
-		            }                          
+		            }
 		        }
 		    }).render();
 		});
@@ -939,7 +882,7 @@ adminPage.controller('adminPage', function($scope,$http,$window){
         </p>
     </div> -->
   <div class="wrap" style="width:95%" ng-init="getHomeStats()">
-      
+
 	<!-- <div class="header">
 		<div class="header_bottom">
 		 	<div class="menu">
@@ -951,8 +894,8 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 					<li><a class="cur" ng-click="chartsShow();">Statics</a></li>
 				</ul>
 		 	</div>
-		     
-		</div>	     
+
+		</div>
    </div> -->
 
    <!-- navigation -->
@@ -963,10 +906,10 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 		    <a href="" class="w3-bar-item w3-button w3-padding-large w3-hide-small" ng-click="getCustomers()">Customers</a>
 		    <a href="" class="w3-bar-item w3-button w3-padding-large w3-hide-small" ng-click="showBills()">Successfull Trips</a>
 		    <div class="w3-dropdown-hover w3-hide-small">
-		      	<button class="w3-padding-large w3-button" title="More">Pending Requests <i class="fa fa-caret-down"></i></button>     
+		      	<button class="w3-padding-large w3-button" title="More">Pending Requests <i class="fa fa-caret-down"></i></button>
 		      	<div class="w3-dropdown-content w3-bar-block w3-card-4">
-			        <a href="#" class="w3-bar-item w3-button" ng-click="showOpenShipperRequests()">Shipping Requests</a>
-			        <a href="#" class="w3-bar-item w3-button" ng-click="showOpenTransporterRequests()">Transport Requests</a>
+			        <a href="#" class="w3-bar-item w3-button" ng-click="showOpenShipperRequests()">Shipper Requests</a>
+			        <a href="#" class="w3-bar-item w3-button" ng-click="showOpenTransporterRequests()">Transporter Requests</a>
 		      	</div>
 		    </div>
 		    <a href="javascript:void(0)" class="w3-padding-large w3-hover-red w3-hide-small w3-right" ng-click="signOut()">Sign Out</a>
@@ -979,12 +922,12 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 <!-- cards -->
 
             <div class="row cards" ng-show="showHome">
-              
+
               <div class="card-container col-lg-3 col-sm-6 col-sm-12">
                 <div class="card card-redbrown hover">
-                  <div class="front"> 
+                  <div class="front">
 
-                    <div class="media">        
+                    <div class="media">
                       <span class="pull-left">
                         <i class="fa fa-users media-object"></i>
                       </span>
@@ -993,7 +936,7 @@ adminPage.controller('adminPage', function($scope,$http,$window){
                         <small>New Users</small>
                         <h2 class="media-heading animate-number" data-value="3659" data-animation-duration="1500">0</h2>
                       </div>
-                    </div> 
+                    </div>
 
                     <div class="progress-list">
                       <div class="details">
@@ -1014,9 +957,9 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 
               <div class="card-container col-lg-3 col-sm-6 col-sm-12">
                 <div class="card card-blue hover">
-                  <div class="front">        
-                    
-                    <div class="media">                  
+                  <div class="front">
+
+                    <div class="media">
                       <span class="pull-left">
                         <i class="fa fa-shopping-cart media-object"></i>
                       </span>
@@ -1025,7 +968,7 @@ adminPage.controller('adminPage', function($scope,$http,$window){
                         <small>New Orders</small>
                         <h2 class="media-heading animate-number" data-value="19214" data-animation-duration="1500">0</h2>
                       </div>
-                    </div> 
+                    </div>
 
                     <div class="progress-list">
                       <div class="details">
@@ -1048,8 +991,8 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 
               <div class="card-container col-lg-3 col-sm-6 col-sm-12">
                 <div class="card card-greensea hover">
-                  <div class="front">        
-                    
+                  <div class="front">
+
                     <div class="media">
                       <span class="pull-left">
                         <i class="fa fa-usd media-object"></i>
@@ -1081,9 +1024,9 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 
               <div class="card-container col-lg-3 col-sm-6 col-xs-12">
                 <div class="card card-slategray hover">
-                  <div class="front"> 
+                  <div class="front">
 
-                    <div class="media">                   
+                    <div class="media">
                       <span class="pull-left">
                         <i class="fa fa-eye media-object"></i>
                       </span>
@@ -1092,7 +1035,7 @@ adminPage.controller('adminPage', function($scope,$http,$window){
                         <small>Visits</small>
                         <h2 class="media-heading animate-number" data-value="9634" data-animation-duration="1500">0</h2>
                       </div>
-                    </div> 
+                    </div>
 
                     <div class="progress-list">
                       <div class="details">
@@ -1119,23 +1062,24 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 
  <div class="main">
     <div class="content" style="width:92%; margin: 0 auto;">
-    	
+
  		<div ng-show="customerList">
-	    	<div class="content_top">
-	    		<div class="heading">
-	                    <h3>Customer List </h3>
-	    		</div>
-	    		<input type="text" class="textbox-control" placeholder="search customer" ng-model="searchCustomer.firstName"/>
-	    	</div>
-    	
-    	
-     	<!-- <div class="content_top content_top1" ng-repeat = "data in customers | filter:searchCustomer">
-     	
+    	<div class="content_top">
+    		<div class="heading">
+                    <h3>Customer List: </h3>
+    		</div>
+
+    		<div class="clear"></div>
+    	</div>
+
+
+     	<div class="content_top content_top1" ng-repeat = "data in customers ">
+
     		<div class="heading content_name">
-                <h3>{{data.firstName}} {{data.lastName}}</h3>
+                    <h3>{{data.firstName}} {{data.lastName}}</h3>
     		</div>
     		<div align="center" class="content_email">
-    			<h3>{{data.emailID}}</h3>
+    		<h3>{{data.emailID}}</h3>
     		</div>
     		<div align="right" class="content_add_delete">
 			<div align="center">
@@ -1143,253 +1087,46 @@ adminPage.controller('adminPage', function($scope,$http,$window){
     				<a class="button btn2 cur" ng-click="deleteCustomer(names.cKey);">Delete</a>
     		</div>
 			</div>
-    		
+
     		<div class="clear"></div>
-    	</div>  -->
-
-    	<div class="task-list__content" ng-repeat = "data in customers | filter:searchCustomer">
-          <div class="js-result-item-main" data-task-id="77762">
-          <div class="task-list__inner">
-            <div class="task-list__info">
-              <h2 class="h5 task-list__title">
-                <a title="Chair" href="/tasks/77762">{{data.firstName}} {{data.lastName}}</a>
-              </h2>
-
-           	<span class="task-locations">
-	            <span class="task-location">
-                {{data.emailID}}
-              </span>
-	        </span>
-            </div><!-- task-list__info -->
-
-            <div class="task-list__side-options">
-              <a class="task-list__price" title="See more" href="/tasks/77762">
-                      
-        <span class="task-price__number  js-task-price ">
-      		<a class="button btn1 cur" ng-click="showCustomerProfile(data)">View Profile</a>
-      	</span>
-
-</a>            </div><!-- task-list_side-options -->
-          </div><!-- task-list__inner -->
-          </div>
-        </div><!-- task content -->
-
-
+    	</div>
 		</div>
-    	
+
 
   		<div ng-show="Bills">
-    		<div class="content_top">
-	    		<div class="heading">
-	                    <h3>Bills</h3>
-	    		</div>
-	    		<input type="text" class="textbox-control" placeholder="search bill" ng-model="searchCustomer.transporter.id"/>
+    	<div class="content_top">
+    		<div class="heading">
+                    <h3>Bills :</h3>
     		</div>
-   
 
-		<div class="task-list__content" ng-repeat = "data in billList | filter:searchCustomer">
-          <div class="js-result-item-main" data-task-id="77762">
-          <div class="task-list__inner">
-            <div class="task-list__info">
-              <h2 class="h5 task-list__title">
-                <a title="Chair" href="/tasks/77762">Bill ID : {{data.transporter.id}}{{data.shipper.id}}</a>
-              </h2>
+    		<div class="clear"></div>
+    	</div>
 
-           	<span class="task-locations">
-	            <span class="task-location">
-                {{data.shipper.name}}
-              </span><b class="task-to-icon icon-font">
-              →
-              </b><span class="task-location">
-               {{data.transporter.name}}
-              </span>
-	        </span>
-            </div><!-- task-list__info -->
 
-            <div class="task-list__side-options">
-              <a class="task-list__price" title="See more" href="/tasks/77762">
-                      
-        <span class="task-price__number  js-task-price ">
-      		<a class="button btn1 cur" ng-click="openBillDetails(data)">View Bill</a>
-      	</span>
+    	<div class="content_top" ng-repeat="data in billList | filter:searchBill">
+    		<div class="heading">
+                    <h3>Bill ID:{{data.transporter.id}}{{data.shipper.id}}</h3>
+                    <h4>Tansporter: {{data.transporter.name}}</h4>
+                    <h4>Shipper: {{data.shipper.name}}</h4>
+    		 </div>
 
-</a>            </div><!-- task-list_side-options -->
-          </div><!-- task-list__inner -->
-          </div>
-        </div><!-- task content -->
-    	</div> 
-    
-    	
+    		<div align="right">
+    		<a class="button btn1 cur" ng-click="openBillDetails(data);">View Bill</a>
+    		<a class="button btn2 cur" ng-click="deleteBill(names.bill_id);">Delete</a>
+    		</div>
+
+    		<div class="clear"></div>
+    		</div>
+
+    		<div>
+			</div>
+    	</div>
+
+
 	<div ng-show="customerProfileShow">
 	<div class="main">
 		<div class="content">
-		<section class="section  profile-header-wrapper  expand">
-		  <div class="content">
-		    <div class="profile-header">
-		      <a href="https://d1xqbpwl1wh09p.cloudfront.net/avatars/default/default.png" class="avatar  my-avatar  obj-label-over  profile__avatar  eb-profile-avatar" rel="lightbox">
-		        <img id="user_avatar" alt="Savan Thakker" src="https://d1xqbpwl1wh09p.cloudfront.net/avatars/default/default_130x130@2x.png" />
-		      </a><!-- end of profile avatar -->
-		      
-		      <h1 class="profile__title">
-		          {{customerDetails.firstName}} {{customerDetails.lastName}}
-		      </h1>
-		    </div><!-- profile-header -->
-		  </div>
-		</section>
-		<section class="section  profile__stats  expand">
-		  <div class="content cf">
-		    <div class="profile__stats-item">
 
-		        <span class="profile__stats-number">{{customerFeedback.length}}</span>
-		        <span class="profile__stats-reviews">Deliveries completed</span>
-
-		    </div>
-		    <div class="profile__stats-item">
-		      <span class="profile__stats-reviews">
-		        Joined {{customerDetails.dateJoined}}
-		      </span><!-- profile__stats-reviews -->
-		    </div><!-- profile__stats -->
-		  </div>
-		</section>
-
-		<section class="section  profile__content">
-  <div class="content  cf">
-		
-	    	
-  	<div class="user-verifications">
-  <h2 class="profile-content__title  user-verifications__title">
-    Verified information
-  </h2>
-  
-  <section class="obj-task-info  verifications-list">
-  <div class="data-list">
-    <div class="data-list__item--clean">
-      <div class="data-list__actions--left data-list__action--empty">
-          <span class="obj-task-info__item-icon obj-task-info__item-icon--bank_account verified"></span>
-      </div>
-      <div class="data-list__info data-list__info--center">
-            <h6 class="data-list__info__title">Verified user</h6>
-            <span class="light-text-small">
-               <span>{{customerDetails.firstName}} has provided identification and it’s verified by the Nimber team.</span>
-            </span>
-        </div>
-      </div>
-    </div>
-
-  <dl class="obj-task-info__item obj-task-info__item--first">
-    <dt class="obj-task-info__item-title  cf">
-    	
-    	<span class="obj-task-info__item-title-text">Mobile number verified</span>
-    </dt>
-    <dd class="obj-task-info__item-content">
-      <span class="obj-task-info__content-text  js-reload-page" rel="tooltip" title="">
-		    	<span class="icon-font  details-icon  details-icon--yes" data-yes="✓" data-no="−">✓</span>
-      </span>
-    </dd>
-  </dl><!-- obj-task-info__item -->
-
-
-  <dl class="obj-task-info__item">
-    <dt class="obj-task-info__item-title  cf">
-    	<span class="obj-task-info__item-title-text">Facebook connected</span>
-    </dt>
-    <dd class="obj-task-info__item-content">
-      <span class="obj-task-info__content-text" rel="tooltip" title="">
-	        <span class="icon-font  details-icon  details-icon--yes" data-yes="✓" data-no="−">✓</span>
-      </span>
-    </dd>
-  </dl><!-- obj-task-info__item -->
-
-  <dl class="obj-task-info__item">
-    <dt class="obj-task-info__item-title  cf">
-    	
-    	<span class="obj-task-info__item-title-text">Credit card connected</span>
-    </dt>
-    <dd class="obj-task-info__item-content">
-      <span class="obj-task-info__content-text" rel="tooltip" title="">
-	        <span class="icon-font  details-icon  details-icon--yes" data-yes="✓" data-no="−">✓</span>
-      </span>
-    </dd>
-  </dl><!-- obj-task-info__item -->
-
-  <dl class="obj-task-info__item  obj-task-info__item--last">
-    <dt class="obj-task-info__item-title  cf">
-    	
-    	<span class="obj-task-info__item-title-text">E-mail verified</span>
-    </dt>
-    <dd class="obj-task-info__item-content">
-      <span class="obj-task-info__content-text">
-        <span class="icon-font  details-icon  details-icon--yes" data-yes="✓" data-no="−">✓</span>
-      </span>
-    </dd>
-  </dl><!-- obj-task-info__item -->
-</section>
-
-
-
-</div><!-- user-verifications -->
-
-	  	<div class="user-reviews">
-  <h2 class="profile-content__title">
-      Reviews for {{customerDetails.firstName}}
-  </h2>
-    <div class="user-reviews__breakdown">
-      <div class="user-reviews__total">
-        
-<span class="user-rating user-rating--5 user-rating--big      " >
-   {{customerFeedback.length}}
-  <span class="user-rating__icon">*</span>
-</span>
-
-          <b class="user-reviews__total-title">
-           
-            Reviews
-          </b>
-          
-      </div><!-- user-reviews__breakdown-total -->
-    </div><!-- user-reviews__breakdown -->
-
-  <ol class="unstyled" data-append-to="reviews-list">
-    
-  <li class="user-review  cf">
- <div class="user-review__content" ng-repeat="data in customerFeedback">    
-	<span class="user-rating user-rating--5" >
-	  {{data.rating}}
-	  <span class="user-rating__icon">*</span>
-</span>
-      <article class="user-review__text">
-          {{data.text}}
-      </article>
-      <div class="user-review__footer cf">
-          <a href="" class="user-review__figure">
-            <img id="user_avatar" alt="Manuel Rueda" src="https://d1xqbpwl1wh09p.cloudfront.net/avatars/default/default_40x40@2x.png" />
-          </a><!-- end of profile avatar -->
-        <div class="user-review__footer-content">
-          <h3 class="user-review__title">
-              <a href="">
-               {{data.name}}<br/><br/>
-              </a>
-          </h3>
-        </div><!-- user-review__footer-content -->
-        <a href="/users/74441/reviews/18547" class="user-review__date">{{data.timestamp}}</a>
-      </div><!-- user-review__foter -->
-      <br/>
-      <br/>
-    </div><!-- user-review__content -->
-  </li><!-- user-review -->
-      <!-- user-review -->
-  </ol>
-
-      <div data-load="Loading...">
-        <div class="load-more-wrapper">
-        
-        </div><!-- load-more-wrapper -->
-      </div>
-</div><!-- user-reviews -->
-
-
-  </div>
-</section>
 			<div class="section group">
 				<div class="cont-desc span_1_of_2">
 					<div class="product-details">
@@ -1407,42 +1144,49 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 							</div>
 						</div> -->
 
-		<!-- 				<div class="desc span_3_of_2" align="left">
+						<div class="desc span_3_of_2" align="left">
 
 							<table class="table_fdesc" width="93%" border="0" cellspacing="10" cellpadding="10">
 
 							  <tbody>
-								
+							  <tr>
+							  	 <td>Customer Profile</td>
+							  </tr>
+							  <tr>
+								  <td>Name: </td>
+								  <td class="td2_content name">{{customerDetails.firstName}} {{customerDetails.lastName}}</td>
+								</tr>
+
 								<tr>
 								  <td>ID: </td>
 								  <td class="td2_content">{{customerDetails.userID}}</td>
 								</tr>
-								
+
 								<tr>
 								  <td>Email: </td>
 								  <td class="td2_content">{{customerDetails.emailID}}</td>
 								</tr>
-								
+
 								<tr>
 								  <td>Phone Number: </td>
 								  <td class="td2_content">{{customerDetails.cell}}</td>
 								</tr>
-								
+
 								<tr>
 								  <td>Address: </td>
 								  <td class="td2_content">{{customerDetails.address[0].street}}</td>
 								</tr>
-								
+
 								<tr>
 								  <td>City: </td>
 								  <td class="td2_content">{{customerDetails.address[0].city}}</td>
 								</tr>
-								
+
 								<tr>
 								  <td>State: </td>
 								  <td class="td2_content">{{customerDetails.address[0].state}}</td>
 								</tr>
-								
+
 								<tr>
 								  <td>Zip: </td>
 								  <td class="td2_content">{{customerDetails.address[0].zip}}</td>
@@ -1452,7 +1196,7 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 							<div class="share-desc" align="left">
 								<div class="clear"></div>
 							</div>
-						</div> -->
+						</div>
 					</div>
 
 				</div>
@@ -1460,140 +1204,119 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 		</div>
 					</div>
 	</div>
-	
- 
+
+
  	 <div ng-show="showBillProfile">
-	 	<div class="content_top">
-			<div class="heading">
-        		<h3 >Trip Information: </h3>
-			</div>
-		<div>
-      <header class="obj-info  obj-info--header  cf">
-        <div class="obj-info__left  obj-info__item" style="background-image: url('https://d1xqbpwl1wh09p.cloudfront.net/jobs/default/default-m_150x150@2x.png')">
-          <figure id="task-page-image" class="obj-info__figure  js-task-main-image  eb-image">
-                <img alt="Chair" id="task-avatar" src="https://d1xqbpwl1wh09p.cloudfront.net/jobs/default/default-m_150x150@2x.png" />
-          </figure>
+	 <div class="content_top">
+    					<div class="heading">
+                    		<h3 >Bill Information: </h3>
+    					</div>
+
+    					<div class="clear"></div>
+    				</div>
+         <div style="width:35%; float:left; display:inline-block;">
+
+				<table class="table_fdesc" border="0" cellspacing="10" cellpadding="10">
+				  <tbody>
+				  <tr>
+					  <td>ID: </td>
+					  <td class="td2_content name">{{billInfo._id}}</td>
+				   </tr>
+				  <tr>
+
+				  <tr>
+					  <td>Total Amount: </td>
+					  <td class="td2_content name">{{billInfo.packageDetails.price}}</td>
+				   </tr>
+				  <tr>
+					  <td>Date: </td>
+					  <td class="td2_content">{{billInfo.timestamp}}</td>
+				   </tr>
+				  <tr>
+					  <td>Shipper ID: </td>
+					  <td class="td2_content ">{{billInfo.shipper.id}}</td>
+					  <td>Shipper Name: </td>
+					  <td class="td2_content ">{{billInfo.shipper.name}}</td>
+				   </tr>
+				   <tr>
+					  <td>Transporter ID: </td>
+					  <td class="td2_content ">{{billInfo.transporter.id}}</td>
+					  <td>Transporter Name: </td>
+					  <td class="td2_content ">{{billInfo.transporter.name}}</td>
+				   </tr>
+				  <tr>
+					  <td>Pickup Location: </td>
+					  <td class="td2_content">{{billInfo.pickupLocation.street}},{{billInfo.pickupLocation.apt}}</td>
+					  <td class="td2_content">{{billInfo.pickupLocation.city}},{{billInfo.pickupLocation.state}}</td>
+					  <td class="td2_content">{{billInfo.pickupLocation.zip}},{{billInfo.pickupLocation.country}}</td>
+				   </tr>
+				  <tr>
+					  <td>Dropoff Location: </td>
+					  <td class="td2_content">{{billInfo.dropoffLocation.street}},{{billInfo.dropoffLocation.apt}}</td>
+					  <td class="td2_content">{{billInfo.dropoffLocation.city}},{{billInfo.dropoffLocation.state}}</td>
+					  <td class="td2_content">{{billInfo.dropoffLocation.zip}},{{billInfo.dropoffLocation.country}}</td>
+				   </tr>
+				  <tr>
+					  <td>Package Details: </td>
+					  <td>Title:</td>
+					  <td class="td2_content">{{billInfo.packageDetails.title}}</td>
+					  <td>Note:</td>
+					  <td class="td2_content">{{billInfo.packageDetails.note}}</td>
+					  <td>Size:</td>
+					  <td class="td2_content">{{billInfo.packageDetails.size}}</td>
+				   </tr>
+				     </tbody>
+
+				 </table>
+
+                  </div>
+		 		 <div style="width:12%; float:left; display:inline-block;">
+
+                  	<div ng-show="GoogleMaps_Show" style="width:1368px;height:400px;">
+
+    				<div id="map"></div>
 
 
-              <!-- Image upload form -->
-              <form class='task-image-upload-photo image-upload-form' id='task-image-upload-photo' action='/utils/upload_image' method=''data-url_field="#task-page-image-url"data-id="task-image-upload-modal"data-button_class="hidify"data-path_field="#uploaded_image_key_77762"data-task_id="77762"data-auto_update="true"data-img="js-task-main-image"data-size="130x130"data-error_message="The image couldn't uploaded, please try again or contact us."data-generic_error_message="Your image is too big to upload, please choose a smaller one."> <canvas id='canvas' width='300'></canvas><input type='file' name='file_upload' id='file_upload-task-image-upload-photo'/> </form>
-              <input type="hidden" id="task-page-image-url" value="" />
-              <form class="non-html5-upload hidify" enctype="multipart/form-data" action="/utils/upload_image" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="HGMvB8V5rodzxj4cHWfCNNC5wKbK7NQrk8N47g54oBR5T3O+dIVM8xfCphCviQxpgHcP1Og53USZOSR1zhBsDg==" />
-                  <input type="file" name="image" id="image" />
-                  <input type="hidden" name="bucket" id="bucket" value="jobs" />
-                  <input type="hidden" name="task_id" id="task_id" value="77762" />
-                  <input type="hidden" name="auto_update" id="auto_update" value="true" />
-                  <input type="hidden" name="redirect_after" id="redirect_after" value="" class="js-redirect-path" />
-                  <input type="hidden" name="redirect_hash" id="redirect_hash" value="" class="js-redirect-hash" />
-                  <input type="submit" name="commit" value="Upload" class="hidify" data-disable-with="Upload" />
-			</form>        
-		</div>
+				</div>
 
-        <div class="obj-info__middle  obj-info__item">
-          <h1 class="obj-info__title js-task-page-title">Title: {{billInfo.packageDetails.title}}</h1>
-          <span class="obj-info__locations  task-block__locations">
-            <span class="js-task-page-location-from">
-               {{billInfo.pickupLocation.city}}
-            </span><b class="task-to-icon icon-font">
-            →
-          </b><span class="js-task-page-location-to">
-                {{billInfo.dropoffLocation.city}}
-            </span>
-          </span>
-        </div>
+                  </div>
 
-        <div class="obj-info__right  obj-info__item">
-          <dl class="obj-info__meta">
-            <dt class="obj-info__title">
-                  Total delivery cost:
-            </dt>
-            <dd class="obj-info__price">
-                      <span class="task-price__currency js-task-currency ">
-      $</span><span class="task-price__number  js-task-price js-task-price-live">{{billInfo.packageDetails.price}}</span>
+                  <div>
+                   <div style="width:100%; display: block; clear: both;">
+				<div style="width:28%;" class="grid_1_of_4 images_1_of_4" ng-repeat = "productInfo in names.billingProducts">
 
-            </dd>
-          </dl>
+					 	<h2>{{productInfo.bProductName}} ( {{productInfo.bProductID}} )</h2>
+						<div class="price-details">
+				      		 <div class="price-number">
+								<p><span class="rupees">${{productInfo.bProductPrice}}</span></p>
+								<p><span class="rupees"> Quantity:{{productInfo.bProductQuantity}}</span></p>
+								<p><span class="rupees">Sub Total:${{productInfo.pTotal}}</span></p>
+					    	</div>
 
-          <div class="obj-info__secondary">
-              <ul class="obj-info__list no-bullet">
-                  <li><span class="object-info__price-details">
-                  Bringer&#39;s reward &minus;
-                      <strong class="js-task-breakdown-bringer">    <span class="task-price__currency js-task-currency task-price__currency">
-      $</span><span class="task-price__number  js-task-price ">{{shipperReward}}</span>
-</strong></span>
-                  </li>
-                    <li>
-                      <span class="object-info__price-details">
-                      Insurance and service fee &minus;
-                      <strong class="js-task-breakdown-nimber">
-                            <span class="task-price__currency js-task-currency task-price__currency">
-      $</span><span class="task-price__number  js-task-price ">{{insurance}}</span>
+						<div class="clear"></div>
+					</div>
 
-                      </strong></span>
-                    </li>
-              </ul>
-          </div>
-        </div>
-      </header>
-      	</div>
-    	<!-- <div ng-show="GoogleMaps_Show" align="center" style="width:100%;height:400px;">
-			<div id="map"></div>
-		</div> -->
-	</div>     
-</div>
- 
+				</div>
+				</div>
+
+                  </div>
+
+	</div>
+
 
 				 <div ng-show="shipperRequests">
-					<!-- <div ng-repeat="data in pendingShipperRequests">
+					<div ng-repeat="data in pendingShipperRequests">
 						<div class="request_margin">
 				        	<h3>{{data.name}} </h3>
 				    		<h3>Pickup location: {{data.pickupLocation.zip}}</h3>
 				    		<h3>Dropoff location: {{data.dropoffLocation.zip}}</h3>
 				    		<h3>Desired Date of Shipping: {{data.desiredDate}}</h3>
 						</div>
-					</div> -->
-					<div class="content_top">
-				    	<div class="heading">
-				                <h3>Shipping Requests</h3>
-				    	</div>
-				   <input type="text" class="textbox-control" placeholder="search request" ng-model="searchpendingShipperRequests.name"/>
-			    		</div>
-					<div class="task-list__content" ng-repeat = "data in pendingShipperRequests | filter:searchpendingShipperRequests">
-			          <div class="js-result-item-main" data-task-id="77762">
-			          <div class="task-list__inner">
-			            <div class="task-list__info">
-			              <h2 class="h5 task-list__title">
-			              <a title="Chair" href="">Name : {{data.name}}</a><br/>
-			              <a title="Chair" href="">Price Requested : ${{data.packageDetails[0].price}}</a><br/>
-			                <a title="Chair" href="">Shipping Date : {{data.desiredDate}}</a>
-			              </h2>
-
-			           	<span class="task-locations">
-				            <span class="task-location">
-			                {{data.pickupLocation[0].city}}, {{data.pickupLocation[0].state}}
-			              </span><b class="task-to-icon icon-font">
-			              →
-			              </b><span class="task-location">
-			               {{data.dropoffLocation[0].city}}, {{data.dropoffLocation[0].city}}
-			              </span>
-				        </span>
-
-			            </div><!-- task-list__info -->
-			                <div class="task-list__side-options">
-				              <a class="task-list__price" title="See more" href="/tasks/77762">
-				                      
-				        <span class="task-price__number  js-task-price ">
-				      		<a class="button btn1 cur" ng-click="openBillDetails(data)">View Request</a>
-				      	</span> </a> 
-		      	           </div><!-- task-list_side-options -->
-			          </div><!-- task-list__inner -->
-			          </div>
-			        </div><!-- task content -->
-
+					</div>
 				</div>
 
 				<div ng-show="transporterRequests">
-					<!-- <div ng-repeat="data in pendingTransporterRequests">
+					<div ng-repeat="data in pendingTransporterRequests">
 						<div class="request_margin">
 				        	<h3>{{data.name}} </h3>
 				    		<h3>Pickup location: {{data.sourceAddress.zip}}</h3>
@@ -1602,50 +1325,12 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 				    		<h3>Travel Date: {{data.travelDate}}</h3>
 				    		<h3>Vehicle Type: {{data.vehicleType}}</h3>
 						</div>
-					</div> -->
-							<div class="content_top">
-				    	<div class="heading">
-				                <h3>Transport Requests</h3>
-				    	</div>
-				   <input type="text" class="textbox-control" placeholder="search request" ng-model="searchpendingTransporterRequests.name"/>
-			    		</div>
-					<div class="task-list__content" ng-repeat = "data in pendingTransporterRequests | filter:searchpendingTransporterRequests.name">
-			          <div class="js-result-item-main" data-task-id="77762">
-			          <div class="task-list__inner">
-			            <div class="task-list__info">
-			              <h2 class="h5 task-list__title">
-			              <a title="Chair" href="">Name : {{data.name}}</a><br/>
-			              <a title="Chair" href="">Flexible Commute Range : {{data.additionalDesiredCommuteRange}}</a><br/>
-			              <a title="Chair" href="">Vehicle Type : {{data.vehicleType}}</a><br/>
-			                <a title="Chair" href="">Travel Date : {{data.travelDate}}</a>
-			              </h2>
-
-			           	<span class="task-locations">
-				            <span class="task-location">
-			                {{data.sourceAddress.city}}, {{data.sourceAddress.state}}
-			              </span><b class="task-to-icon icon-font">
-			              →
-			              </b><span class="task-location">
-			               {{data.destinationAddress.city}}, {{data.destinationAddress.state}}
-			              </span>
-				        </span>
-
-			            </div><!-- task-list__info -->
-			                <div class="task-list__side-options">
-				              <a class="task-list__price" title="See more" href="/tasks/77762">
-				                      
-				        <span class="task-price__number  js-task-price ">
-				      		<a class="button btn1 cur" ng-click="openBillDetails(data)">View Request</a>
-				      	</span> </a> 
-		      	           </div><!-- task-list_side-options -->
-			          </div><!-- task-list__inner -->
-			          </div>
-			        </div><!-- task content -->
+					</div>
 				</div>
 
-	
+
 	<div ng-show="charts_show">
-		<!-- <h3 align="center">Total stats by Map</h3><br/> -->
+		<h3 align="center">Total stats by Map</h3><br/>
 		<div id="chartContainer">
 			<div >Data Chat will load here!</div>
 		</div>
@@ -1655,12 +1340,12 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 			<div class="row">
 			 	<div class="col-sm-6">
 			 	<br/>
-			 		<!-- <h3>Revenue Per location</h3><br/> -->
+			 		<h3>Revenue Per location</h3><br/>
 					<div id="revenuePerLocation">Data Chat will load here!</div>
 				</div>
 				<br/>
 				<div class="col-sm-6">
-					<!-- <h3>Trips Per pickup location</h3><br/> -->
+					<h3>Trips Per pickup location</h3><br/>
 					<div id="tripsPerLocation">Data Chat will load here!</div>
 				</div>
 			</div>
@@ -1668,30 +1353,30 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 			<div class="row">
 				<div class="col-sm-6">
 				<br/>
-					<!-- <h3>Trips per dropoff location</h3><br/> -->
+					<h3>Trips per dropoff location</h3><br/>
 					<div id="ridesPerArea">Data Chat will load here!</div>
 				</div>
 				<br/>
 				<div class="col-sm-6">
-					<!-- <h3>Trips Per driver</h3><br/> -->
+					<h3>Trips Per driver</h3><br/>
 					<div id="ridesPerDriver">Data Chat will load here!</div>
 				</div>
 				<br/>
 			</div>
 
 		</div>
-		 
+
     </div>
-    	
-			
+
+
     </div>
  </div>
 </div>
    <!--  <div class="footer" style="background-image:url(images/strip.png); display: block; clear: both;">
-   	  
+
         <div class="copy_right">
 				<p style="margin-top: 0.5%;margin-bottom: 0.5%;">Social Delivery Service </p>
 		   </div>
-    </div>  -->   
+    </div>  -->
 </body>
 </html>
