@@ -1,0 +1,287 @@
+
+<!DOCTYPE html>
+<head>
+<meta charset="utf-8">
+  <meta name="google" value="notranslate" />
+<meta http-equiv="Content-Language" content="en" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>
+    Schmuber
+</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<meta name="description" content="
+  The social delivery service where you save the environment, make money and do something nice for other people.
+">
+<meta name="apple-itunes-app" content="app-id=1037756477">
+<!-- Favicons -->
+<link rel="shortcut icon" href="//d1xqbpwl1wh09p.cloudfront.net/web_images/favicon.png" type="image/png">
+<link href="//d1xqbpwl1wh09p.cloudfront.net/web_images/touch-icon.png" rel="apple-touch-icon-precomposed">
+
+<!-- Facebook Settings Code -->
+<meta property="og:title" content="
+    Nimber - Going your way, anyway!
+" />
+<meta property="og:site_name" content="Nimber" />
+<meta property="og:type" content="website" />
+<meta property="og:image:url" content="
+    https://d1xqbpwl1wh09p.cloudfront.net/web_images/fb-image.jpg
+"/>
+<meta property="og:image:secure_url" content="
+    https://d1xqbpwl1wh09p.cloudfront.net/web_images/fb-image.jpg
+" />
+<meta property="fb:app_id" content="262841183796158" />
+
+<meta property="og:description" content="
+    The social delivery service where you save the environment, make money and do something nice for other people.
+"/>
+
+
+<!-- Stylesheets -->
+<link rel="stylesheet" media="all" href="https://d1112petr9ji1a.cloudfront.net/assets/application-bac74edb05b8d09242307623247b39e57872aca9abbde84ab37667ba59ba3a68.css" />
+<link rel="stylesheet" media="all" href="https://d1112petr9ji1a.cloudfront.net/assets/app-2a7eb28789d541ecb4e68b87c8793bceb04d9b85ee51cf52b7eae9e4aa8c7a71.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:400,300|Raleway:300,400,900,700italic,700,300,600">
+    <link rel="stylesheet" type="text/css" href="/css/jquery.bxslider.css">
+    <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/animate.css">
+    <link rel="stylesheet" type="text/css" href="/css/style1.css">
+ <script>
+
+  var app = angular.module("schmuber_index_app", []);
+  app.controller("schmuber_index_controller", function($scope,$http,$window,$location) {
+    $scope.fetchCustomerDetails = function(){
+      $http({
+            method:'post',
+            url:'/v1/getcustomerdetails',
+        }).then(function(res){
+        // console.log(res.data)
+          $scope.customerFeedback = res.data.reviews[0].reviewsReceived
+          // $scope.generic()
+          $scope.customerProfileShow = true;
+          $scope.customerDeliveries = Math.floor(Math.random()*5)
+          $scope.customerDetails = res.data.details[0]
+        });
+    }
+
+});
+
+</script>
+</head>
+
+<body  class="en  not-logged-in " data-lang="en" data-pageview="" ng-app="schmuber_index_app" ng-controller="schmuber_index_controller">
+
+
+  <!-- HEADER -->
+        <nav class="navbar navbar-default navbar-fixed-top" style="background-color: #4A566B">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="/">Schmu<span class="logo-dec">ber</span></a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+              <ul class="nav navbar-nav navbar-right">
+                <li class="active"><a href="/">About</a></li>
+                <li class="active"><a href="/">Contact Us</a></li>
+                <li class="active"><a href="/register">Register</a></li>
+
+              </ul>
+            </div>
+          </div>
+        </nav>
+    <br/><br/><br/>
+  <!-- end header -->
+
+<div ng-init="fetchCustomerDetails()">
+<div class="main">
+  <div class="content">
+  <section class="section  profile-header-wrapper  expand">
+    <div class="content">
+      <div class="profile-header">
+        <a href="https://d1xqbpwl1wh09p.cloudfront.net/avatars/default/default.png" class="avatar  my-avatar  obj-label-over  profile__avatar  eb-profile-avatar" rel="lightbox">
+          <img id="user_avatar" alt="Savan Thakker" src="https://d1xqbpwl1wh09p.cloudfront.net/avatars/default/default_130x130@2x.png" />
+        </a><!-- end of profile avatar -->
+
+        <h1 class="profile__title">
+            {{customerDetails.firstName}} {{customerDetails.lastName}}
+        </h1>
+      </div><!-- profile-header -->
+    </div>
+  </section>
+  <section class="section  profile__stats  expand">
+    <div class="content cf">
+      <div class="profile__stats-item">
+
+          <span class="profile__stats-number">{{customerFeedback.length}}</span>
+          <span class="profile__stats-reviews">Deliveries completed</span>
+
+      </div>
+      <div class="profile__stats-item">
+        <span class="profile__stats-reviews">
+          Joined {{customerDetails.dateJoined}}
+        </span><!-- profile__stats-reviews -->
+      </div><!-- profile__stats -->
+    </div>
+  </section>
+
+  <section class="section  profile__content">
+<div class="content  cf">
+
+
+  <div class="user-verifications">
+<h2 class="profile-content__title  user-verifications__title">
+  Verified information
+</h2>
+
+<section class="obj-task-info  verifications-list">
+<div class="data-list">
+  <div class="data-list__item--clean">
+    <div class="data-list__actions--left data-list__action--empty">
+        <span class="obj-task-info__item-icon obj-task-info__item-icon--bank_account verified"></span>
+    </div>
+    <div class="data-list__info data-list__info--center">
+          <h6 class="data-list__info__title">Verified user</h6>
+          <span class="light-text-small">
+             <span>{{customerDetails.firstName}} has provided identification and it’s verified by the Nimber team.</span>
+          </span>
+      </div>
+    </div>
+  </div>
+
+<dl class="obj-task-info__item obj-task-info__item--first">
+  <dt class="obj-task-info__item-title  cf">
+
+    <span class="obj-task-info__item-title-text">Mobile number verified</span>
+  </dt>
+  <dd class="obj-task-info__item-content">
+    <span class="obj-task-info__content-text  js-reload-page" rel="tooltip" title="">
+        <span class="icon-font  details-icon  details-icon--yes" data-yes="✓" data-no="−">✓</span>
+    </span>
+  </dd>
+</dl><!-- obj-task-info__item -->
+
+
+<dl class="obj-task-info__item">
+  <dt class="obj-task-info__item-title  cf">
+    <span class="obj-task-info__item-title-text">Facebook connected</span>
+  </dt>
+  <dd class="obj-task-info__item-content">
+    <span class="obj-task-info__content-text" rel="tooltip" title="">
+        <span class="icon-font  details-icon  details-icon--yes" data-yes="✓" data-no="−">✓</span>
+    </span>
+  </dd>
+</dl><!-- obj-task-info__item -->
+
+<dl class="obj-task-info__item">
+  <dt class="obj-task-info__item-title  cf">
+
+    <span class="obj-task-info__item-title-text">Credit card connected</span>
+  </dt>
+  <dd class="obj-task-info__item-content">
+    <span class="obj-task-info__content-text" rel="tooltip" title="">
+        <span class="icon-font  details-icon  details-icon--yes" data-yes="✓" data-no="−">✓</span>
+    </span>
+  </dd>
+</dl><!-- obj-task-info__item -->
+
+<dl class="obj-task-info__item  obj-task-info__item--last">
+  <dt class="obj-task-info__item-title  cf">
+
+    <span class="obj-task-info__item-title-text">E-mail verified</span>
+  </dt>
+  <dd class="obj-task-info__item-content">
+    <span class="obj-task-info__content-text">
+      <span class="icon-font  details-icon  details-icon--yes" data-yes="✓" data-no="−">✓</span>
+    </span>
+  </dd>
+</dl><!-- obj-task-info__item -->
+</section>
+
+
+
+</div><!-- user-verifications -->
+
+    <div class="user-reviews">
+<h2 class="profile-content__title">
+    Reviews for {{customerDetails.firstName}}
+</h2>
+  <div class="user-reviews__breakdown">
+    <div class="user-reviews__total">
+
+<span class="user-rating user-rating--5 user-rating--big      " >
+ {{customerFeedback.length}}
+<span class="user-rating__icon">*</span>
+</span>
+
+        <b class="user-reviews__total-title">
+
+          Reviews
+        </b>
+
+    </div><!-- user-reviews__breakdown-total -->
+  </div><!-- user-reviews__breakdown -->
+
+<ol class="unstyled" data-append-to="reviews-list">
+
+<li class="user-review  cf">
+<div class="user-review__content" ng-repeat="data in customerFeedback">
+<span class="user-rating user-rating--5" >
+  {{data.rating}}
+  <span class="user-rating__icon">*</span>
+</span>
+    <article class="user-review__text">
+        {{data.text}}
+    </article>
+    <div class="user-review__footer cf">
+        <a href="" class="user-review__figure">
+          <img id="user_avatar" alt="Manuel Rueda" src="https://d1xqbpwl1wh09p.cloudfront.net/avatars/default/default_40x40@2x.png" />
+        </a><!-- end of profile avatar -->
+      <div class="user-review__footer-content">
+        <h3 class="user-review__title">
+            <a href="">
+             {{data.name}}<br/><br/>
+            </a>
+        </h3>
+      </div><!-- user-review__footer-content -->
+      <a href="/users/74441/reviews/18547" class="user-review__date">{{data.timestamp}}</a>
+    </div><!-- user-review__foter -->
+    <br/>
+    <br/>
+  </div><!-- user-review__content -->
+</li><!-- user-review -->
+    <!-- user-review -->
+</ol>
+
+    <div data-load="Loading...">
+      <div class="load-more-wrapper">
+
+      </div><!-- load-more-wrapper -->
+    </div>
+</div><!-- user-reviews -->
+
+
+</div>
+</section>
+    <div class="section group">
+      <div class="cont-desc span_1_of_2">
+        <div class="product-details">
+        </div>
+
+      </div>
+    </div>
+  </div>
+        </div>
+</div>
+
+</body>
+</html>

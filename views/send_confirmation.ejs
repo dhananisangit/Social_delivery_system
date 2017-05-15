@@ -1,0 +1,185 @@
+
+
+<!DOCTYPE html>
+<head>
+
+<meta charset="utf-8">
+<meta name="google" value="notranslate" />
+<meta http-equiv="Content-Language" content="en" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>
+    Schmuber
+</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<meta name="description" content="The social delivery service where you save the environment, make money and do something nice for other people.">
+
+
+<!-- Stylesheets -->
+<link rel="stylesheet" media="all" href="https://d1112petr9ji1a.cloudfront.net/assets/application-bac74edb05b8d09242307623247b39e57872aca9abbde84ab37667ba59ba3a68.css" />
+<link rel="stylesheet" media="all" href="https://d1112petr9ji1a.cloudfront.net/assets/app-2a7eb28789d541ecb4e68b87c8793bceb04d9b85ee51cf52b7eae9e4aa8c7a71.css" />
+
+    <meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="zildzrC0zc98IW3JtQy61zW1QxeatCdd19FRR8gsKG2JA4fLciXkaQylfCi8PRQ2h+3zwjANuvRTueMPHflLQw==" />
+
+    <meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="PImlTDEIIZ4/FYHqmaKKgvKJC8RZDCoH5y9mP+u4Rs57o39J85kIOE+RkAuQkyRjQNG7EfO1t65jR9R3Pm0l4A==" />
+
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+  <script>
+
+  var app = angular.module("schmuber", []);
+  app.controller("send_confirmation", function($scope,$http,$window,$location) {
+
+    $scope.navigate = function(type){
+      if(type=='login') $window.location.href='login'
+      else if(type=='register')$window.location.href='register'
+
+    }
+
+});
+
+</script>
+</head>
+<body ng-app="schmuber" ng-controller="send_confirmation">
+<section class="section section--tight">
+  <div class="content  checkout-page text-center">
+
+    <header class="checkout-page__header">
+      <h1 class="checkout-page__title">Your task has been posted!</h1>
+      <p class="checkout-page__subtitle">We have already sent your task out to relevant bringers, and those interested will get back to you with questions or a date they can help you out.</p>
+    </header>
+
+    <section class="checkout-page__container">
+      <div class="[ checkout-page__content cf ]">
+          <div class="[ checkout-page__task-info cf ]  [ js-checkout-page-task-info ]" data-url="/tasks/78568">
+            <figure class="task-page__image  task-page__image--checkout">
+              <img alt="Chair" title="Chair" id="task-avatar" src="https://d1xqbpwl1wh09p.cloudfront.net/jobs/default/default-xs_130x130@2x.png" />
+            </figure>
+            <div class="checkout-page-headline__content">
+              <h1 class="headline__title headline__title--small h1">Chair</h1>
+              <span class="task-block__locations">
+                33-99 Bush St, San Jose, CA 95126, USA<b class="task-to-icon icon-font">
+                →
+                </b>33-99 Bush St, San Jose, CA 95126, USA
+              </span>
+            </div><!-- checkout-page-headline__content -->
+          </div>
+
+          <div class="checkout-page__breakdown">
+            <ul class="[ checkout-page__prices hidify ]  [ js-checkout-prices ]">
+                 <li class="order-list__item  ">
+     <span class="pull-right offer-module__loader js-task-breakdown-loader hidify"></span>
+  <dl class="order-list__header">
+    <dt class="order-list__title  ">
+      Bringer&#39;s reward
+    </dt>
+    <dd class="order-list__price  ">
+              <span class="task-price__currency js-task-currency ">
+      $</span><span class="task-price__number  js-task-price ">20</span>
+
+    </dd>
+  </dl>
+</li>
+                 <li class="order-list__item  ">
+     <span class="pull-right offer-module__loader js-task-breakdown-loader hidify"></span>
+  <dl class="order-list__header">
+    <dt class="order-list__title  ">
+      Insurance and service
+    </dt>
+    <dd class="order-list__price  ">
+              <span class="task-price__currency js-task-currency ">
+      $</span><span class="task-price__number  js-task-price ">4</span>
+
+    </dd>
+  </dl>
+</li>
+
+                   <li class="order-list__item  hidify  js-order-list-item-coupon">
+     <span class="pull-right offer-module__loader js-task-breakdown-loader hidify"></span>
+  <dl class="order-list__header">
+    <dt class="order-list__title  js-order-list-item-title">
+      Coupon discount:
+    </dt>
+    <dd class="order-list__price  js-order-list-item-price">
+              <span class="task-price__number  js-task-price ">
+      </span><span class="task-price__currency js-task-currency "></span>
+
+    </dd>
+  </dl>
+</li>
+
+              <li class="order-list__item order-list__item--total">
+                <dl class="order-list__header">
+                  <dt class="order-list__title">Total delivery costs</dt>
+                  <dd class="order-list__price order-list__price--total">
+                          <span class="task-price__currency js-task-currency ">
+      $</span><span class="task-price__number  js-task-price js-total-order-list-price">24</span>
+
+                  </dd>
+                </dl>
+              </li>
+
+              <li class="[ order-list__item order-list__item--coupon  ]  [ js-checkout-coupon-form ]">
+                <form class="page-content__coupon-form  js-coupon-form  cf" action="/coupons/redeem.json" accept-charset="UTF-8" data-remote="true" method="post"><input name="utf8" type="hidden" value="&#x2713;" />
+                  <input type="hidden" name="task_id" value="78568">
+                  <input type="text" name="code" class="input checkout-page__coupon-input page-content-list__input  js-coupon-code-input js-ctrl-submit  js-input-with-prevent" placeholder="Type your code...">
+                  <button type="submit" class="[ btn btn--primary ] checkout-page__coupon-submit page-content__submit  js-coupon-submit  js-form-submit-button" data-applied-text="Already applied" data-success-text="Coupon applied!" data-disable-with="Activating..." data-error-text="Wrong code" data-default-text="Redeem">
+                    Redeem
+                  </button>
+                </form><!-- page-content__coupon-form -->
+              </li>
+            </ul>
+
+            <div class="[ checkout-page__coupon  ]  [ js-closest-wrapper ]">
+              <h3 class="checkout-page__coupon-title">
+                Do you have a coupon code?
+              </h3>
+              <div class="checkout-page__coupon-buttons">
+                <a href="#" class="[ checkout-page__coupon-button ]  [ js-coupon-code-button ]" data-type="yes">Yes</a><!--
+             --><a href="#" class="[ checkout-page__coupon-button ]  [ js-coupon-code-button ]" data-type="no">No</a>
+              </div>
+            </div><!-- checkout-page__coupon-question -->
+          </div><!-- checkout-page__breakdown -->
+      </div><!-- checkout-page__content -->
+
+      <footer class="[ checkout-page__cta cf ]">
+        <a class="task-overview__submit green-style" data-disablify="true" data-disable-with="Redirecting..." href="/tasks/78568">Continue to your task</a>
+      </footer>
+
+      <div class="checkout-page__faq">
+        <h3 class="checkout-page__faq-question">
+          How do I pay for the delivery?
+        </h3>
+        <p class="checkout-page__faq-answer">
+          When you have found someone to help you out and accepted an offer, we’ll have you add your credit card details. Then delivery moves along as planned, and when you have confirmed that delivery is done, we’ll withdraw the agreed amount. We’ll make sure the reward is transferred to the bringer.<br/><br/>If you want to save some time later, add your card details now. Then the process is automated later. We’ll never withdraw anything till you have confirmed delivery anyway. And all card data is stored securely with one of the largest payment providers in the world, Stripe.
+        </p>
+
+        <h3 class="checkout-page__faq-question">
+          Is my item insured?
+        </h3>
+        <p class="checkout-page__faq-answer">
+          Yes, every task is actually insured for up to 500 pounds. To be eligible for the insurance, make sure the bringer you agree with actually sends you an offer to help, and that it is fully accepted and delivered through the system.
+        </p>
+
+        <h3 class="checkout-page__faq-question  checkout-page__faq-question--secondary">
+          Anything you need to change about your task?
+        </h3>
+
+        <p class="checkout-page__faq-answer">
+          <a href="/tasks/78568#extra-info" class="obj-task-hero__button btn--outline checkout-page__settings-button">
+            <span class="obj-task-hero__button-text">Edit your task info</span>
+          </a>
+          <span class="checkout-page__or">or</span>
+          <a class="obj-task-hero__button btn--outline checkout-page__settings-button" data-disable-with="Deleting..." rel="nofollow" data-method="delete" href="/tasks/78568/delete">
+            <span class="obj-task-hero__button-text">Delete your task</span>
+</a>        </p>
+      </div>
+    </section><!-- checkout-page__container -->
+  </div><!-- .content -->
+</section>
+</body>

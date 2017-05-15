@@ -14,7 +14,6 @@ function login(req,res){
 				if(user){
 					var result={"status":"200","name":user.firstName, "role":user.role};
 					req.session.data={"userID":user.userID, "name":user.firstName + " " + user.lastName};
-					console.log(req.session.data);
 				}else{
 					var result={"status":"400","msg":"Either email or password is incorrect"};
 				}
@@ -110,6 +109,7 @@ function sendPackage(req,res){
 }
 
 function getSingleDeliveryRequest(req,res){
+
 	mongo.connect(mongoURL, function(){
 			var coll = mongo.collection('shipperRequestPool');
 			coll.findOne({requestID: req.query.requestID}, function(err, delivery){
@@ -241,6 +241,40 @@ function deleteDeliveryRequest(req,res){ console.log(req.query.requestID);
 }
 
 
+function getOpenShipperRequests(req,res){
+	mongo.connect(mongoURL, function(){
+			var coll = mongo.collection('shipperRequestPool');
+			coll.find({}).limit(10).toArray(function(err, req){
+			if(req){
+				var result = {"status":"200","shipperRequests":req};
+			}
+			else{
+				var result = {"status":"400"};
+
+			}
+			res.send(result)
+		});
+	});
+}
+
+//
+//
+// function getTripList(req, res){
+// 		mongo.connect(mongoURL, function(){
+// 			var coll = mongo.collection('shipperRequestPool');
+// 			// coll.find({userID:req.body.userID}).toArray(function(err, reviews){
+// 			coll.find({userID: req.session.data.userID}).toArray(function(err, trip){
+// 				if(trip){
+// 					var result={"status":"200", "trips":trip};
+// 				}else{
+// 					var result={"status":"400", "msg":"Something went wrong, Please try again."};
+// 				}
+// 				res.send(result);
+// 			});
+// 		})
+// }
+
+
 
 exports.login = login;
 exports.home = home;
@@ -253,3 +287,4 @@ exports.getSingleDeliveryRequest = getSingleDeliveryRequest;
 exports.getAllDeliveryRequests = getAllDeliveryRequests;
 exports.updateDeliveryRequest = updateDeliveryRequest;
 exports.deleteDeliveryRequest = deleteDeliveryRequest;
+exports.getOpenShipperRequests = getOpenShipperRequests;

@@ -167,7 +167,7 @@
           data:{deliveryDetails: $scope.deliveryDetails}
         }).then(function(res){
           if(res.data.status == "200"){
-            console.log(res.data);
+
             $scope.deliveryDetails = null;
           }
           else if(res.data.status=="400"){

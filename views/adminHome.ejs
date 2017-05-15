@@ -90,7 +90,8 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 			$scope.generic()
 			$http({
 				method:'get',
-				url:'/v1/getcustomerlist'
+				url:'/v1/getcustomerlist',
+				data:$scope.user
 			}).then(function(res){
 
 				$scope.customers = res.data.customerList

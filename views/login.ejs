@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Language" content="en" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <title>
-    Social Delivery System
+    Schmuber
 </title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
@@ -45,6 +45,13 @@
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:400,300|Raleway:300,400,900,700italic,700,300,600">
+    <link rel="stylesheet" type="text/css" href="/css/jquery.bxslider.css">
+    <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/animate.css">
+    <link rel="stylesheet" type="text/css" href="/css/style1.css">
  <script>
 
   var app = angular.module("schmuber_index_app", []);
@@ -70,7 +77,7 @@
           if (res.data.role === "admin") {
             $window.location.href = '/admin';
           } else {
-            $window.location.href = '/user';
+            $window.location.href = '/home';
           }
         }
         else if(res.data.status=="400"){
@@ -86,46 +93,30 @@
 
 <body  class="en  not-logged-in " data-lang="en" data-pageview="" ng-app="schmuber_index_app" ng-controller="schmuber_index_controller">
 
-<header class="header-wrapper expand cf ">
-    <div class="fixed-header">
-        <div class="header container">
 
-            <a class="[ logo ]  [ pull-left ]" href="/">
-        <span class="logo-content">
-                <img width="28" alt="Nimber Logo" title="Nimber" src="https://d1112petr9ji1a.cloudfront.net/assets/logo-red-4d7578fa494a5ccfb988ee2f0c3f055b443c937210bb4af93e8e9e52ef0d4a2b.svg" />
-        </span>
-</a>
-            <nav class="top-nav-wrapper longer">
-                    <ul class="top-nav pull-right cf js-replace-avatar">
+  <!-- HEADER -->
+        <nav class="navbar navbar-default navbar-fixed-top" style="background-color: #4A566B">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="/">Schmu<span class="logo-dec">ber</span></a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+              <ul class="nav navbar-nav navbar-right">
+                <li class="active"><a href="/">About</a></li>
+                <li class="active"><a href="/">Contact Us</a></li>
+                <li class="active"><a href="/register">Register</a></li>
 
-                            <li class="item">
-                                <a class="login-link js-login-link" href="">Login</a>
-                            </li>
-
-                            <li class="item">
-                                <a class="[ btn btn--primary ]" href="/users/new?redirect_path=%2Ftasks%2Fsearch">Register</a>
-                            </li>
-                    </ul><!-- end of top-side-nav -->
-                </nav><!-- end of top nav wrapper -->
-
-            <nav class="tab-nav">
-                <ul class="cf">
-                    <li class="item tab-nav-item tab-nav-item--send longer ">
-            <a id="send-noe" data-ie="before" href="">Send</a>
-          </li>
-                    <li class="item tab-nav-item tab-nav-item--search longer ">
-            <a id="ta-med-noe" data-ie="before" href="">Search</a>
-          </li>
-            <li class="item tab-nav-item tab-nav-item--deliveries longer ">
-              <a id="deliveries" data-ie="before" href="">Deliveries</a>
-            </li>
-        </ul>
-            </nav><!-- end of top-nav -->
-
-
-        </div><!-- end of header -->
-    </div><!-- fixed header -->
-</header>
+              </ul>
+            </div>
+          </div>
+        </nav>
+    <br/><br/><br/><br/><br/>
+  <!-- end header -->
 
 
 <!-- GLOBAL ALERTS -->

@@ -79,6 +79,7 @@ function getOpenTransporterRequests(req,res){
 }
 
 function getCustomerFeedback(req,res){
+	console.log(req.session.data.userID)
 	mongo.connect(mongoURL, function(){
 			var coll = mongo.collection('customerFeedback');
 			coll.find({userID:req.body.userID}).toArray(function(err, reviews){
@@ -91,6 +92,33 @@ function getCustomerFeedback(req,res){
 
 			}
 			res.send(result)
+		});
+	});
+}
+
+function getCustomerDetails(req,res){
+	mongo.connect(mongoURL, function(){
+			var coll = mongo.collection('customerFeedback');
+			coll.find({"userID":req.session.data.userID}).toArray(function(err, reviews){
+			if(reviews){
+				console.log(reviews)
+				var coll1 = mongo.collection('customerDetails');
+				coll1.find({"userID": req.session.data.userID}).toArray(function(err, details){
+					if(details){
+						console.log(details)
+						var result = {"status":"200", "reviews": reviews, "details":details}
+							res.send(result)
+					}
+					else{
+						var result = {"status":"400"};
+					}
+				})
+			}
+			else {
+					var result = {"status":"400"}
+			}
+
+
 		});
 	});
 }
@@ -189,3 +217,4 @@ exports.tripsPerLocation = tripsPerLocation;
 exports.ridesPerArea = ridesPerArea;
 exports.ridesPerDriver = ridesPerDriver;
 exports.getCustomerFeedback = getCustomerFeedback;
+exports.getCustomerDetails = getCustomerDetails;

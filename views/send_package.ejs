@@ -1,1736 +1,339 @@
-
-<!DOCTYPE html>
-
-<!--[if gt IE 9]><!--> <html class="no-js"> <!--<![endif]-->
+<!DOCTYPE HTML>
 <head>
+<title>Amazon Fresh | Home </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link href="https://images-na.ssl-images-amazon.com/images/G/01/omaha/css/default._V1455922598_.css" type="text/css" rel="stylesheet" />    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+ <link rel="shortcut icon"
+	href="https://images-na.ssl-images-amazon.com/images/G/01/omaha/images/ui/favicon.ico"
+	type="image/vnd.microsoft.icon" />
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <link rel="stylesheet" media="all" href="/css/admin1.css" />
+    <link rel="stylesheet" media="all" href="/css/admin2.css" />
+    <!-- Latest compiled JavaScript -->
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:400,300|Raleway:300,400,900,700italic,700,300,600">
+  <link rel="stylesheet" type="text/css" href="/css/jquery.bxslider.css">
+  <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="/css/animate.css">
+  <link rel="stylesheet" type="text/css" href="/css/style1.css">
 
-    <!-- App head -->
-    
+  <script>
 
-  <!-- start Mixpanel --><script type="text/javascript">(function(e,a){if(!a.__SV){var b=window;try{var c,l,i,j=b.location,g=j.hash;c=function(a,b){return(l=a.match(RegExp(b+"=([^&]*)")))?l[1]:null};g&&c(g,"state")&&(i=JSON.parse(decodeURIComponent(c(g,"state"))),"mpeditor"===i.action&&(b.sessionStorage.setItem("_mpcehash",g),history.replaceState(i.desiredHash||"",e.title,j.pathname+j.search)))}catch(m){}var k,h;window.mixpanel=a;a._i=[];a.init=function(b,c,f){function e(b,a){var c=a.split(".");2==c.length&&(b=b[c[0]],a=c[1]);b[a]=function(){b.push([a].concat(Array.prototype.slice.call(arguments,
-0)))}}var d=a;"undefined"!==typeof f?d=a[f]=[]:f="mixpanel";d.people=d.people||[];d.toString=function(b){var a="mixpanel";"mixpanel"!==f&&(a+="."+f);b||(a+=" (stub)");return a};d.people.toString=function(){return d.toString(1)+".people (stub)"};k="disable time_event track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config reset people.set people.set_once people.increment people.append people.union people.track_charge people.clear_charges people.delete_user".split(" ");
-for(h=0;h<k.length;h++)e(d,k[h]);a._i.push([b,c,f])};a.__SV=1.2;b=e.createElement("script");b.type="text/javascript";b.async=!0;b.src="undefined"!==typeof MIXPANEL_CUSTOM_LIB_URL?MIXPANEL_CUSTOM_LIB_URL:"file:"===e.location.protocol&&"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js".match(/^\/\//)?"https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js":"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";c=e.getElementsByTagName("script")[0];c.parentNode.insertBefore(b,c)}})(document,window.mixpanel||[]);
-mixpanel.init("04ab9e2caf1b969e673ae99837192af6");</script><!-- end Mixpanel -->
+  var app = angular.module("schmuber", []);
+  app.controller("send_package", function($scope,$http,$window,$location) {
+    $scope.send_form=true;
+    $scope.send_confirmation = false;
 
-
-<meta charset="utf-8">
-  <meta name="google" value="notranslate" />
-<meta http-equiv="Content-Language" content="en" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"beacon":"bam.nr-data.net","errorBeacon":"bam.nr-data.net","licenseKey":"5bc163779d","applicationID":"11382826","transactionName":"eltWREVaVFwGF0oQBEpfSx9ZUE8=","queueTime":5,"applicationTime":516,"agent":""}</script>
-<script type="text/javascript">window.NREUM||(NREUM={}),__nr_require=function(e,n,t){function r(t){if(!n[t]){var o=n[t]={exports:{}};e[t][0].call(o.exports,function(n){var o=e[t][1][n];return r(o||n)},o,o.exports)}return n[t].exports}if("function"==typeof __nr_require)return __nr_require;for(var o=0;o<t.length;o++)r(t[o]);return r}({1:[function(e,n,t){function r(){}function o(e,n,t){return function(){return i(e,[c.now()].concat(u(arguments)),n?null:this,t),n?void 0:this}}var i=e("handle"),a=e(2),u=e(3),f=e("ee").get("tracer"),c=e("loader"),s=NREUM;"undefined"==typeof window.newrelic&&(newrelic=s);var p=["setPageViewName","setCustomAttribute","setErrorHandler","finished","addToTrace","inlineHit","addRelease"],d="api-",l=d+"ixn-";a(p,function(e,n){s[n]=o(d+n,!0,"api")}),s.addPageAction=o(d+"addPageAction",!0),s.setCurrentRouteName=o(d+"routeName",!0),n.exports=newrelic,s.interaction=function(){return(new r).get()};var m=r.prototype={createTracer:function(e,n){var t={},r=this,o="function"==typeof n;return i(l+"tracer",[c.now(),e,t],r),function(){if(f.emit((o?"":"no-")+"fn-start",[c.now(),r,o],t),o)try{return n.apply(this,arguments)}finally{f.emit("fn-end",[c.now()],t)}}}};a("setName,setAttribute,save,ignore,onEnd,getContext,end,get".split(","),function(e,n){m[n]=o(l+n)}),newrelic.noticeError=function(e){"string"==typeof e&&(e=new Error(e)),i("err",[e,c.now()])}},{}],2:[function(e,n,t){function r(e,n){var t=[],r="",i=0;for(r in e)o.call(e,r)&&(t[i]=n(r,e[r]),i+=1);return t}var o=Object.prototype.hasOwnProperty;n.exports=r},{}],3:[function(e,n,t){function r(e,n,t){n||(n=0),"undefined"==typeof t&&(t=e?e.length:0);for(var r=-1,o=t-n||0,i=Array(o<0?0:o);++r<o;)i[r]=e[n+r];return i}n.exports=r},{}],4:[function(e,n,t){n.exports={exists:"undefined"!=typeof window.performance&&window.performance.timing&&"undefined"!=typeof window.performance.timing.navigationStart}},{}],ee:[function(e,n,t){function r(){}function o(e){function n(e){return e&&e instanceof r?e:e?f(e,u,i):i()}function t(t,r,o,i){if(!d.aborted||i){e&&e(t,r,o);for(var a=n(o),u=m(t),f=u.length,c=0;c<f;c++)u[c].apply(a,r);var p=s[y[t]];return p&&p.push([b,t,r,a]),a}}function l(e,n){v[e]=m(e).concat(n)}function m(e){return v[e]||[]}function w(e){return p[e]=p[e]||o(t)}function g(e,n){c(e,function(e,t){n=n||"feature",y[t]=n,n in s||(s[n]=[])})}var v={},y={},b={on:l,emit:t,get:w,listeners:m,context:n,buffer:g,abort:a,aborted:!1};return b}function i(){return new r}function a(){(s.api||s.feature)&&(d.aborted=!0,s=d.backlog={})}var u="nr@context",f=e("gos"),c=e(2),s={},p={},d=n.exports=o();d.backlog=s},{}],gos:[function(e,n,t){function r(e,n,t){if(o.call(e,n))return e[n];var r=t();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(e,n,{value:r,writable:!0,enumerable:!1}),r}catch(i){}return e[n]=r,r}var o=Object.prototype.hasOwnProperty;n.exports=r},{}],handle:[function(e,n,t){function r(e,n,t,r){o.buffer([e],r),o.emit(e,n,t)}var o=e("ee").get("handle");n.exports=r,r.ee=o},{}],id:[function(e,n,t){function r(e){var n=typeof e;return!e||"object"!==n&&"function"!==n?-1:e===window?0:a(e,i,function(){return o++})}var o=1,i="nr@id",a=e("gos");n.exports=r},{}],loader:[function(e,n,t){function r(){if(!x++){var e=h.info=NREUM.info,n=d.getElementsByTagName("script")[0];if(setTimeout(s.abort,3e4),!(e&&e.licenseKey&&e.applicationID&&n))return s.abort();c(y,function(n,t){e[n]||(e[n]=t)}),f("mark",["onload",a()+h.offset],null,"api");var t=d.createElement("script");t.src="https://"+e.agent,n.parentNode.insertBefore(t,n)}}function o(){"complete"===d.readyState&&i()}function i(){f("mark",["domContent",a()+h.offset],null,"api")}function a(){return E.exists&&performance.now?Math.round(performance.now()):(u=Math.max((new Date).getTime(),u))-h.offset}var u=(new Date).getTime(),f=e("handle"),c=e(2),s=e("ee"),p=window,d=p.document,l="addEventListener",m="attachEvent",w=p.XMLHttpRequest,g=w&&w.prototype;NREUM.o={ST:setTimeout,CT:clearTimeout,XHR:w,REQ:p.Request,EV:p.Event,PR:p.Promise,MO:p.MutationObserver};var v=""+location,y={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-1026.min.js"},b=w&&g&&g[l]&&!/CriOS/.test(navigator.userAgent),h=n.exports={offset:u,now:a,origin:v,features:{},xhrWrappable:b};e(1),d[l]?(d[l]("DOMContentLoaded",i,!1),p[l]("load",r,!1)):(d[m]("onreadystatechange",o),p[m]("onload",r)),f("mark",["firstbyte",u],null,"api");var x=0,E=e(4)},{}]},{},["loader"]);</script>
-<title>
-    Nimber - Going your way, anyway!
-</title>
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
-<meta name="description" content="
-  The social delivery service where you save the environment, make money and do something nice for other people.
-">
-
-
-<meta name="apple-itunes-app" content="app-id=1037756477">
-<!-- Favicons -->
-<link rel="shortcut icon" href="//d1xqbpwl1wh09p.cloudfront.net/web_images/favicon.png" type="image/png">
-<link href="//d1xqbpwl1wh09p.cloudfront.net/web_images/touch-icon.png" rel="apple-touch-icon-precomposed">
-
-<!-- Facebook Settings Code -->
-<meta property="og:title" content="
-    Nimber - Going your way, anyway!
-" />  
-<meta property="og:site_name" content="Nimber" />
-<meta property="og:type" content="website" />
-<meta property="og:image:url" content="
-    https://d1xqbpwl1wh09p.cloudfront.net/web_images/fb-image.jpg
-"/>
-<meta property="og:image:secure_url" content="
-    https://d1xqbpwl1wh09p.cloudfront.net/web_images/fb-image.jpg
-" />
-<meta property="fb:app_id" content="262841183796158" />
-
-<meta property="og:description" content="
-    The social delivery service where you save the environment, make money and do something nice for other people.
-"/>
-
-
-<!-- Stylesheets -->
-<link rel="stylesheet" media="all" href="https://d1112petr9ji1a.cloudfront.net/assets/application-bac74edb05b8d09242307623247b39e57872aca9abbde84ab37667ba59ba3a68.css" />
-<link rel="stylesheet" media="all" href="https://d1112petr9ji1a.cloudfront.net/assets/app-2a7eb28789d541ecb4e68b87c8793bceb04d9b85ee51cf52b7eae9e4aa8c7a71.css" />
-<!--[if lte IE 9]>
-<link rel="stylesheet" media="all" href="https://d1112petr9ji1a.cloudfront.net/stylesheets/app_split2.css" />
-<![endif]-->
-
-    <!-- Mapbox JS API -->
-    <script src="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
-    <script src="//d1xqbpwl1wh09p.cloudfront.net/maps/leaflet.gmaps.min-1.js"></script>
-    <!-- Google Maps -->
-    <script src="https://maps.google.com/maps/api/js?v=3&key=AIzaSyCZDT3sbyd8eLFQgJQJSudAGpmiLJHlNc8&libraries=geometry,places"></script>
-
-
-    <!-- JS Scripts -->
-    <script src="https://d1112petr9ji1a.cloudfront.net/assets/application-c6bd95a0eb15ad197408eedcde728014e3dc15a1351fb6b4f29f86e2b91013e0.js"></script>
-    
-    <meta name="csrf-param" content="authenticity_token" />
-<meta name="csrf-token" content="+uPm8Z4C0zjYOPlfB16NoiYlc3zO0rZ7gPX8JzWWWQ29yTz0XJP6nqi86L4ObyNDlH3DqWRrK9IEnU5v4EM6Iw==" />
-    <script>
-//<![CDATA[
-window.gon={};gon.global={"current_user":false,"live_activity":"/sessions/live_activity","triggerLogin":false,"base_url":"https://www.nimber.com","locale":"en","ago":"ago","api_url":"https://api.nimber.com/","current_user_id":null,"taskId":34393,"chatUser":null,"offerPath":"/task_actions/date_price_suggestion","showOfferModal":null,"taskCreatorId":20482,"userVerified":false,"hasSentOffer":false,"guaranteedMaxRadius":10000,"currentStep":"title","taskDriverId":11967,"coupon_code":false,"facebook_connect":true};
-//]]>
-</script>
-    <script>
-
-  // The socketjs object
-  var sock = null;
-
-  // Opens a socket connection
-  function openSocket(sessionID){
-    sock = new SockJS('https://wspush.nimber.com/notifications');
-    var sockPing = null;
-
-    dings = null;
-
-    if (typeof sessionID === 'undefined' || sessionID === null || sessionID.length === 0) {
-      sessionID = '635782f0-afef-4425-a9d3-2714d3baadbf';
+    $scope.postSendDetails = function(){
+      $scope.send_form = false;
+      $scope.send_confirmation = true;
+      $http({
+        method:'get',
+        url:'/v1/getdeliverydetails'
+      }).then(function(res){
+      });
     }
 
-    sock.onopen = function() {
-      sock.send("authorize: " + sessionID);
-
-      sockPing = window.setInterval(function() {
-        sock.send('ping');
-      }, 10000);
-      $.publish('socket.open');
-    };
-
-    //fire question without socket
-    if('' !== ''){
-      var ask_question = JSON.parse('');
-      if(ask_question !== undefined && ask_question !== null){
-        e = {data: {event: "question:push", question: ask_question}, type: "manual_message"};
-        show_notification_message(e);
-      }
-    }
-
-    sock.onmessage = function(e) {
-      if(e.data != "pong" && e.data.length > 0 && e.data !== null && e.data !== "[]") {
-        if (typeof e.data === 'string') {
-          var parsedData = JSON.parse(e.data);
-
-          switch (parsedData.event) {
-            case 'chatmessage:added':
-              handleChatMessage(parsedData);
-              break;
-            case 'chatmessage:read':
-              handleReadChatMessage(parsedData);
-              break;
-            case 'chatmessage:update_unread_count':
-              handleUpdateUnreadCountChatMessage(parsedData);
-              break;
-            case 'job_action:created':
-              handleJobActionCreated(parsedData);
-              break;
-            case 'job_action:updated':
-              handleJobActionUpdated(parsedData);
-              break;
-            case 'job:released':
-              handleJobReleased(parsedData);
-              break;
-            case 'job_action:canceled':
-              handleJobActionCanceled(parsedData);
-              break;
-            case 'job_action:accepted':
-              handleJobActionAccepted(parsedData);
-              break;
-            case 'job_action:declined':
-              handleJobActionDeclined(parsedData);
-              break;
-            case 'transaction_state':
-              handleTransactionState(parsedData);
-              break;
-            case 'job:bought':
-              if (gon.global.taskId && gon.global.taskId == parsedData.id){
-                window.location.reload();
-              }
-              break;
-            case 'job:delivered':
-              if (gon.global.taskId && gon.global.taskId == parsedData.id && parsedData.obj.driver.id == gon.global.current_user_id){
-                window.location.reload();
-              }
-              break;
-            case 'user:start_typing':
-              handleUserStartTyping(parsedData);
-              break;
-            case 'user:online':
-              handleUserState(parsedData);
-              break;
-            case 'user:offline':
-              handleUserState(parsedData);
-              break;
-            case 'job:added':
-            case 'job:buyable':
-              // Do nothing
-              break;
-            default:
-              show_notification_message(e);
-          }
-        }
-      }
-    };
-
-    sock.onclose = function() {
-      if (sockPing != null)
-        window.clearInterval(sockPing);
-    };
-
-    // Close socket connection on unload
-    $(window).unload(function(){
-      sock.close();
-    });
-  }
-
-  $(function(){
-
-    $(document).on("cacheLoaded",function(){
-      $.getScript( Helpers.url_for("utils","add_to_flow", {the_controller: "tasks", the_action: "new"}), function( data, textStatus, jqxhr ) {
-      }).fail(function( jqxhr, settings, exception ) {console.log( exception );});
-    });
-
-  });
-
-  $(window).load(function(){
-  });
-
-  //js parse the translations for profile.news to make them available in mustache templates
-  t = JSON.parse('{"title":"Latest news","user_missing":"User missing","comment":" added a comment to the task ","bought":" said he would deliver ","creator":{"added":{"you_added":"You added the task"},"buyable":{"your_task":"The task","is_buyable":"is available"},"bought":{"your_package":"accepted your task"},"picked_up":{"your_package":"picked up the task"},"delivered_wait":{"your_package":"delivered the task"},"delivered":{"your_package":"The delivery of the task","confirmed":"was confirmed"},"canceled":{"your_package":"The task","deleted":"was deleted"},"released":{"your_task":"The bringer of your task","was_released":"was released"}},"sender":{"added":{"you_added":"You added the task"},"buyable":{"your_task":"The task","is_buyable":"is available"},"bought":{"your_package":"accepted the task"},"picked_up":{"your_package":"picked up the task"},"delivered_wait":{"your_package":"delivered the task"},"delivered":{"your_package":"The delivery of the task","confirmed":"was confirmed"},"canceled":{"your_package":"The task","deleted":"was deleted"}},"recipient":{"added":{"task":"added the task"},"buyable":{"your_task":"The task","is_buyable":"is available"},"bought":{"your_package":"accepted the task"},"picked_up":{"your_package":"picked up the task"},"delivered_wait":{"your_package":"delivered the task"},"delivered":{"your_package":"You confirmed that","confirmed":"was delivered"},"canceled":{"your_package":"The task","deleted":"was deleted"}},"driver":{"bought":{"pre":"You accepted the task","post":""},"picked_up":{"pre":"you picked up the task","post":""},"delivered_wait":{"pre":"You delivered the task","post":""},"delivered":{"pre":"The delivery of","post":"was confirmed"},"canceled":{"pre":"The task","post":"was canceled"}},"friend":{"buyable":"is now buyable and was created by","bought":"has bought","delivered":"has delivered","by":"by","now_buayable":"is now buyable"}}');
-
-  //shows a notification/question
-  function show_notification_message(e){
-    //ignore ping messages
-    if((e.data != "pong" && e.data.length > 0 && e.data !== null && e.data !== "[]") || e.type == "manual_message"){
-
-      //parse message data and create template variables
-      var data = e.data
-      if(typeof(data) !== "object")
-        var data = JSON.parse(e.data);
-      var affiliation = "";
-      if(data.obj !== undefined && data.obj.affiliation !== undefined)
-        affiliation = data.obj.affiliation+"_";
-      else
-        affiliation = "";
-
-      //find template id should be #notification_affiliation_object_event
-      var $template = $("#notification_"+affiliation+data.event.replace(/:/g,"_"));
-      var template_vars = new Object;
-      template_vars.t = t;
-      template_vars.entry = data;
-      //logic if the message is a question
-      var question = false;
-      if(data.question !== undefined){
-        question = true
-        var $template = $("#notification_"+data.event.replace(/:/g,"_")+"_"+data.question.type);
-        if(data.question.type === "answers"){
-          for(var i=0; i<data.question.answers.length; i++){
-            data.question.answers[i].index = i+1;
-          }
-        }
-        template_vars.answer_url = Helpers.url_for("utils","answer_question",{question_id: data.question.id});
-
-        if(typeof data.question.include_field !== 'undefined' || data.question.include_field !== null) {
-          template_vars.entry.include_field_name = data.question.include_field;
-          switch(data.question.include_field) {
-            case 'job_id':
-              template_vars.entry.include_field_value = null;
-              break;
-            default:
-              template_vars.entry.include_field_value = null;
-          }
-        }
-      }
-
-      var image_size = "40x40";
-
-      //create links to render in mustache templates
-      if(data.obj !== undefined){
-        if(data.obj.job !== undefined && data.obj.job !== null){
-          template_vars.job_link = Helpers.url_for("tasks","show",data.obj.job.id);
-          template_vars.job_image = Helpers.image_path(data.obj.job.picture_location,image_size);
-        }
-        if(data.obj.user !== undefined && data.obj.user !== null){
-          template_vars.user_link = Helpers.url_for("users","show",data.obj.user.id);
-          template_vars.user_image = Helpers.image_path(data.obj.user.avatar,image_size);
-        }
-        if(data.obj.user === undefined || data.obj.user === null){
-          template_vars.user_link = Helpers.url_for("users","show",data.obj.creator.id);
-          template_vars.user_image = Helpers.image_path(data.obj.creator.avatar,image_size);
-        }
-        if(data.obj.job === undefined || data.obj.job === null){
-          template_vars.job_link = Helpers.url_for("tasks","show",data.obj.id);
-          template_vars.job_image = Helpers.image_path(data.obj.picture_location,image_size);
-        }
-        if(data.obj.driver !== undefined && data.obj.driver !== null){
-          template_vars.driver_link = Helpers.url_for("users","show",data.obj.driver.id);
-          template_vars.driver_image = Helpers.image_path(data.obj.driver.avatar,image_size);
-        }
-        if(data.obj.sender !== undefined && data.obj.sender !== null){
-          template_vars.sender_link = Helpers.url_for("users","show",data.obj.sender.id);
-          template_vars.sender_image = Helpers.image_path(data.obj.sender.avatar,image_size);
-        }
-        if(data.obj.creator !== undefined && data.obj.creator !== null){
-          template_vars.creator_link = Helpers.url_for("users","show",data.obj.creator.id);
-          template_vars.creator_image = Helpers.image_path(data.obj.creator.avatar,image_size);
-        }
-      }
-      //render template and fire notification
-      if($template.length > 0){
-        Notifications.show(Mustache.render($template.html(), template_vars),template_vars.answer_url, question);
-      }
-    }
-  }
-
-  function handleChatMessage(data) {
-    // Publish a chatmesssage.added message, passing the relevant data to subscribers
-    $.publish('chatmessage.added', {chat_id: data.chat_id, id: data.id, author_is_job_creator: data.author_is_job_creator});
-  }
-
-  function handleReadChatMessage(data) {
-    /*
-     * Fields in data:
-     *   object: "ChatMessage"
-     *   event: "chatmessage:read"
-     *   chat_id: ID of the chat that was marked as read
-     *   timestamp: Unix timestamp (UTC) of when the chat was marked as read
-     */
-    $.publish('chatmessage.read', {chat_id: data.chat_id, timestamp: data.timestamp});
-  }
-
-  /*
-   * Fields in data:
-   *   object: "User"
-   *   event: "user:start_typing"
-   *   chat_id: ID of the chat that typing activity was sent
-   */
-  function handleUserStartTyping(data){
-    $.publish('chatmessage.typing', {chat_id: data.chat_id});
-  }
-
-  /*
-   * Fields in data:
-   *   object: "User"
-   *   event: "user:online"
-   *   user_id: id of the user whose state was requested
-   */
-  function handleUserState(data){
-    if(data.event === 'user:online'){
-      $.publish('user.state', {user_id: data.user_id, online: true});
-    }else {
-      $.publish('user.state', {user_id: data.user_id, online: false});
-    }
-  }
-
-  function handleUpdateUnreadCountChatMessage(data) {
-    /*
-     * Fields in data:
-     *   object: "ChatMessage"
-     *   event: "chatmessage:update_unread_count"
-     *   chat_id: ID of the chat that was marked as read
-     *   timestamp: Unix timestamp (UTC) of when the chat was marked as read
-     */
-
-    // Update the counter in all open windows
-    // $.get('/chats/get_unread', function(unreadChats) {
-    //   TaskChat.markedAsRead(data.chat_id, unreadChats);
-    // });
-  }
-
-  function handleJobActionCreated(data) {
-    /*
-     * Fields in data:
-     *   object: "JobAction"
-     *   event: "job_action:created"
-     *   id: ID of the job action (offer)
-     *   job_id: ID of the job
-     *   timestamp: Unix timestamp (UTC) of when the event was sent
-     *   user_id: ID of job_action creator
-     */
-
-    if (gon.global.taskId && gon.global.taskId == data.job_id && (gon.global.chatUser == null || data.user_id == gon.global.chatUser)) {
-      window.location.reload();
-    }
-  }
-
-  function handleJobActionUpdated(data) {
-    /*
-     * Fields in data:
-     *   object: "JobAction"
-     *   event: "job_action:updated"
-     *   id: ID of the job action (offer)
-     *   job_id: ID of the job
-     *   timestamp: Unix timestamp (UTC) of when the event was sent
-     */
-
-    if (gon.global.taskId && gon.global.taskId == data.job_id && $('#offer_' + data.id).length > 0) {
-      window.location.reload();
-    }
-  }
-
-  function handleJobReleased(data) {
-    /*
-     * Fields in data:
-     *   object: "Job"
-     *   event: "job:released"
-     *   id: ID of the job
-     *   timestamp: Unix timestamp (UTC) of when the event was sent
-     */
-
-    if (gon.global.taskId && gon.global.taskId == data.id) {
-      window.location.reload();
-    }
-  }
-
-  function handleJobActionCanceled(data) {
-    /*
-     * Fields in data:
-     *   object: "Job"
-     *   event: "job:released"
-     *   id: ID of the job
-     *   job_id: ID of the job
-     *   timestamp: Unix timestamp (UTC) of when the event was sent
-     */
-
-    if (gon.global.taskId && gon.global.taskId == data.job_id && $('#offer_' + data.id).length > 0) {
-      window.location.reload();
-    }
-  }
-
-  function handleJobActionAccepted(data) {
-    /*
-     * Fields in data:
-     *   object: "JobAction"
-     *   event: "job_action:accepted"
-     *   id: ID of the job action (offer)
-     *   job_id: ID of the job
-     *   timestamp: Unix timestamp (UTC) of when the event was sent
-     */
-
-    if (gon.global.taskId && gon.global.taskId == data.job_id) {
-      window.location.reload();
-    }
-  }
-
-  function handleJobActionDeclined(data) {
-    /*
-     * Fields in data:
-     *   object: "JobAction"
-     *   event: "job_action:accepted"
-     *   id: ID of the job action (offer)
-     *   job_id: ID of the job
-     *   timestamp: Unix timestamp (UTC) of when the event was sent
-     */
-
-    if (gon.global.taskId && gon.global.taskId == data.job_id && $('#offer_' + data.id).length > 0) {
-      window.location.reload();
-    }
-  }
-  function handleTransactionState(data){
-    $.publish('transaction_state:updated', {task_id: data.job_id, state: data.state });
-  }
+});
 
 </script>
-
-    <!-- Notification templates for comments -->
-<script id="notification_comment_added" type="text/html">
-  <img src="{{&user_image}}" class="eb-notification__image eb-image">
-  <div class="eb-notification__message">
-    {{#entry.obj.user}}
-      <a href="{{&user_link}}">{{entry.obj.user.first_name}} {{entry.obj.user.last_name}}</a>
-    {{/entry.obj.user}}
-    {{^entry.obj.user}}
-      <em>{{ t.user_missing }}</em>
-    {{/entry.obj.user}}
-    {{t.comment}} <a href="{{&job_link}}">{{entry.obj.job.title}}</a>
-  </div>
-</script>
-<!-- END Notification templates for comments -->
-
-<!-- Notification templates for creator -->
-<script id="notification_creator_job_added" type="text/html">
-  <img src="{{&job_image}}" class="eb-notification__image eb-image">
-  <div class="eb-notification__message">
-    {{t.creator.added.you_added}} <a href="{{&job_link}}">{{entry.obj.title}}</a>
-  </div>
-</script>
-
-<script id="notification_creator_job_buyable" type="text/html">
-  <img src="{{&job_image}}" class="eb-notification__image eb-image">
-  <div class="eb-notification__message">
-    {{t.creator.buyable.your_task}} <a href="{{&job_link}}">{{entry.obj.title}}</a> {{t.creator.buyable.is_buyable}}
-  </div>
-</script>
-
-<script id="notification_creator_job_bought" type="text/html">
-  <img src="{{&driver_mage}}" class="eb-notification__image eb-image">
-  <div class="eb-notification__message">
-    {{#entry.obj.driver}}
-      <a href="{{&driver_link}}">{{entry.obj.driver.first_name}} {{entry.obj.driver.last_name}}</a>
-    {{/entry.obj.driver}}
-    {{^entry.obj.driver}}
-      <em>{{t.user_missing}}</em>
-    {{/entry.obj.driver}}
-    {{t.creator.bought.your_package}} <a href="{{&job_link}}">{{entry.obj.title}}</a>
-  </div>
-</script>
-
-<script id="notification_creator_job_picked_up" type="text/html">
-  <img src="{{&driver_image}}" class="eb-notification__image eb-image">
-  <div class="eb-notification__message">
-    {{#entry.obj.driver}}
-      <a href="{{&driver_link}}">{{entry.obj.driver.first_name}} {{entry.obj.driver.last_name}}</a>
-    {{/entry.obj.driver}}
-    {{^entry.obj.driver}}
-      <em>{{t.user_missing}}</em>
-    {{/entry.obj.driver}}
-    {{t.creator.picked_up.your_package}} <a href="{{&job_link}}">{{entry.obj.title}}</a>
-  </div>
-</script>
-
-<script id="notification_creator_job_delivered_wait" type="text/html">
-  <img src="{{&driver_image}}" class="eb-notification__image eb-image">
-  <div class="eb-notification__message">
-    {{#entry.obj.driver}}
-      <a href="{{&driver_link}}">{{entry.obj.driver.first_name}} {{entry.obj.driver.last_name}}</a>
-    {{/entry.obj.driver}}
-    {{^entry.obj.driver}}
-      <em>{{t.user_missing}}</em>
-    {{/entry.obj.driver}}
-    {{t.creator.delivered_wait.your_package}} <a href="{{&job_link}}">{{entry.obj.title}}</a>
-  </div>
-</script>
-
-<script id="notification_creator_job_delivered" type="text/html">
-  <img src="{{&job_image}}" class="eb-notification__image eb-image">
-  <div class="eb-notification__message">
-    {{t.creator.delivered.your_package}} <a href="{{&job_link}}">{{entry.obj.title}}</a> {{t.creator.delivered.confirmed}}
-  </div>
-</script>
-
-<script id="notification_creator_job_canceled" type="text/html">
-  <img src="{{&job_image}}" class="eb-notification__image eb-image">
-  <div class="eb-notification__message">
-    {{t.creator.canceled.your_package}} <a href="{{&job_link}}">{{entry.obj.title}}</a> {{t.creator.canceled.deleted}}
-  </div>
-</script>
-<!-- End Notification templates for creator -->
-
-<!-- Notification templates for driver -->
-<script id="notification_driver_job_bought" type="text/html">
-  <img src="{{&job_image}}" class="eb-notification__image eb-image">
-  <div class="eb-notification__message">
-    {{t.driver.bought.pre}} <a href="{{&job_link}}">{{entry.obj.title}}</a> {{t.driver.bought.post}}
-  </div>
-</script>
-
-<script id="notification_driver_job_picked_up" type="text/html">
-  <img src="{{&job_image}}" class="eb-notification__image eb-image">
-  <div class="eb-notification__message">
-    {{t.driver.picked_up.pre}} <a href="{{&job_link}}">{{entry.obj.title}}</a> {{t.driver.bought.post}}
-  </div>
-</script>
-
-<script id="notification_driver_job_delivered_wait" type="text/html">
-  <img src="{{&job_image}}" class="eb-notification__image eb-image">
-  <div class="eb-notification__message">
-    {{t.driver.delivered_wait.pre}} <a href="{{&job_link}}">{{entry.obj.title}}</a> {{t.driver.delivered_wait.post}}
-  </div>
-</script>
-
-<script id="notification_driver_job_delivered" type="text/html">
-  <img src="{{&job_image}}" class="eb-notification__image eb-image">
-  <div class="eb-notification__message">
-    {{t.driver.delivered_wait.pre}} <a href="{{&job_link}}">{{entry.obj.title}}</a> {{t.driver.delivered_wait.post}}
-    {{t.driver.delivered.pre}} <a href="{{&job_link}}">{{entry.obj.title}}</a> {{t.driver.delivered.post}}
-  </div>
-</script>
-<!-- END Notification templates for driver -->
-
-<!-- Notification templates for friends -->
-<script id="notification_none_friends_job_bought" type="text/html">
-  <img src="{{&driver_image}}" class="eb-notification__image eb-image">
-  <div class="eb-notification__message">
-    {{#entry.obj.driver}}
-      <a href="{{&driver_link}}">{{entry.obj.driver.first_name}} {{entry.obj.driver.last_name}}</a>
-    {{/entry.obj.driver}}
-    {{^entry.obj.driver}}
-      <em>{{t.user_missing}}</em>
-    {{/entry.obj.driver}}
-    {{t.friend.bought}} <a href="{{&job_link}}">{{entry.obj.title}}</a>
-  </div>
-</script>
-
-<script id="notification_none_friends_job_buyable" type="text/html">
-  <img src="{{&job_image}}" class="eb-notification__image eb-image">
-  <div class="eb-notification__message">
-    <a href="{{&job_link}}">{{entry.obj.title}}</a> {{t.friend.by }}
-    {{#entry.obj.creator}}
-      <a href="{{&creator_link}}">{{entry.obj.creator.first_name}} {{entry.obj.creator.last_name}}</a>
-    {{/entry.obj.creator}}
-    {{^entry.obj.creator}}
-      <em>{{t.user_missing}}</em>
-    {{/entry.obj.creator}}
-    {{t.friend.now_buayable}}
-  </div>
-</script>
-
-<script id="notification_none_friends_job_delivered" type="text/html">
-  <img src="{{&driver_image}}" class="eb-notification__image eb-image">
-  <div class="eb-notification__message">
-    {{#entry.obj.driver}}
-      <a href="{{&driver_link}}">{{entry.obj.driver.first_name}} {{entry.obj.driver.last_name}}</a>
-    {{/entry.obj.driver}}
-    {{^entry.obj.driver}}
-      <em>{{t.user_missing}}</em>
-    {{/entry.obj.driver}}
-    {{t.friend.delivered}} <a href="{{&job_link}}">{{entry.obj.title}}</a>
-  </div>
-</script>
-<!-- End Notification templates for friends -->
-
-<!-- Notifications with none affiliation -->
-<script id="notification_none_job_picked_up" type="text/html">
-  <img src="{{&driver_image}}" class="eb-notification__image eb-image">
-  <div class="eb-notification__message">
-    {{#entry.obj.driver}}
-      <a href="{{&driver_link}}">{{entry.obj.driver.first_name}} {{entry.obj.driver.last_name}}</a>
-    {{/entry.obj.driver}}
-    {{^entry.obj.driver}}
-      <em>{{t.user_missing}}</em>
-    {{/entry.obj.driver}}
-    {{t.creator.picked_up.your_package}} <a href="{{&job_link}}">{{entry.obj.title}}</a>
-  </div>
-</script>
-
-<script id="notification_none_job_delivered_wait" type="text/html">
-  <img src="{{&driver_image}}" class="eb-notification__image eb-image">
-  <div class="eb-notification__message">
-    {{#entry.obj.driver}}
-      <a href="{{&driver_link}}">{{entry.obj.driver.first_name}} {{entry.obj.driver.last_name}}</a>
-    {{/entry.obj.driver}}
-    {{^entry.obj.driver}}
-      <em>{{t.user_missing}}</em>
-    {{/entry.obj.driver}}
-    {{t.creator.delivered_wait.your_package}} <a href="{{&job_link}}">{{entry.obj.title}}</a>
-  </div>
-</script>
-
-<script id="notification_none_job_delivered" type="text/html">
-  <img src="{{&job_image}}" class="eb-notification__image eb-image">
-  <div class="eb-notification__message">
-    {{t.creator.delivered.your_package}} <a href="{{&job_link}}">{{entry.obj.title}}</a> {{t.creator.delivered.confirmed}}
-  </div>
-</script>
-
-<script id="notification_none_job_canceled" type="text/html">
-  <img src="{{&job_image}}" class="eb-notification__image eb-image">
-  <div class="eb-notification__message">
-    {{t.creator.canceled.your_package}} <a href="{{&job_link}}">{{entry.obj.title}}</a> {{t.creator.canceled.deleted}}
-  </div>
-</script>
-<!-- END Notifications with none affiliation -->
-
-<!-- Notifications for recipient affiliation -->
-<script id="notification_recipient_job_added" type="text/html">
-  <img src="{{&job_image}}" class="eb-notification__image eb-image">
-  <div class="eb-notification__message">
-    {{#entry.obj.creator}}
-      <a href="{{&creator_link}}">{{entry.obj.creator.first_name}} {{entry.obj.creator.last_name}}</a>
-    {{/entry.obj.creator}}
-    {{^entry.obj.creator}}
-      <em>{{t.user_missing}}</em>
-    {{/entry.obj.creator}}
-    {{t.recipient.added.task}} <a href="{{&job_link}}">{{entry.obj.title}}</a>
-  </div>
-</script>
-
-<script id="notification_recipient_job_buyable" type="text/html">
-  <img src="{{&job_image}}" class="eb-notification__image eb-image">
-  <div class="eb-notification__message">
-    {{t.recipient.buyable.your_task}} <a href="{{&job_link}}">{{entry.obj.title}}</a> {{t.recipient.buyable.is_buyable}}
-  </div>
-</script>
-
-<script id="notification_recipient_job_bought" type="text/html">
-  <img src="{{&driver_image}}" class="eb-notification__image eb-image">
-  <div class="eb-notification__message">
-    {{#entry.obj.driver}}
-      <a href="{{&driver_link}}">{{entry.obj.driver.first_name}} {{entry.obj.driver.last_name}}</a>
-    {{/entry.obj.driver}}
-    {{^entry.obj.driver}}
-      <em>{{t.user_missing}}</em>
-    {{/entry.obj.driver}}
-    {{t.recipient.bought.your_package}} <a href="{{&job_link}}">{{entry.obj.title}}</a>
-  </div>
-</script>
-
-<script id="notification_recipient_job_bought" type="text/html">
-  <img src="{{&driver_image}}" class="eb-notification__image eb-image">
-  <div class="eb-notification__message">
-    {{#entry.obj.driver}}
-      <a href="{{&driver_link}}">{{entry.obj.driver.first_name}} {{entry.obj.driver.last_name}}</a>
-    {{/entry.obj.driver}}
-    {{^entry.obj.driver}}
-      <em>{{t.user_missing}}</em>
-    {{/entry.obj.driver}}
-    {{t.recipient.picked_up.your_package}} <a href="{{&job_link}}">{{entry.obj.title}}</a>
-  </div>
-</script>
-
-<script id="notification_recipient_job_delivered_wait" type="text/html">
-  <img src="{{&driver_image}}" class="eb-notification__image eb-image">
-  <div class="eb-notification__message">
-    {{#entry.obj.driver}}
-      <a href="{{&driver_link}}">{{entry.obj.driver.first_name}} {{entry.obj.driver.last_name}}</a>
-    {{/entry.obj.driver}}
-    {{^entry.obj.driver}}
-      <em>{{t.user_missing}}</em>
-    {{/entry.obj.driver}}
-    {{t.recipient.delivered_wait.your_package}} <a href="{{&job_link}}">{{entry.obj.title}}</a>
-  </div>
-</script>
-
-<script id="notification_recipient_job_delivered" type="text/html">
-  <img src="{{&job_image}}" class="eb-notification__image eb-image">
-  <div class="eb-notification__message">
-    {{t.recipient.delivered.your_package}} <a href="{{&job_link}}">{{entry.obj.title}}</a> {{t.recipient.delivered.confirmed}}
-  </div>
-</script>
-
-<script id="notification_recipient_job_canceled" type="text/html">
-  <img src="{{&job_image}}" class="eb-notification__image eb-image">
-  <div class="eb-notification__message">
-    {{t.recipient.delivered.your_package}} <a href="{{&job_link}}">{{entry.obj.title}}</a> {{t.recipient.canceled.deleted}}
-  </div>
-</script>
-<!-- END Notifications with recipient affiliation -->
-
-<!-- Notifications with sender affiliation -->
-<script id="notification_sender_job_added" type="text/html">
-  <img src="{{&job_image}}" class="eb-notification__image eb-image">
-  <div class="eb-notification__message">
-    {{t.sender.added.you_added}} <a href="{{&job_link}}">{{entry.obj.title}}</a>
-  </div>
-</script>
-
-<script id="notification_sender_job_buyable" type="text/html">
-  <img src="{{&job_image}}" class="eb-notification__image eb-image">
-  <div class="eb-notification__message">
-    {{t.sender.buyable.your_task}} <a href="{{&job_link}}">{{entry.obj.title}}</a> {{t.sender.buyable.is_buyable}}
-  </div>
-</script>
-
-<script id="notification_sender_job_bought" type="text/html">
-  <img src="{{&driver_image}}" class="eb-notification__image eb-image">
-  <div class="eb-notification__message">
-    {{#entry.obj.driver}}
-      <a href="{{&driver_link}}">{{entry.obj.driver.first_name}} {{entry.obj.driver.last_name}}</a>
-    {{/entry.obj.driver}}
-    {{^entry.obj.driver}}
-      <em>{{t.user_missing}}</em>
-    {{/entry.obj.driver}}
-    {{t.sender.bought.your_package}} <a href="{{&job_link}}">{{entry.obj.title}}</a>
-  </div>
-</script>
-
-<script id="notification_sender_job_picked_up" type="text/html">
-  <img src="{{&driver_image}}" class="eb-notification__image eb-image">
-  <div class="eb-notification__message">
-    {{#entry.obj.driver}}
-      <a href="{{&driver_link}}">{{entry.obj.driver.first_name}} {{entry.obj.driver.last_name}}</a>
-    {{/entry.obj.driver}}
-    {{^entry.obj.driver}}
-      <em>{{t.user_missing}}</em>
-    {{/entry.obj.driver}}
-    {{t.sender.picked_up.your_package}} <a href="{{&job_link}}">{{entry.obj.title}}</a>
-  </div>
-</script>
-
-<script id="notification_sender_job_delivered_wait" type="text/html">
-  <img src="{{&sender_image}}" class="eb-notification__image eb-image">
-  <div class="eb-notification__message">
-    {{#entry.obj.driver}}
-      <a href="{{&driver_link}}">{{entry.obj.driver.first_name}} {{entry.obj.driver.last_name}}</a>
-    {{/entry.obj.driver}}
-    {{^entry.obj.driver}}
-      <em>{{t.user_missing}}</em>
-    {{/entry.obj.driver}}
-    {{t.sender.sender.delivered_wait.your_package}} <a href="{{&job_link}}">{{entry.obj.title}}</a>
-  </div>
-</script>
-
-<script id="notification_sender_job_delivered" type="text/html">
-  <img src="{{&job_image}}" class="eb-notification__image eb-image">
-  <div class="eb-notification__message">
-    {{t.sender.delivered.your_package}} <a href="{{&job_link}}">{{entry.obj.title}}</a> {{t.sender.delivered.confirmed}}
-  </div>
-</script>
-
-<script id="notification_sender_job_canceled" type="text/html">
-  <img src="{{&job_image}}" class="eb-notification__image eb-image">
-  <div class="eb-notification__message">
-    {{t.sender.canceled.your_package}} <a href="{{&job_link}}">{{entry.obj.title}}</a> {{t.sender.canceled.deleted}}
-  </div>
-</script>
-
-<!-- END Notifications with sender affiliation -->
-
-<script id="notification_creator_test" type="text/html">
-  <div class="eb-notification__message-wrapper cf">
-    <img src="https://easybring.s3.amazonaws.com/jobs/default/default-no-size_130x130.png" class="eb-notification__image eb-image">
-    <div class="eb-notification__message">
-      The task titlem <a href="#">Title</a> is buyable my friend
-    </div>
-  </div>
-</script>
-
-<!-- Notification layout for questions -->
-<script id="notification_layout" type="text/html">
-  <section class="eb-notification is-visible">
-    <div class="eb-notification__wrapper content to-animate">
-      <div class="eb-notification__content">
-
-
-        {{#question}}
-          <div class="eb-notification__body cf">
-            <form class="question-form" accept-charset="UTF-8" action="{{&answer_url}}" method="post" data-remote="true"> <!-- Form should be removed, is only for testing purposes -->
-              {{{content}}}
-              <input type="submit" style="display: none;">
-            </form>
-          </div><!-- eb-notification__body -->
-          <div class="eb-notification__success">
-            <h2 class="eb-notitification__success-title" data-read-delay="1600">Great. Thank you :)</h2>
-          </div><!-- eb-notification__success -->
-        {{/question}}
-        {{^question}}
-          <div class="eb-notification__body cf">
-            <div class="eb-notification__message-wrapper cf">
-              {{{content}}}
-            </div><!-- eb-notification__message-wrapper -->
-          </div><!-- eb-notification__body -->
-        {{/question}}
-
-
-      </div><!-- eb-notification__content -->
-      <a href="#" class="eb-notification__close icon-font animatable" data-animation="slideInUp slower animation-delay200 quarter-time">✕</a>
-    </div><!-- content -->
-  </section><!-- eb-notification -->
-</script>
-<!-- END Notification layout for questions -->
-
-
-<!-- Notification layout for questions -->
-<script id="notification_question_push_answers" type="text/html">
-  <h2 class="eb-notification__title h6 animatable" data-animation="slideInBottom slower animation-ease-out">{{entry.question.question}}</h2>
-  <div class="eb-notification__answers">
-    <input type="hidden" name="answer_id">
-    <input type="hidden" name="include_field_name" value="{{entry.include_field_name}}">
-    <input type="hidden" name="include_field_value" value="{{entry.include_field_value}}">
-    {{#entry.question.answers}}
-    <a href="#" class="eb-notification__button animatable" data-animation="slideInBottom slower animation-delay100 animation-ease-out" data-answer-id="{{id}}">
-      <span class="eb-notification__number">{{index}}</span>
-      {{answer}}
-    </a>
-    {{/entry.question.answers}}
-  </div><!-- eb-notification__answers -->
-</script>
-<!-- END Notification layout for questions -->
-
-
-<!-- Notification template for question with one text-field answer -->
-<script id="notification_question_push_input" type="text/html">
-  <h2 class="eb-notification__title h6 animatable" data-animation="slideInBottom slower animation-ease-out">{{entry.question.question}}</h2>
-  <div class="eb-notification__answers eb-notification__answers--input animatable" data-animation="slideInBottom slower animation-delay100 animation-ease-out">
-    <span class="eb-notification__arrow animatable" data-animation="hor-floating animation-delay50 infinite">&gt;</span>
-    <input type="hidden" name="include_field_name" value="{{entry.include_field_name}}">
-    <input type="hidden" name="include_field_value" value="{{entry.include_field_value}}">
-    <input type="text" class="input--light eb-notification__input js-input-with-prevent {{#entry.question.geocode}}autocomplete{{/entry.question.geocode}}" placeholder="{{entry.question.placeholder}}" name="answer_text" data-add-id="geo-question-{{entry.question.id}}" data-country-restriction="none">
-    <span class="eb-notification__submit-wrapper">
-      <input type="submit" value="Add" class="orange-submit-button eb-notification__submit"/>
-    </span>
-  </div><!-- eb-notification__answers -->
-</script>
-<!-- END Notification template for question with one text-field answer -->
-
-<!-- LOADER for any use -->
-<script id="dotted_loader_image" type="text/html">
-  <img class="dotted-loader" src="https://d1112petr9ji1a.cloudfront.net/assets/comment-loader@2x-a83ba0e56bdd29c1f678ab02380c5e1191710655ea61930e3a7cd30ba0c9d69e.gif" alt="Comment loader@2x" />
-</script>
-<!-- END LOADER-->
-
-<!-- Card message on admin of the task page -->
-<script id="card_info_message" type="text/html">
-  
-</script>
-<!-- END Card message -->
-
-<!-- Card message on admin of the task page -->
-<script id="rating_messages" type="text/html">
-  <div class="js-rating-title">Thanks for your rating!</div>
-<div class="js-rating-title-mild">Thanks for rating.</div>
-<div class="js-rating-subtitle">Let your friends know about your experience :)</div>
-<div class="js-rating-subtitle-mild">Let us know if you had any problems. <a href="mailto:support@nimber.com">Contact us</a>.</div>
-
-
-<div class="js-rating-facebook-creator">
-  <a href="http://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]=https://www.nimber.com&amp;p[images][0]=''&amp;p[title]=''&amp;p[summary]=''" class="[ btn btn--facebook btn--big ] facebook-connect">Share it!</a>
-</div>
-<div class="js-rating-twitter-creator">
-  <a href="https://twitter.com/intent/tweet?url=https://www.nimber.com?&amp;text=Awesome! I just had a social delivery through Nimber. Social deliveries FTW. Join us!&amp;via=nimber" class="[ btn btn--twitter btn--big ]">Tweet it!</a>
-</div>
-
-<div class="js-rating-facebook-driver">
-  <a href="http://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]=https://www.nimber.com&amp;p[images][0]=''&amp;p[title]=''&amp;p[summary]=" class="[ btn btn--facebook btn--big ] facebook-connect">Share it!</a>
-</div>
-<div class="js-rating-twitter-driver">
-  <a href="https://twitter.com/intent/tweet?url=https://www.nimber.com?&amp;text=I just got paid for helping someone on my last trip. Social deliveries FTW. Join us!&amp;via=nimber" class="[ btn btn--twitter btn--big ]">Tweet it!</a>
-</div>
-
-</script>
-<!-- END Card message -->
-
-<!-- Card message on admin of the task page -->
-<script id="modalview" type="text/html">
-  <div id="{{id}}" class="modalview__overlay modalview--hidden {{extra_classes}}">
-  <div class="modalview__deadzone"></div>
-  <section class="[ modalview__wrapper modalview--out ]  [ js-modalview-wrapper ]">
-    <header class="modalview__header">
-      <h1 class="modalview__header-title">{{title}}</h1>
-      <a href="#" class="modalview__close icon-font">✕</a>
-    </header><!-- modalview__header -->
-    <div class="modalview__content cf">
-
-    </div><!-- modalview__content -->
-  </section><!-- modalview__wrapper -->
-</div><!-- modalview__overlay -->
-</script>
-<!-- END Card message -->
-
-<!-- Alerts -->
-<script id="alert_layout" type="text/html">
-  <div class="system-alert cf is-visible">
-    <div class="system-alert__content {{type}} content cf">
-        <p class="system-alert__message">{{{content}}}</p>
-        <span class="system-alert__close icon-font">✕</span>
-    </div><!-- system-alert__content -->
-  </div><!-- system-alert -->
-</script>
-<!-- Alert -->
-
-<!-- Task chat message -->
-<script id="chat_message_template" type="text/html">
-  
-</script>
-<!-- Task chat message -->
-
-    
-
-    <script type="text/javascript">
-  $(document).ready(function(){
-// Facebook pixel
-    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-        n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
-      n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
-      t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
-        document,'script','//connect.facebook.net/en_US/fbevents.js');
-
-    fbq('init', '969309376454035');
-    fbq('track', 'PageView');
-
-// Facebook Pixel Send offer
-    (function() {
-      var _fbq = window._fbq || (window._fbq = []);
-      if (!_fbq.loaded) {
-        var fbds = document.createElement('script');
-        fbds.async = true;
-        fbds.src = '//connect.facebook.net/en_US/fbds.js';
-        var s = document.getElementsByTagName('script')[0];
-        s.parentNode.insertBefore(fbds, s);
-        _fbq.loaded = true;
-      }
-    })();
-
-// Bing ads
-    (function(w,d,t,r,u){var f,n,i;w[u]=w[u]||[],f=function(){var o={ti:"5118126"};o.q=w[u],w[u]=new UET(o),w[u].push("pageLoad")},n=d.createElement(t),n.src=r,n.async=1,n.onload=n.onreadystatechange=function(){var s=this.readyState;s&&s!=="loaded"&&s!=="complete"||(f(),n.onload=n.onreadystatechange=null)},i=d.getElementsByTagName(t)[0],i.parentNode.insertBefore(n,i)})(window,document,"script","//bat.bing.com/bat.js","uetq");
-
-  });
-</script>
-
-
-
-
-</head>
-
-<body  class="en no-nav send-page not-logged-in " data-lang="en" data-pageview="">
-
-<!-- BODY CODE -->
-<!-- Google Tag Manager -->
-<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5PG4G3"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-5PG4G3');</script>
-<!-- End Google Tag Manager -->
-<!--Facebook conversion pixel-->
-<noscript><img height="1" width="1" alt="" style="display:none" src="https://www.facebook.com/tr?ev=6026886869712&amp;cd[value]=0.00&amp;cd[currency]=GBP&amp;noscript=1" /></noscript>
-<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=969309376454035&amp;ev=PageView&amp;noscript=1"/></noscript>
-<!--End facebook conversion pixel-->
-
-<!--[if lt IE 7]>
-    <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
-<![endif]-->
-
-<!-- HEADER OF THE WEBSITE -->
-<header class="header-wrapper expand cf ">
-  <div class="fixed-header">
-    <div class="header container">
-
-      <a class="[ logo ]  [ pull-left ]" href="/">
-        <span class="logo-content">
-          <img width="28" alt="Nimber Logo" title="Nimber" src="https://d1112petr9ji1a.cloudfront.net/assets/logo-red-4d7578fa494a5ccfb988ee2f0c3f055b443c937210bb4af93e8e9e52ef0d4a2b.svg" />
-        </span>
-</a>
-      <nav class="top-nav-wrapper longer">
-          </ul><!-- end of top-side-nav -->
-        </nav><!-- end of top nav wrapper -->
-
-      <nav class="tab-nav">
-        <ul class="cf">
-          <li class="item tab-nav-item tab-nav-item--send longer is-active">
-            <a id="send-noe" data-ie="before" href="/tasks/add">Send</a>
-          </li>
-          <li class="item tab-nav-item tab-nav-item--search longer ">
-            <a id="ta-med-noe" data-ie="before" href="/tasks/search">Search</a>
-          </li>
-            <li class="item tab-nav-item tab-nav-item--deliveries longer ">
-              <a id="deliveries" data-ie="before" href="/tasks/deliveries">Deliveries</a>
-            </li>
-        </ul>
-      </nav><!-- end of top-nav -->
-
-
-    </div><!-- end of header -->
-  </div><!-- fixed header -->
-</header>
-<script type="text/javascript">
-<!--
-  var locale = "en";
-//-->
-</script>
-
-
-<!-- GLOBAL ALERTS -->
-
-
-<!-- CONTENT -->
-<script src="https://d1112petr9ji1a.cloudfront.net/assets/send-steps-fc89e2c5d997e2d3a97007c08e388bf44c57559f5f4c68c14294a7e9a51cbf36.js"></script>
-
-<script>
-  var PriceFeedbackTexts = {
-    min: [
-      "Our marketplace is not perfect, yet. But as a rule, the more you pay the faster the match.",
-      "As a rule, the more you pay, the quicker the delivery.",
-      "We believe in fair. Though a higher price normally means a quicker delivery."
-    ],
-    max: [
-      "Bringers should be fighting to help you out",
-      "Must be a very important delivery :)",
-      "A price can never be too high...but?!?",
-      "Call our CEO, he wants you to invest ;)",
-      "Whoa, slow down money bags :)",
-      "With this price we'll throw in a free bowl of soup"
-    ],
-    temporary: [
-      "Higher prices usually lead to quicker deliveries."
-    ]
-  };
-
-  var feedbackQuestions = {
-    title: "Can we assist you with your delivery? Let us know:",
-    input: "What do you need help with..."
-  }
-
-</script>
-
-<div class="hidify">
-  <input type="hidden" class="js-price-suggestion-url" value="/tasks/price_suggestions">
-  <input type="hidden" class="js-guaranteed-route-url" value="/tasks/guaranteed_routes">
-</div>
-
-<script id="location-tooltip" type="text/html">
-  <div class="send-map-tooltip js-send-map-tooltip">
-    <h1>{{address}}</h1><p> Press to select this address
-    <span class='icon-font arrow-right'>〉</span>
-    </p>
-  </div>
-</script>
-
-<script id="loading-tooltip" type="text/html">
-  <div class="animated showify send-map-tooltip send-map-tooltip-loading js-send-map-tooltip-loading">
-    <img width="20" class="relative" style="display: inline-block; margin-right: 5px; top: -2px;" src="https://d1112petr9ji1a.cloudfront.net/assets/loader-white-on-black-e2c1641bc5f47548997398cd121506371e3af877398f21ebea4b26e66dcb66e0.gif" alt="Loader white on black" />
-    Loading...
-  </div>
-</script>
-
-<script id="tooltip-0" type="text/html">
-  <div class='search-tooltip'>PICK-UP</div>
-</script>
-
-<script id="tooltip-1" type="text/html">
-  <div class='search-tooltip'>DELIVERY</div>
-</script>
-
-<script id="autoaccept-no-cc" type="text/html">
-  <span>You need to add your credit card to pay for the delivery. <strong>We don't charge until delivery is confirmed.</strong></span>
-</script>
-<script id="autoaccept-has-cc" type="text/html">
-  <span>We don't charge your card until you confirm the delivery.</span>
-</script>
-
-<script id="normal-no-cc" type="text/html">
-  <span>No card needed yet. When a bringer accepts your delivery we will ask for your card and <strong>we only charge it when you confirm delivery</strong></span>
-</script>
-
-<script id="normal-has-cc" type="text/html">
-  <span>We don't charge your card until you confirm the delivery</span>
-</script>
-
-
+            </head>
+    <body ng-app="schmuber" ng-controller="send_package">
 
 
 <!-- HEADER -->
-<section id="new-task-page" class="section expand">
-  <div class="content--full">
-    <article id="send-steps-page" class="send-steps" data-current-address="33-99 Bush St, San Jose, CA 95126, USA">
-      <form class='task-avatar-upload image-upload-form' id='task-avatar-upload' action='/utils/upload_image' method='post'data-img="task-avatar"data-remote="true"data-url_field="#uploaded_image_url"data-trigger=".js-final-post-button"data-path_field="#uploaded_image_key"data-bucket="jobs"data-auto_upload="false"data-error_message="The image couldn't uploaded, please try again or contact us."data-generic_error_message="Your image is too big to upload, please choose a smaller one."> <input type='hidden' name='bucket' value='jobs'/><canvas id='canvas' width='300'></canvas><input type='file' name='file_upload' id='file_upload-task-avatar-upload'/> </form>
-      <form class="non-html5-upload hidify" enctype="multipart/form-data" action="/utils/upload_image" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="wkbbw1mY4C6jSA35vxpmeZGJTwhsGuCiVa5WyNAPoeuFbAHGmwnJiNPMHBi2K8iYI9H/3cajfQvRxuSABdrCxQ==" />
-          <input type="file" name="image" id="image" />
-          <input type="hidden" name="bucket" id="bucket" value="jobs" />
-          <input type="hidden" name="auto_update" id="auto_update" value="true" />
-          <input type="hidden" name="redirect_after" id="redirect_after" value="" class="js-redirect-path" />
-          <input type="hidden" name="redirect_hash" id="redirect_hash" value="" class="js-redirect-hash" />
-          <input type="submit" name="commit" value="Upload" class="hidify" data-disable-with="Upload" />
-</form>      <form id="send-task-form" class="send-task-form step-form" data-currency="USD" action="/tasks" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="LUKK6QhsYQwzJ3kxvspMVv80hBO5AGr4S8lpLyyUnXNqaFDsyv1IqkOjaNC3++K3TWw0xhO591HPodtn+UH+XQ==" />
-          <input type="hidden" name="task[picture]" id="uploaded_image_key" value="" />
-          <section class="send-step js-send-step send-step--in send-step--invisible  cf  js-auto-next  js-closest-wrapper"
-         data-metric="{'category': 'Send', 'action': 'Load', 'options': {'action': 'Title'}}"
-         data-event="{'name': 'Send - Details', 'options': {}}">
-  <h2 class="send-step__title">What do you want to send?</h2>
-    
-  <a class="send-step__image js-upload-button task-avatar" style="" data-upload-form="task-avatar-upload" href="#">
-
-      <img width="70" class="add-photo-hint-icon js-add-photo-icon" src="https://d1112petr9ji1a.cloudfront.net/assets/send/icon-photo-upload-f07dd3107d8dba8ba3b27c79414d61ef2853550d7b8097a18a3e52e8013bacbf.svg" alt="Icon photo upload" />
-
-      <span class="add-photo-hint">
-        Add photo
-        <br/>
-        <span class="add-photo-optional">
-          Optional
-        </span>
-      </span>
-
-      <img id="uploaded_image" alt="Upload your photo" class="send-step__main-image js-task-main-image" title="Select photo" src="https://d1112petr9ji1a.cloudfront.net/assets/empty_image-8ea078292393a14a8e44be139a7fa6ed09d9c650e210eccca587045239b71cab.png" />
-
-</a>
-  <input id="send-task-title" autocomplete="off" class="send-input  js-repeatable autofocus input-stacked first js-attach-error  js-input-title  js-input-to-next
-                       js-validation-not-empty  capitalize" data-field="title" tabindex="1" placeholder="Title (e.g. Office chair)" type="text" value="" name="task[title]" />
-  <textarea id="send-task-description" autocomplete="off" rows="3" class="send-input js-input-description input-stacked last
-                       capitalize" data-field="description" tabindex="2" placeholder="Additional notes for delivery (Optional)" name="task[description]">
-</textarea>
-
-
-  <div class="cf send-step__navigation-wrapper">
-    <div class="js-navigation-wrapper-inner">
-      <div class="send-step__navigation-content cf">
-        <button type="button" class="[ btn btn--big btn--primary pull-right btn--space-top ] js-step__button send-step__button" tabindex="2">Next</button>
-      </div>
-    </div>
-  </div>
-</section><!-- send-step -->
-          <section class="js-send-step send-step  js-auto-next send-step--size  send-step--hidden  cf  js-closest-wrapper"
-         data-metric="{'category': 'Send', 'action': 'Load', 'options': {'action': 'Size'}}" data-pageview="/virtual/tasks/new/size"
-         data-event="{'name': 'Send - Size', 'options': {}}">
-  <h2 class="send-step__title">What&#39;s the size</h2>
-
-  <div class="size-options">
-    <div class="data-list data-list">
-      <label for="size-xs" class="data-list__item data-list__item--thin data-list__item--clean js-size-option is-clickable ">
-        <span class="data-list__actions data-list__actions--left">
-          <input type="radio" class="js-size-option-button js-option-button" 
-                 id="size-xs" value="1" name="size-options"/>
-        </span>
-        <span class="data-list__info data-list__info--center">
-           <span class="data-list__info-full pull-left">
-            <span class="pull-right">
-               <span class="vehicle-walk small"></span>
-            </span>
-            <span class="data-list__info__text o-heading o-heading-bold">
-              Fits in a pocket
-            </span>
-            <span class="data-list__info__text o-paragraph--helper">Phone, keys, glasses etc.</span>
-           </span>
-        </span>
-      </label>
-      <label for="size-s" class="data-list__item data-list__item--thin is-clickable js-size-option">
-        <span class="data-list__actions data-list__actions--left">
-          <input type="radio" class="js-size-option-button js-option-button" id="size-s"
-                 value="2" 
-                 name="size-options"/>
-        </span>
-          <span class="data-list__info data-list__info--center">
-          <span class="data-list__info-full pull-left">
-            <span class="data-list__info__text pull-right">
-               <span class="vehicle-bike small"></span>
-            </span>
-            <span class="data-list__info__text o-heading o-heading-bold">
-              Fits in a bag
-            </span>
-            <span class="data-list__info__text o-paragraph--helper">Laptop, book, clothes etc.</span>
-          </span>
-        </span>
-      </label>
-      <label for="size-m" class="data-list__item data-list__item--thin is-clickable js-size-option">
-        <span class="data-list__actions data-list__actions--left">
-          <input type="radio" class="js-size-option-button js-option-button" id="size-m" 
-                 value="3" name="size-options"/>
-        </span>
-        <span class="data-list__info data-list__info--center">
-          <span class="data-list__info-full pull-left">
-            <span class="data-list__info__text pull-right">
-              <span class="vehicle-car small"></span>
-            </span>
-            <span class="data-list__info__text o-heading o-heading-bold">
-              Fits in a car
-            </span>
-            <span class="data-list__info__text o-paragraph--helper">Painting, guitar, pet etc.</span>
-          </span>
-        </span>
-      </label>
-      <label for="size-l" class="data-list__item data-list__item--thin is-clickable js-size-option">
-        <span class="data-list__actions data-list__actions--left">
-          <input type="radio" class="js-size-option-button js-option-button" id="size-l" value="4" name="size-options"
-                 />
-        </span>
-        <span class="data-list__info data-list__info--center">
-          <span class="data-list__info-full pull-left">
-            <span class="data-list__info__text pull-right">
-              <span class="vehicle-suv small"></span>
-            </span>
-            <span class="data-list__info__text o-heading o-heading-bold">
-              Fits in a big car
-            </span>
-            <span class="data-list__info__text o-paragraph--helper">Chair, mirror, small furniture, etc.</span>
-          </span>
-        </span>
-      </label>
-      <label for="size-xl" class="data-list__item data-list__item--thin is-clickable js-size-option">
-        <span class="data-list__actions data-list__actions--left">
-          <input type="radio" class="js-size-option-button js-option-button" id="size-xl"
-                 value="5" name="size-options" />
-        </span>
-        <label for="size-xl" class="data-list__info data-list__info--center">
-          <span class="data-list__info-full pull-left">
-            <span class="data-list__info__text pull-right">
-              <span class="vehicle-van small"></span>
-            </span>
-            <span class="data-list__info__text o-heading o-heading-bold">
-              Fits in a van
-            </span>
-            <span class="data-list__info__text o-paragraph--helper">Sofas, dining table, piano, boat, etc.</span>
-          </span>
-        </label>
-      </label>
-    </div>
-  </div>
-  <input id="send-task-size" class="js-input-size  js-validation-not-empty  hidden-but-working" data-trigger="change" data-field="size" type="text" name="task[size]" />
-
-  <div class="cf send-step__navigation-wrapper">
-    <div class="js-navigation-wrapper-inner">
-      <div class="send-step__navigation-content cf">
-        <a href="#" class="js-step__back-button send-step__back-button"><span class="icon-font arrow-left">〈</span>Back</a>
-        <button type="button" class="[ btn btn--big btn--primary pull-right btn--space-top ] js-step__button send-step__button" tabindex="2">Next</button>
-      </div>
-    </div>
-  </div>
-</section>
-          
-<!---EXPERIMENT -->
-
-<section class="js-send-step send-step send-step-map send-step--hidden  js-auto-next send-step--route  cf"
-         data-metric="{'category': 'Send', 'action': 'Load', 'options': {'action': 'Pick up location'}}"
-         data-pageview="/virtual/tasks/new/pickup_location"
-         data-event="{'name': 'Send - Pickup Location', 'options': {}}">
-    <h2 class="send-step__title">Where should it be picked up from?</h2>
-    <div class="location-input-wrapper">
-      <span class="icon-font location-icon">m</span>
-      <span class="icon-font warning-icon">!</span>
-      <input id="send-task-from" class="send-input  autofocus  autocomplete  js-input-from js-input-to-next
-                        js-attach-error  js-validation-not-empty" tabindex="3" placeholder="Type pick-up location" data-field="pickup_location" data-add-id="pickup_location" data-which="pickup" data-country-restriction="none" data-map-index="0" type="text" value="" name="task[pickup_location]" />
-      <div class="warning-input-message">We coulnd&#39;t find this address. Check it again, or use the map.</div>
-    </div>
-    <input type="hidden" value="" name="task[pickup_city]" id="task_pickup_city" />
-    <input class="js-location-lat" type="hidden" value="" name="task[pickup_lat]" id="task_pickup_lat" />
-    <input class="js-location-lng js-location-change-trigger" type="hidden" value="" name="task[pickup_lng]" id="task_pickup_lng" />
-    <input type="hidden" value="" name="task[pickup_country]" id="task_pickup_country" />
-    <input type="hidden" value="" name="task[pickup_street]" id="task_pickup_street" />
-  
-<div class="sendmap"  style="width:100%; height:369px;" data-height="369" id="pickup_map"
-     data-center-lat="37.33089289999999" data-center-lng="-121.9046921">
-  <div style="width:100%; height: 100%;"></div>
-  <a href="#" class="map-shadow">&nbsp;</a>
-  <div class="map-transparent-overlay js-map-transparent-overlay" style="display: none"></div>
-</div><!-- end of map -->
-
-
-  <div class="cf send-step__navigation-wrapper">
-    <div class="js-navigation-wrapper-inner">
-      <div class="send-step__navigation-content cf">
-        <button type="button" class="[ btn btn--big btn--primary pull-right btn--space-top ] send-step__button js-step__button disablify">Next</button>
-        <a href="#" class="js-step__back-button send-step__back-button">
-          <span class="icon-font arrow-left">〈</span>Back</a>
-      </div>
-    </div>
-  </div>
-</section>
-          <div class="send-step js-send-step js-auto-next send-step-map cf  js-auto-next  js-closest-wrapper send-step--hidden"
-         data-metric="{'category': 'Send', 'action': 'Load', 'options': {'action': 'Delivery location'}}"
-         data-pageview="/virtual/tasks/new/delivery_location"
-     data-event="{'name': 'Send - Delivery Location', 'options': {}}">
-  <h2 class="send-step__title">And where should it be delivered to?</h2>
-  <div class="location-input-wrapper">
-    <span class="icon-font">m</span>
-    <span class="icon-font warning-icon">!</span>
-    <input id="send-task-to" class="send-input  autofocus  autocomplete  js-input-to  js-input-to-next
-                      js-attach-error  js-validation-not-empty" tabindex="3" placeholder="e.g. 178 Walton Breck Road, Liverpool" data-field="delivery_location" data-add-id="delivery_location" data-which="delivery" data-country-restriction="none" data-map-index="1" type="text" value="" name="task[delivery_location]" />
-    <div class="warning-input-message">We coulnd&#39;t find this address. Check it again, or use the map.</div>
-  </div>
-  <input type="hidden" value="" name="task[delivery_city]" id="task_delivery_city" />
-  <input class="js-location-lat" type="hidden" value="" name="task[delivery_lat]" id="task_delivery_lat" />
-  <input class="js-location-lng js-location-change-trigger" type="hidden" value="" name="task[delivery_lng]" id="task_delivery_lng" />
-  <input type="hidden" value="" name="task[delivery_country]" id="task_delivery_country" />
-  <input type="hidden" value="" name="task[delivery_street]" id="task_delivery_street" />
-  
-<div class="sendmap"  style="width:100%; height:369px;" data-height="369" id="delivery_map"
-     data-center-lat="37.33089289999999" data-center-lng="-121.9046921">
-  <div style="width:100%; height: 100%;"></div>
-  <a href="#" class="map-shadow">&nbsp;</a>
-  <div class="map-transparent-overlay js-map-transparent-overlay" style="display: none"></div>
-</div><!-- end of map -->
-
-  <div class="cf send-step__navigation-wrapper">
-    <div class="js-navigation-wrapper-inner">
-      <div class="send-step__navigation-content cf">
-        <button type="button" class="[ btn btn--big btn--primary pull-right btn--space-top ] send-step__button js-step__button disablify">Next</button>
-        <a href="#" class="js-step__back-button send-step__back-button">
-          <span class="icon-font arrow-left">〈</span>Back</a>
-      </div>
-    </div>
-  </div>
-
-</div><!-- send-substep -->
-
-
-          <section class="js-send-step send-step  send-step--delivery-date send-step--hidden cf"
-         data-metric="{'category': 'Send', 'action': 'Load', 'options': {'action': 'Delivery Time'}}"
-         data-pageview="/virtual/tasks/new/time"
-         data-event="{'name': 'Send - Date & Time', 'options': {}}">
-  <h2 class="send-step__title">When would you like to have it delivered?</h2>
-
-  <div class="day-options">
-    <div class="data-list data-list">
-      <label for="day-flexible" class="data-list__item data-list__item--thin data-list__item--clean is-clickable">
-        <span class="data-list__actions data-list__actions--left">
-          <input type="radio" class="js-day-option-button js-option-button"
-                 id="day-flexible" value="2017-05-13T02:33:18+00:00" name="day-options"/>
-        </span>
-        <label  class="data-list__info data-list__info--center">
-          <span class="data-list__info__text">I&#39;m flexible</span>
-        </label>
-      </label>
-      <label for="day-today" class="data-list__item data-list__item--thin is-clickable">
-        <span class="data-list__actions data-list__actions--left">
-          <input type="radio" class="js-day-option-button js-option-button" id="day-today"
-                 value="2017-04-13T02:33:18+00:00"
-                 name="day-options"/>
-        </span>
-        <span class="data-list__info data-list__info--center">
-          <span class="data-list__info__text pull-left">Today</span>
-          <span class="data-list__info__text pull-right">
-            13 April</span>
-        </span>
-      </label>
-      <label for="day-custom" class="data-list__item data-list__item--thin is-clickable">
-        <span class="data-list__actions data-list__actions--left">
-          <input type="radio" class="js-day-option-button js-option-button" id="day-custom" value="custom" name="day-options"/>
-        </span>
-        <span class="data-list__info data-list__info--center">
-          <span class="data-list__info__text pull-left">
-            Custom...
-          </span>
-          <span class="data-list__info__text pull-right js-custom-date-text">
-          </span>
-        </span>
-      </label>
-      <div class="data-list__item data-list__item--thin js-custom-day-options hidify">
-        <div class="datepicker js-input-task-date" data-format='dd-mm-yy'>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="time-options js-time-options hidify">
-    <h3 class="send-step__title">...and at what time?</h3>
-    <div class="data-list data-list">
-      <label for="time-flexible" class="data-list__item data-list__item--thin data-list__item--clean is-clickable">
-        <span class="data-list__actions data-list__actions--left">
-          <input type="radio" class="js-time-option-button js-option-button" value=""
-                 id="time-flexible" name="time-options"/>
-        </span>
-        <span  class="data-list__info data-list__info--center">
-          <span class="data-list__info__text">I&#39;m flexible</span>
-        </span>
-      </label>
-      <label for="time-noon" class="data-list__item data-list__item--thin is-clickable">
-        <span class="data-list__actions data-list__actions--left">
-          <input type="radio" class="js-time-option-button js-option-button" id="time-noon" value="12" name="time-options"/>
-        </span>
-        <span class="data-list__info data-list__info--center">
-          <span class="data-list__info__text task-delivery-time noon pull-left">Noon</span>
-          <span class="data-list__info__text pull-right">12:00 PM</span>
-        </span>
-      </label>
-      <label for="time-evening" class="data-list__item data-list__item--thin is-clickable">
-        <span class="data-list__actions data-list__actions--left">
-          <input type="radio" class="js-time-option-button js-option-button" id="time-evening" value="18" name="time-options"/>
-        </span>
-        <span  class="data-list__info data-list__info--center">
-          <span  class="data-list__info__text task-delivery-time evening pull-left">Evening</span>
-          <span class="data-list__info__text pull-right">06:00 PM</span>
-        </span>
-      </label>
-      <label for="time-night" class="data-list__item data-list__item--thin is-clickable">
-        <span class="data-list__actions data-list__actions--left">
-          <input type="radio" class="js-time-option-button js-option-button" id="time-night" value="23" name="time-options"/>
-        </span>
-        <span  class="data-list__info data-list__info--center">
-          <span class="data-list__info__text task-delivery-time night pull-left">Night</span>
-          <span class="data-list__info__text pull-right">11:00 PM</span>
-        </span>
-      </label>
-      <label for="time-custom" class="data-list__item data-list__item--thin is-clickable">
-        <span class="data-list__actions data-list__actions--left">
-          <input type="radio" class="js-time-option-button js-option-button js-time-custom" id="time-custom"
-                 value="custom" name="time-options"/>
-        </span>
-        <span  class="data-list__info data-list__info--center">
-          <span class="data-list__info__text">Custom...</span>
-        </span>
-      </label>
-      <div class="data-list__item data-list__item--thin js-custom-time-options hidify">
-        <div class="data-list__actions visibility-hidden">
-        </div>
-        <div class="data-list__info data-list__info--center">
-          <select id="date_hour" name="date[hour]" class="custom-dropdown-style js-custom-task-hours">
-<option value="">hours</option>
-<option value="00">00</option>
-<option value="01">01</option>
-<option value="02">02</option>
-<option value="03">03</option>
-<option value="04">04</option>
-<option value="05">05</option>
-<option value="06">06</option>
-<option value="07">07</option>
-<option value="08">08</option>
-<option value="09">09</option>
-<option value="10">10</option>
-<option value="11">11</option>
-<option value="12">12</option>
-<option value="13">13</option>
-<option value="14">14</option>
-<option value="15">15</option>
-<option value="16">16</option>
-<option value="17">17</option>
-<option value="18">18</option>
-<option value="19">19</option>
-<option value="20">20</option>
-<option value="21">21</option>
-<option value="22">22</option>
-<option value="23">23</option>
-</select>
-
-          <select id="date_minute" name="date[minute]" class="custom-dropdown-style js-custom-task-minutes">
-<option value="">minutes</option>
-<option value="00">00</option>
-<option value="01">01</option>
-<option value="02">02</option>
-<option value="03">03</option>
-<option value="04">04</option>
-<option value="05">05</option>
-<option value="06">06</option>
-<option value="07">07</option>
-<option value="08">08</option>
-<option value="09">09</option>
-<option value="10">10</option>
-<option value="11">11</option>
-<option value="12">12</option>
-<option value="13">13</option>
-<option value="14">14</option>
-<option value="15">15</option>
-<option value="16">16</option>
-<option value="17">17</option>
-<option value="18">18</option>
-<option value="19">19</option>
-<option value="20">20</option>
-<option value="21">21</option>
-<option value="22">22</option>
-<option value="23">23</option>
-<option value="24">24</option>
-<option value="25">25</option>
-<option value="26">26</option>
-<option value="27">27</option>
-<option value="28">28</option>
-<option value="29">29</option>
-<option value="30">30</option>
-<option value="31">31</option>
-<option value="32">32</option>
-<option value="33">33</option>
-<option value="34">34</option>
-<option value="35">35</option>
-<option value="36">36</option>
-<option value="37">37</option>
-<option value="38">38</option>
-<option value="39">39</option>
-<option value="40">40</option>
-<option value="41">41</option>
-<option value="42">42</option>
-<option value="43">43</option>
-<option value="44">44</option>
-<option value="45">45</option>
-<option value="46">46</option>
-<option value="47">47</option>
-<option value="48">48</option>
-<option value="49">49</option>
-<option value="50">50</option>
-<option value="51">51</option>
-<option value="52">52</option>
-<option value="53">53</option>
-<option value="54">54</option>
-<option value="55">55</option>
-<option value="56">56</option>
-<option value="57">57</option>
-<option value="58">58</option>
-<option value="59">59</option>
-</select>
-
-        </div>
-      </div>
-    </div>
-  </div>
-  <input value="2017-05-13T02:33:18+00:00" id="send-task-delivery-date" data-field="delivered_until" class="js-input-delivery-date  js-validation-not-empty  hidden-but-working" type="text" name="task[delivered_until]" />
-  <div class="cf">
-    <button type="button" class="[ btn btn--big btn--primary pull-right btn--space-top ] js-step__button send-step__button js-delivery-date-next-button disablify">
-      Calculate price
-    </button>
-    <a href="#" class="js-step__back-button send-step__back-button"><span class="icon-font arrow-left">〈</span>Back</a>
-  </div>
-
-</section>
-          <section class="send-step send-step--price-calculation js-send-step send-step--hidden  cf  js-price-calculation">
-  <div class="send-step__loader  text-center  fadeIn  animated">
-    <div class="ring-loader"></div>
-  </div><!-- send-step__loader -->
-  <h2 class="send-step__title">
-    Loading...
-  </h2>
-</section>
-          
-<section class="send-step js-send-step send-step--price send-step--hidden js-closest-wrapper js-auto-next cf"
-         data-metric="{'category': 'Send', 'action': 'Load', 'options': {'action': 'Money Price'}}"
-         data-pageview="/virtual/tasks/new/price"
-         data-event="{'name': 'Send - Price', 'options': {}}">
-  <h2 class="send-step__title  send-step__title--clear  send-step__title--smaller">
-    Our recommended price
-  </h2>
-  <div class="data-list task-price-overview--featured js-task-price-overview text-center hidify">
-    <div class="data-list__item">
-      <div class="js-suggested-price-wrapper">
-        <h1 class="task-price-overview__price">
-          <sup class="sup-currency--left js-sup-currency-left">£</sup>
-              <span class="task-price__number  js-task-price js-task-breakdown-nimber js-task-breakdown js-replace-price">
-      25</span><span class="task-price__currency js-task-currency "></span>
-
-          <sup class="sup-currency--right js-sup-currency-right hidify">kr</sup>
-        </h1>
-        <p class="light-text-small">(inc. insurance and service).</p>
-        <span class="[ btn btn--secondary btn--space-top btn--space-bottom ] [ js-edit-price-button ]">
-          Or set your own price
-        </span>
-      </div>
-
-      <div class="send-input-wrapper  js-attach-error hidify js-input-price-wrapper">
-        <span class="icon-font  send-icon  send-icon--cash">C</span>
-        <input value="35" class="send-input  send-input--bold  send-price-input
-                          js-input-price  send-price-slider  js-validation-not-empty  js-validation-number" data-currency="USD" data-min="0" data-max="100" data-step="1" type="text" name="task[task_price]" id="task_task_price" />
-        <input value="false" class="js-input-payment" type="hidden" name="task[cash]" id="task_cash" />
-        <input type="hidden" name="task[fee_id]" class="js-application-fee-id"/>
-        <span class="input-extra input-extra--big js-input-currency" data-ie="after">
-  <span class="short-code">$</span>
-  <span class="input-extra__arrows">&gt;</span>
-  <select id="" class="" name="task[currency]"  data-edit=.task-price__currency>
-      <option data-value=CHF value="CHF" >CHF - CHF</option>
-      <option data-value=kr value="DKK" >DKK - kr</option>
-      <option data-value=€ value="EUR" >EUR - €</option>
-      <option data-value=£ value="GBP" >GBP - £</option>
-      <option data-value=kr value="NOK" >NOK - kr</option>
-      <option data-value=kr value="SEK" >SEK - kr</option>
-      <option data-value=$ value="USD" selected>USD - $</option>
-  </select>
-</span>
-
-      </div><!-- send-step__input-wrapper -->
-
-      <div class="js-price-suggestion-error highlight-warning text-left" style="margin-top:17px;">
-        <div> Minimum delivery cost should be more than <strong class="js-task-breakdown-nimber"></strong></div>
-      </div>
-    </div>
-
-    <div class="data-list__item text-left is-clickable js-price-breakdown-toggle">
-      <span class="data-list__info__title">See price breakdown</span>
-      <span class="icon-font arrow-right pull-right">}</span>
-
-      <div class="task-price-overview task-price-breakdown js-task-price-breakdown hidify">
-        <ul class="checkout-page__prices">
-             <li class="order-list__item  ">
-     <span class="pull-right offer-module__loader js-task-breakdown-loader hidify"></span>
-  <dl class="order-list__header">
-    <dt class="order-list__title  ">
-      Bringer&#39;s reward
-    </dt>
-    <dd class="order-list__price  ">
-              <span class="task-price__number  js-task-price js-task-breakdown-bringer js-task-breakdown">
-      0</span><span class="task-price__currency js-task-currency "></span>
-
-    </dd>
-  </dl>
-</li>
-             <li class="order-list__item  ">
-     <span class="pull-right offer-module__loader js-task-breakdown-loader hidify"></span>
-  <dl class="order-list__header">
-    <dt class="order-list__title  ">
-      Insurance and service
-    </dt>
-    <dd class="order-list__price  ">
-              <span class="task-price__number  js-task-price js-task-breakdown-nimber js-task-breakdown">
-      0</span><span class="task-price__currency js-task-currency "></span>
-
-    </dd>
-  </dl>
-</li>
-        </ul>
-      </div><!-- task-price-overview -->
-    </div>
-
-
-  </div><!-- task-price-overview -->
-
-
-
-  <ul class="system-notice system-notice--thin">
-    <li class="data-list__item--clean">
-      <article>
-        <div class="data-list__actions--image--cell align-middle">
-          <span class="icon-font system-notice__icon-gray">♦</span>
-        </div>
-        <div class="data-list__info data-list__info--center">
-          <p class="data-list__desc">
-            <strong>Your item is insured up to £500 in the UK or 10,000 NOK in Norway</strong>. You can rest assured that your item is in good hands.
-          </p>
-        </div>
-      </article>
-    </li><!-- data-list__item -->
-    <li class="data-list__item--clean">
-      <article>
-        <div class="data-list__actions--image--cell align-middle">
-          <span class="icon-font system-notice__icon-gray">C</span>
-        </div>
-        <div class="data-list__info data-list__info--center">
-          <p class="data-list__desc">
-            <strong>Our recommended price is calculated based on previous deliveries.</strong> Final price is based on delivery offers of bringers will respond.
-          </p>
-        </div>
-      </article>
-    </li><!-- data-list__item -->
-  </ul>
-
-  <div class="cf send-step__navigation-wrapper">
-    <div class="js-navigation-wrapper-inner">
-      <div class="send-step__navigation-content cf">
-        <button type="button" class="[ btn btn--big btn--primary pull-right btn--space-top ] send-step__button js-step__button js-button-create-task">
-  Next
-</button>
-        <a href="#" class="js-step__back-button send-step__back-button" data-step=".send-step--delivery-date">
-          <span class="icon-font arrow-left">〈</span>Back</a>
-      </div>
-    </div>
-  </div>
-
-
-  <div class="filter-loader filter-loader--top js-list-loader">
-    <div class="filter-loader__content text-center fadeIn animated">
-      <div class="ring-loader"></div>
-      <b class="animated fadeIn filter-loader__message">Calculating...</b>
-    </div><!-- list-overlay__content -->
-  </div><!-- list-overlay -->
-</section>
-          <input type="hidden" name="task[autoaccept]" class="js-task-auto-accept" value="false"/>
-</form>    </article>
-    <div id="login-modal" class="hidify" data-extra-classes="modalview--generic">
-  <section class="send-step js-send-step send-step--in  send-step--email  js-auto-next  cf"
-         data-metric="{'category': 'Send', 'action': 'Load', 'options': {'action': 'Email'}}">
-  <h2 class="send-step__title  send-step__title--clear">You&#39;re almost done</h2>
-  <h3 class="send-step__subtitle">Add your e-mail address so we can notify you of delivery offers.</h3>
-
-  <input type="text" class="send-input  send-input--form  autofocus  js-input-check-email  js-input-to-next
-  js-attach-error  js-validation-not-empty  js-validation-email"
-         data-path="/users/email_exists" placeholder="e.g. john.smith@email.com">
-
-  <div class="cf">
-    <button type="button" class="[ btn btn--big btn--primary pull-right btn--space-top ] js-step__button send-step__button js-button-check-email js-post-button"
-            data-replace="Checking...">Next</button>
-  </div>
-</section>
-  <section class="send-step  js-send-step send-step--hidden  send-step--login  cf"
-         data-metric="{'category': 'Send', 'action': 'Load', 'options': {'action': 'Login'}}"
-         data-event="{'name': 'Send - Login/Register', 'options': {}}"
-         data-pageview="/virtual/tasks/new/login/">
-
-  <div class="send-substep send-substep--in cf">
-    <h2 class="send-step__title  send-step__title--clear">Welcome back, <span class="js-login-name"></span></h2>
-    <h3 class="send-step__subtitle">We are ready to post the task and notify bringers. Type your password to post it.</h3>
-    <form id="send-step__ajax-login" autocomplete="on" name="ajax_login_form" class="[ link--secondary inline-block u--space-top ]" action="/sessions" accept-charset="UTF-8" data-remote="true" method="post"><input name="utf8" type="hidden" value="&#x2713;" />
-        <div class="send-step__ajax-login">
-          <input value="" class="hidden-but-working  js-login-input-email" type="text" name="session[email]" id="session_email" />
-          <input placeholder="e.g. ********" class="send-input  send-input--form  autofocus  js-login-input-password" type="password" name="session[password]" id="session_password" />
-          <div class="cf">
-            <a class="send-step__forgot-password" target="_blank" href="/users/forgot_password">Forgot password?</a>
+      <nav class="navbar navbar-default navbar-fixed-top" style="background-color: #4A566B">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Schmu<span class="logo-dec">ber</span></a>
           </div>
-          <div class="cf">
-            <button name="button" type="submit" class="[ btn btn--big btn--primary pull-right btn--space-top ] js-step__button send-step__button  js-button-ajax-login js-button-login-and-post js-facebook-pixel-send" data-original-text="Post task" data-posting="Logging in..." data-replace-with="Logging in...">
-                    Login
-</button>          </div>
+          <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav navbar-right">
+              <li class="active"><a href="/search">Post a Trip</a></li>
+              <li class="active"><a href="/profile">My Profile</a></li>
+              <li class="active"><a href="/">Sign Out</a></li>
+            </ul>
+          </div>
         </div>
-</form>  </div><!-- sen-substep -->
+      </nav>
+  <br/><br/><br/><br/><br/>
+<!-- end header -->
+      <div ng-show="send_form">
+                <div id="main">
+            <div class="container">
 
+                <div id="content">
+                        <div class="row page-header-wrapper">
+        <div class="col-md-2 hidden-sm hidden-xs cms-block">
+            <div class="cms-block">
 
+</div>
 
+        </div>
+        <div class="col-md-10">
+            <h1 class="page-header">Shipping request</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
 
-</body>
+            <form class="form-horizontal">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <fieldset>
+                                    <div class="form-group"><label class="control-label col-sm-2">
+            Item to be transported
+        </label><div class="col-sm-10"><input type="text" id="package_form_type_label" name="package_form_type[label]" placeholder="Package, bag, phone, food,..." class="form-control" /></div></div>
+
+                                    <div class="form-group"><label class="control-label col-sm-2">
+            From
+        </label><div class="col-sm-10"><input type="text" id="package_form_type_origin_label" name="package_form_type[origin][label]"  ggplace-label="ggplace-label" placeholder="City or Country" class="form-control" /><input type="hidden" id="package_form_type_origin_placeId" name="package_form_type[origin][placeId]" ggplace-id="ggplace-id" /></div></div>
+
+                                    <div class="form-group"><label class="control-label col-sm-2">
+            To
+        </label><div class="col-sm-10"><input type="text" id="package_form_type_arrival_label" name="package_form_type[arrival][label]" ggplace-label="ggplace-label" placeholder="City or Country" class="form-control" /><input type="hidden" id="package_form_type_arrival_placeId" name="package_form_type[arrival][placeId]" ggplace-id="ggplace-id" /></div></div>
+
+                        </fieldset>
+                        <fieldset>
+                                    <div class="form-group"><label class="control-label col-sm-2 ">
+            What type of item
+        </label><div class="col-sm-10"><select id="package_form_type_type" name="package_form_type[type]" placeholder="package_form.placeholder.type" class="form-control"><option value="bought">Item to be bought</option><option value="personal">Personal item</option></select></div></div>
+                <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <div class="pb-help-message child-type">
+                    <i class="fa fa-info-circle pull-left"></i>
+                    <div class="cms-block">
+    <p>Item to be bought (Specific smartphone, local food, to be purchased online,...)&nbsp;OR personal item (A&nbsp;bag, piece of clothing, vehicle,...)</p>
+</div>
+
+                </div>
+            </div>
+        </div>
+
+                                    <div class="form-group"><label class="control-label col-sm-2">
+            Item size
+        </label><div class="col-sm-10"><select id="package_form_type_size" name="package_form_type[size]" placeholder="package_form.placeholder.size" class="form-control"><option value="s">Small</option><option value="m">Medium</option><option value="l">Large</option><option value="xl">Extra large</option></select></div></div>
+                <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <div class="pb-help-message child-size">
+                    <i class="fa fa-info-circle pull-left"></i>
+                    <div class="cms-block">
+    <p>Small = keys / Medium = phone, book, bag / Large = big box, instrument / Extra large = vehicle, pallet</p>
+</div>
+
+                </div>
+            </div>
+        </div>
+
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="row collapse" id="more-details">
+                    <div class="col-md-12">
+                        <fieldset>
+                                    <div class="form-group"><label class="control-label col-sm-2" >
+            Reward
+        </label><div class="col-sm-10"><input type="text" id="package_form_type_reward" name="package_form_type[reward]" placeholder="A ride from the airport, a drink,..." class="form-control" /></div></div>
+
+                                    <div class="form-group"><label class="control-label col-sm-2" for="package_form_type_tip">
+            Tip
+        </label><div class="col-sm-10"><input type="text" id="package_form_type_tip" name="package_form_type[tip]" placeholder="Amount and currency" class="form-control" /></div></div>
+                <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <div class="pb-help-message child-tip">
+                    <i class="fa fa-info-circle pull-left"></i>
+                    <div class="cms-block">
+    <p><a href="/upload/picto/rates.jpg" target="_blank"><font color="#fcc014">See our indicative rates</font></a>&nbsp;or leave blank if you want to discuss with the carrier.</p>
+</div>
+
+                </div>
+            </div>
+        </div>
+
+                        </fieldset>
+                        <fieldset>
+                                    <div class="form-group"><label class="control-label col-sm-2" for="package_form_type_pictureFile">
+            Picture
+        </label><div class="col-sm-10"><input type="file" id="package_form_type_pictureFile" name="package_form_type[pictureFile]" placeholder="package_form.placeholder.pictureFile" /></div></div>
+
+                                    <div class="form-group"><label class="control-label col-sm-2" for="package_form_type_description">
+            Description
+        </label><div class="col-sm-10"><textarea id="package_form_type_description" name="package_form_type[description]" placeholder="" class="form-control"></textarea></div></div>
+
+                                    <div class="form-group"><label class="control-label col-sm-2" for="package_form_type_infos">
+            Practical information
+        </label><div class="col-sm-10"><textarea id="package_form_type_infos" name="package_form_type[infos]" placeholder="" class="form-control"></textarea></div></div>
+
+                                    <div class="form-group"><label class="control-label col-sm-2" for="package_form_type_history">
+            Item story
+        </label><div class="col-sm-10"><textarea id="package_form_type_history" name="package_form_type[history]" placeholder="" class="form-control"></textarea></div></div>
+
+                                    <div class="form-group"><label class="control-label col-sm-2" for="package_form_type_url">
+            URL
+        </label><div class="col-sm-10"><input type="url" id="package_form_type_url" name="package_form_type[url]" placeholder="" class="form-control" /></div></div>
+
+                                    <div class="form-group"><label class="control-label col-sm-2" for="package_form_type_value">
+            Item value
+        </label><div class="col-sm-10"><input type="text" id="package_form_type_value" name="package_form_type[value]" placeholder="Amount and currency" class="form-control" /></div></div>
+
+                            <input type="hidden" id="package_form_type__token" name="package_form_type[_token]" value="5xtXq9yt21rp0K185y-YsuL9O28ObjSwO3rqCkuHueo" />
+                        </fieldset>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-info pull-left" data-toggle="collapse" data-target="#more-details">Add details</button>
+                <button class="btn btn-primary pull-right" ng-click="postSendDetails()"><i class="fa fa-check"></i> Post your request</button>
+            </form>
+
+        </div>
+    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+
+<!-- CONFIRMATION DIV -->
+<div ng-show="send_confirmation">
+          <section class="section section--tight">
+            <div class="content  checkout-page text-center">
+
+              <header class="checkout-page__header">
+                <h1 class="checkout-page__title">Your task has been posted!</h1>
+                <p class="checkout-page__subtitle">We have already sent your task out to relevant bringers, and those interested will get back to you with questions or a date they can help you out.</p>
+              </header>
+
+              <section class="checkout-page__container">
+                <div class="[ checkout-page__content cf ]">
+                    <div class="[ checkout-page__task-info cf ]  [ js-checkout-page-task-info ]" data-url="/tasks/78568">
+                      <figure class="task-page__image  task-page__image--checkout">
+                        <img alt="Chair" title="Chair" id="task-avatar" src="https://d1xqbpwl1wh09p.cloudfront.net/jobs/default/default-xs_130x130@2x.png" />
+                      </figure>
+                      <div class="checkout-page-headline__content">
+                        <h1 class="headline__title headline__title--small h1">Chair</h1>
+                        <span class="task-block__locations">
+                          33-99 Bush St, San Jose, CA 95126, USA<b class="task-to-icon icon-font">
+                          →
+                          </b>33-99 Bush St, San Jose, CA 95126, USA
+                        </span>
+                      </div><!-- checkout-page-headline__content -->
+                    </div>
+
+                    <div class="checkout-page__breakdown">
+                      <ul class="[ checkout-page__prices hidify ]  [ js-checkout-prices ]">
+                           <li class="order-list__item  ">
+               <span class="pull-right offer-module__loader js-task-breakdown-loader hidify"></span>
+            <dl class="order-list__header">
+              <dt class="order-list__title  ">
+                Bringer&#39;s reward
+              </dt>
+              <dd class="order-list__price  ">
+                        <span class="task-price__currency js-task-currency ">
+                $</span><span class="task-price__number  js-task-price ">20</span>
+
+              </dd>
+            </dl>
+          </li>
+                           <li class="order-list__item  ">
+               <span class="pull-right offer-module__loader js-task-breakdown-loader hidify"></span>
+            <dl class="order-list__header">
+              <dt class="order-list__title  ">
+                Insurance and service
+              </dt>
+              <dd class="order-list__price  ">
+                        <span class="task-price__currency js-task-currency ">
+                $</span><span class="task-price__number  js-task-price ">4</span>
+
+              </dd>
+            </dl>
+          </li>
+
+                             <li class="order-list__item  hidify  js-order-list-item-coupon">
+               <span class="pull-right offer-module__loader js-task-breakdown-loader hidify"></span>
+            <dl class="order-list__header">
+              <dt class="order-list__title  js-order-list-item-title">
+                Coupon discount:
+              </dt>
+              <dd class="order-list__price  js-order-list-item-price">
+                        <span class="task-price__number  js-task-price ">
+                </span><span class="task-price__currency js-task-currency "></span>
+
+              </dd>
+            </dl>
+          </li>
+
+                        <li class="order-list__item order-list__item--total">
+                          <dl class="order-list__header">
+                            <dt class="order-list__title">Total delivery costs</dt>
+                            <dd class="order-list__price order-list__price--total">
+                                    <span class="task-price__currency js-task-currency ">
+                $</span><span class="task-price__number  js-task-price js-total-order-list-price">24</span>
+
+                            </dd>
+                          </dl>
+                        </li>
+
+                        <li class="[ order-list__item order-list__item--coupon  ]  [ js-checkout-coupon-form ]">
+                          <form class="page-content__coupon-form  js-coupon-form  cf" accept-charset="UTF-8" data-remote="true"><input name="utf8" type="hidden" value="&#x2713;" />
+                            <input type="hidden" name="task_id" value="78568">
+                            <input type="text" name="code" class="input checkout-page__coupon-input page-content-list__input  js-coupon-code-input js-ctrl-submit  js-input-with-prevent" placeholder="Type your code...">
+                            <button type="submit" class="[ btn btn--primary ] checkout-page__coupon-submit page-content__submit  js-coupon-submit  js-form-submit-button" data-applied-text="Already applied" data-success-text="Coupon applied!" data-disable-with="Activating..." data-error-text="Wrong code" data-default-text="Redeem">
+                              Redeem
+                            </button>
+                          </form><!-- page-content__coupon-form -->
+                        </li>
+                      </ul>
+                    </div><!-- checkout-page__breakdown -->
+                </div><!-- checkout-page__content -->
+
+                <footer class="[ checkout-page__cta cf ]">
+                  <a class="task-overview__submit green-style" data-disablify="true" data-disable-with="Redirecting..." href="/tasks/78568">Continue to your task</a>
+                </footer>
+
+                <div class="checkout-page__faq">
+                  <h3 class="checkout-page__faq-question">
+                    How do I pay for the delivery?
+                  </h3>
+                  <p class="checkout-page__faq-answer">
+                    When you have found someone to help you out and accepted an offer, we’ll have you add your credit card details. Then delivery moves along as planned, and when you have confirmed that delivery is done, we’ll withdraw the agreed amount. We’ll make sure the reward is transferred to the bringer.<br/><br/>If you want to save some time later, add your card details now. Then the process is automated later. We’ll never withdraw anything till you have confirmed delivery anyway. And all card data is stored securely with one of the largest payment providers in the world, Stripe.
+                  </p>
+
+                  <h3 class="checkout-page__faq-question">
+                    Is my item insured?
+                  </h3>
+                  <p class="checkout-page__faq-answer">
+                    Yes, every task is actually insured for up to 500 pounds. To be eligible for the insurance, make sure the bringer you agree with actually sends you an offer to help, and that it is fully accepted and delivered through the system.
+                  </p>
+
+                  <h3 class="checkout-page__faq-question  checkout-page__faq-question--secondary">
+                    Anything you need to change about your task?
+                  </h3>
+
+                  <p class="checkout-page__faq-answer">
+                    <a href="/tasks/78568#extra-info" class="obj-task-hero__button btn--outline checkout-page__settings-button">
+                      <span class="obj-task-hero__button-text">Edit your task info</span>
+                    </a>
+                    <span class="checkout-page__or">or</span>
+                    <a class="obj-task-hero__button btn--outline checkout-page__settings-button" data-disable-with="Deleting..." rel="nofollow" data-method="delete" href="/tasks/78568/delete">
+                      <span class="obj-task-hero__button-text">Delete your task</span>
+          </a>        </p>
+                </div>
+              </section><!-- checkout-page__container -->
+            </div><!-- .content -->
+          </section>
+        </div>
+                </body>
 </html>
