@@ -38,17 +38,14 @@ var arrayOfPools= [];
 
 
 exports.connect = function(url, callback){
-	// MongoClient.connect("mongodb://localhost:27017/social_delivery_system",function(err, _db){
 	MongoClient.connect("mongodb://sangitdhanani:sjsu1234@ds133211.mlab.com:33211/sds_mongo",function(err, _db){
 	if (err) { throw new Error('Could not connect: '+err); }
 	  db = _db;
-
+	  connected = true;
+	  callback(db);
+	});
 };
 
-exports.disconnect = function(db, callback){
-	releaseConnectionFromPool(connected);
-
-};
 
 /**
  * Returns the collection on the selected database

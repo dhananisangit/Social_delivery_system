@@ -18,4 +18,14 @@ router.get('/register', function(req,res,next){
 	res.render('register.ejs')
 })
 
+router.get('/home', function(req,res,next){
+	res.render('triplist.ejs')
+})
+
+router.get('/profile', function(req,res,next){
+	res.render('profile.ejs')
+})
+
+
+
 module.exports = router;

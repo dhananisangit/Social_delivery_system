@@ -6,21 +6,22 @@
 <link rel="shortcut icon"
 	href="https://images-na.ssl-images-amazon.com/images/G/01/omaha/images/ui/favicon.ico"
 	type="image/vnd.microsoft.icon" /><link href="/css/style.css" rel="stylesheet" type="text/css" media="all"/>
+<link rel="stylesheet" media="all" href="/css/admin1.css" />
+<link rel="stylesheet" media="all" href="/css/admin2.css" />
 
 <link href="/css/slider.css" rel="stylesheet" type="text/css" media="all"/>
 <link href="/css/adminHome.css" rel="stylesheet" type="text/css" media="all"/>
 
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script src="/js/angular.js"></script>
+<script src="/js/jquery.js"></script>
 <script type="text/javascript" src="/js/move-top.js"></script>
 <script type="text/javascript" src="/js/easing.js"></script>
 <script type="text/javascript" src="/js/startstop-slider.js"></script>
 <script type="text/javascript" src="/js/fusioncharts.js"></script>
 <script type="text/javascript" src="/js/themes/fusioncharts.theme.fint.js"></script>
 
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="/js/bootstrap.js"></script>
 <script type="text/javascript" src="/js/angular-fusioncharts.min.js"></script>
-<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
@@ -58,7 +59,7 @@
 }
 
 	</style>
-	<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDKFu5RJEbw7m_TNta9p2aZqwzP0Dq801M&signed_in=true&callback=initMap" async defer></script> -->
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB5sfbUPXiX4jbxe_a9OHuvkCNN6-tXiHQ" async defer></script>
 
 <script>
 
@@ -74,6 +75,7 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 		$scope.transporterRequests = false
 		$scope.showHome = false
 		$scope.charts_show = false
+		$scope.GoogleMaps_Show = false;
 	}
 
 	$scope.getHomeStats = function(){
@@ -88,7 +90,8 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 			$scope.generic()
 			$http({
 				method:'get',
-				url:'/v1/getcustomerlist'
+				url:'/v1/getcustomerlist',
+				data:$scope.user
 			}).then(function(res){
 
 				$scope.customers = res.data.customerList
@@ -115,12 +118,16 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 	}
 
 	$scope.openBillDetails = function(billDetails){
+
 		if ($scope.showBillProfile) $scope.showBillProfile = false
 		else{
+			$scope.generic()
 			$scope.billInfo = billDetails
 			$scope.shipperReward = billDetails.packageDetails.price-(billDetails.packageDetails.price-(billDetails.packageDetails.price*0.75))
 			$scope.insurance = billDetails.packageDetails.price - $scope.shipperReward
 			$scope.showBillProfile = true
+			$scope.GoogleMaps_Show = true
+			$scope.initMap(billDetails)
 		}
 	}
 
@@ -154,6 +161,7 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 				method:'get',
 				url:'/v1/getopenshipperrequests'
 			}).then(function(res){
+				console.log(res.data)
 				$scope.pendingShipperRequests = res.data.shipperRequests
 				$scope.generic()
 				$scope.shipperRequests = true
@@ -169,6 +177,7 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 				method:'get',
 				url:'/v1/getopentransporterrequests'
 			}).then(function(res){
+				console.log(res.data)
 				$scope.pendingTransporterRequests = res.data.transporterRequests
 				$scope.generic()
 				$scope.transporterRequests = true
@@ -225,7 +234,7 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 				url:'/v1/revenueperlocation'
 			}).then(function(res){
 				revenuePerLocation = res.data.revenuePerLocation;
-				chartDetails = {"caption":"Total Revenue Per Location","subCaption":"Today","xAxisName":"Location","yAxisName":"Revenue","data":revenuePerLocation};
+				chartDetails = {"caption":"Total Revenue Per Location","xAxisName":"State","yAxisName":"Revenue","data":revenuePerLocation};
 				$scope.createChart("revenuePerLocation", chartDetails);
 			}).then(function(){
 				$http({
@@ -233,7 +242,7 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 				url:'/v1/tripsperlocation'
 			}).then(function(res){
 				data = res.data.tripsPerLocation;
-				chartDetails = {"caption":"Total trips per pickup location","subCaption":"Today","xAxisName":"Name of State","yAxisName":"Number of Trips","data":data};
+				chartDetails = {"caption":"Total trips per pickup location","xAxisName":"State","yAxisName":"Number of Trips","data":data};
 				$scope.createChart("tripsPerLocation", chartDetails);
 			}).then(function(){
 				$http({
@@ -241,7 +250,7 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 				url:'/v1/ridesperarea'
 			}).then(function(res){
 				data = res.data.ridesPerArea;
-				chartDetails = {"caption":"Total Rides per drop off location","subCaption":"Today","xAxisName":"Driver ID","yAxisName":"Number of Trips","data":data};
+				chartDetails = {"caption":"Total Rides per drop off location","xAxisName":"State","yAxisName":"Number of Trips","data":data};
 				$scope.createChart("ridesPerArea", chartDetails);
 			}).then(function(){
 				$http({
@@ -249,7 +258,7 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 				url:'/v1/ridesperdriver'
 			}).then(function(res){
 				data = res.data.ridesPerDriver;
-				chartDetails = {"caption":"Total Rides per Driver","subCaption":"","xAxisName":"Driver ID","yAxisName":"Number of Trips","data":data};
+				chartDetails = {"caption":"Top 20 Riders","xAxisName":"Driver ID","yAxisName":"Number of Trips","data":data};
 				$scope.createChart("ridesPerDriver", chartDetails);
 			})
 			})
@@ -962,8 +971,8 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 		    <div class="w3-dropdown-hover w3-hide-small">
 		      	<button class="w3-padding-large w3-button" title="More">Pending Requests <i class="fa fa-caret-down"></i></button>
 		      	<div class="w3-dropdown-content w3-bar-block w3-card-4">
-			        <a href="#" class="w3-bar-item w3-button" ng-click="showOpenShipperRequests()">Shipper Requests</a>
-			        <a href="#" class="w3-bar-item w3-button" ng-click="showOpenTransporterRequests()">Transporter Requests</a>
+			        <a href="#" class="w3-bar-item w3-button" ng-click="showOpenShipperRequests()">Shipping Requests</a>
+			        <a href="#" class="w3-bar-item w3-button" ng-click="showOpenTransporterRequests()">Transport Requests</a>
 		      	</div>
 		    </div>
 		    <a href="javascript:void(0)" class="w3-padding-large w3-hover-red w3-hide-small w3-right" ng-click="signOut()">Sign Out</a>
@@ -1132,19 +1141,23 @@ adminPage.controller('adminPage', function($scope,$http,$window){
     		<div class="heading">
                     <h3>Customer List: </h3>
     		</div>
+=======
+>>>>>>> sdhanani
 
-    		<div class="clear"></div>
-    	</div>
 
+<<<<<<< HEAD
 
      	<div class="content_top content_top1" ng-repeat = "data in customers ">
 >>>>>>> e960cddc27d0e387f6996a00a381d3d63252eabd
+=======
+     	<!-- <div class="content_top content_top1" ng-repeat = "data in customers | filter:searchCustomer">
+>>>>>>> sdhanani
 
     		<div class="heading content_name">
-                    <h3>{{data.firstName}} {{data.lastName}}</h3>
+                <h3>{{data.firstName}} {{data.lastName}}</h3>
     		</div>
     		<div align="center" class="content_email">
-    		<h3>{{data.emailID}}</h3>
+    			<h3>{{data.emailID}}</h3>
     		</div>
     		<div align="right" class="content_add_delete">
 			<div align="center">
@@ -1186,14 +1199,78 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 
 
     		<div class="clear"></div>
+    	</div>  -->
+
+    	<div class="task-list__content" ng-repeat = "data in customers | filter:searchCustomer">
+          <div class="js-result-item-main" data-task-id="77762">
+          <div class="task-list__inner">
+            <div class="task-list__info">
+              <h2 class="h5 task-list__title">
+                <a title="Chair" href="/tasks/77762">{{data.firstName}} {{data.lastName}}</a>
+              </h2>
+
+           	<span class="task-locations">
+	            <span class="task-location">
+                {{data.emailID}}
+              </span>
+	        </span>
+            </div><!-- task-list__info -->
+
+
+		<div class="task-list__content" ng-repeat = "data in billList | filter:searchCustomer">
+          <div class="js-result-item-main" data-task-id="77762">
+          <div class="task-list__inner">
+            <div class="task-list__info">
+              <h2 class="h5 task-list__title">
+                <a title="Chair" href="/tasks/77762">Bill ID : {{data.transporter.id}}{{data.shipper.id}}</a>
+              </h2>
+
+           	<span class="task-locations">
+	            <span class="task-location">
+                {{data.shipper.name}}
+              </span><b class="task-to-icon icon-font">
+              →
+              </b><span class="task-location">
+               {{data.transporter.name}}
+              </span>
+	        </span>
+            </div><!-- task-list__info -->
+
+            <div class="task-list__side-options">
+              <a class="task-list__price" title="See more" href="/tasks/77762">
+
+        <span class="task-price__number  js-task-price ">
+      		<a class="button btn1 cur" ng-click="openBillDetails(data)">View Bill</a>
+      	</span>
+
+</a>            </div><!-- task-list_side-options -->
+          </div><!-- task-list__inner -->
+          </div>
+        </div><!-- task content -->
+    		<div class="clear"></div>
     	</div>
+            <div class="task-list__side-options">
+              <a class="task-list__price" title="See more" href="/tasks/77762">
+
+        <span class="task-price__number  js-task-price ">
+      		<a class="button btn1 cur" ng-click="showCustomerProfile(data)">View Profile</a>
+      	</span>
+
+</a>            </div><!-- task-list_side-options -->
+          </div><!-- task-list__inner -->
+          </div>
+        </div><!-- task content -->
+
+
 		</div>
 
 
   		<div ng-show="Bills">
-    	<div class="content_top">
-    		<div class="heading">
-                    <h3>Bills :</h3>
+    		<div class="content_top">
+	    		<div class="heading">
+	                    <h3>Bills</h3>
+	    		</div>
+	    		<input type="text" class="textbox-control" placeholder="search bill" ng-model="searchCustomer.transporter.id"/>
     		</div>
 
 
@@ -1227,28 +1304,6 @@ adminPage.controller('adminPage', function($scope,$http,$window){
           </div><!-- task-list__inner -->
           </div>
         </div><!-- task content -->
-=======
-    		<div class="clear"></div>
-    	</div>
-
-
-    	<div class="content_top" ng-repeat="data in billList | filter:searchBill">
-    		<div class="heading">
-                    <h3>Bill ID:{{data.transporter.id}}{{data.shipper.id}}</h3>
-                    <h4>Tansporter: {{data.transporter.name}}</h4>
-                    <h4>Shipper: {{data.shipper.name}}</h4>
-    		 </div>
-
-    		<div align="right">
-    		<a class="button btn1 cur" ng-click="openBillDetails(data);">View Bill</a>
-    		<a class="button btn2 cur" ng-click="deleteBill(names.bill_id);">Delete</a>
-    		</div>
-
-    		<div class="clear"></div>
-    		</div>
-
-    		<div>
-			</div>
     	</div>
 
 
@@ -1425,8 +1480,121 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 			<div class="section group">
 				<div class="cont-desc span_1_of_2">
 					<div class="product-details">
-=======
 
+  <dl class="obj-task-info__item obj-task-info__item--first">
+    <dt class="obj-task-info__item-title  cf">
+
+    	<span class="obj-task-info__item-title-text">Mobile number verified</span>
+    </dt>
+    <dd class="obj-task-info__item-content">
+      <span class="obj-task-info__content-text  js-reload-page" rel="tooltip" title="">
+		    	<span class="icon-font  details-icon  details-icon--yes" data-yes="✓" data-no="−">✓</span>
+      </span>
+    </dd>
+  </dl><!-- obj-task-info__item -->
+
+
+  <dl class="obj-task-info__item">
+    <dt class="obj-task-info__item-title  cf">
+    	<span class="obj-task-info__item-title-text">Facebook connected</span>
+    </dt>
+    <dd class="obj-task-info__item-content">
+      <span class="obj-task-info__content-text" rel="tooltip" title="">
+	        <span class="icon-font  details-icon  details-icon--yes" data-yes="✓" data-no="−">✓</span>
+      </span>
+    </dd>
+  </dl><!-- obj-task-info__item -->
+
+  <dl class="obj-task-info__item">
+    <dt class="obj-task-info__item-title  cf">
+
+    	<span class="obj-task-info__item-title-text">Credit card connected</span>
+    </dt>
+    <dd class="obj-task-info__item-content">
+      <span class="obj-task-info__content-text" rel="tooltip" title="">
+	        <span class="icon-font  details-icon  details-icon--yes" data-yes="✓" data-no="−">✓</span>
+      </span>
+    </dd>
+  </dl><!-- obj-task-info__item -->
+
+  <dl class="obj-task-info__item  obj-task-info__item--last">
+    <dt class="obj-task-info__item-title  cf">
+
+    	<span class="obj-task-info__item-title-text">E-mail verified</span>
+    </dt>
+    <dd class="obj-task-info__item-content">
+      <span class="obj-task-info__content-text">
+        <span class="icon-font  details-icon  details-icon--yes" data-yes="✓" data-no="−">✓</span>
+      </span>
+    </dd>
+  </dl><!-- obj-task-info__item -->
+</section>
+
+
+
+</div><!-- user-verifications -->
+
+	  	<div class="user-reviews">
+  <h2 class="profile-content__title">
+      Reviews for {{customerDetails.firstName}}
+  </h2>
+    <div class="user-reviews__breakdown">
+      <div class="user-reviews__total">
+
+<span class="user-rating user-rating--5 user-rating--big      " >
+   {{customerFeedback.length}}
+  <span class="user-rating__icon">*</span>
+</span>
+
+          <b class="user-reviews__total-title">
+
+            Reviews
+          </b>
+
+      </div><!-- user-reviews__breakdown-total -->
+    </div><!-- user-reviews__breakdown -->
+
+  <ol class="unstyled" data-append-to="reviews-list">
+
+  <li class="user-review  cf">
+ <div class="user-review__content" ng-repeat="data in customerFeedback">
+	<span class="user-rating user-rating--5" >
+	  {{data.rating}}
+	  <span class="user-rating__icon">*</span>
+</span>
+      <article class="user-review__text">
+          {{data.text}}
+      </article>
+      <div class="user-review__footer cf">
+          <a href="" class="user-review__figure">
+            <img id="user_avatar" alt="Manuel Rueda" src="https://d1xqbpwl1wh09p.cloudfront.net/avatars/default/default_40x40@2x.png" />
+          </a><!-- end of profile avatar -->
+        <div class="user-review__footer-content">
+          <h3 class="user-review__title">
+              <a href="">
+               {{data.name}}<br/><br/>
+              </a>
+          </h3>
+        </div><!-- user-review__footer-content -->
+        <a href="/users/74441/reviews/18547" class="user-review__date">{{data.timestamp}}</a>
+      </div><!-- user-review__foter -->
+      <br/>
+      <br/>
+    </div><!-- user-review__content -->
+  </li><!-- user-review -->
+      <!-- user-review -->
+  </ol>
+
+      <div data-load="Loading...">
+        <div class="load-more-wrapper">
+
+        </div><!-- load-more-wrapper -->
+      </div>
+</div><!-- user-reviews -->
+
+
+  </div>
+</section>
 			<div class="section group">
 				<div class="cont-desc span_1_of_2">
 					<div class="product-details">
@@ -1444,18 +1612,11 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 							</div>
 						</div> -->
 
-						<div class="desc span_3_of_2" align="left">
+		<!-- 				<div class="desc span_3_of_2" align="left">
 
 							<table class="table_fdesc" width="93%" border="0" cellspacing="10" cellpadding="10">
 
 							  <tbody>
-							  <tr>
-							  	 <td>Customer Profile</td>
-							  </tr>
-							  <tr>
-								  <td>Name: </td>
-								  <td class="td2_content name">{{customerDetails.firstName}} {{customerDetails.lastName}}</td>
-								</tr>
 
 								<tr>
 								  <td>ID: </td>
@@ -1496,7 +1657,7 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 							<div class="share-desc" align="left">
 								<div class="clear"></div>
 							</div>
-						</div>
+						</div> -->
 					</div>
 
 				</div>
@@ -1586,7 +1747,6 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 	</div>
 </div>
 
-=======
 	 <div class="content_top">
     					<div class="heading">
                     		<h3 >Bill Information: </h3>
@@ -1681,11 +1841,62 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 
                   </div>
 
+        <div class="obj-info__middle  obj-info__item">
+          <h1 class="obj-info__title js-task-page-title">Title: {{billInfo.packageDetails.title}}</h1>
+          <span class="obj-info__locations  task-block__locations">
+            <span class="js-task-page-location-from">
+               {{billInfo.pickupLocation.city}}
+            </span><b class="task-to-icon icon-font">
+            →
+          </b><span class="js-task-page-location-to">
+                {{billInfo.dropoffLocation.city}}
+            </span>
+          </span>
+        </div>
+
+        <div class="obj-info__right  obj-info__item">
+          <dl class="obj-info__meta">
+            <dt class="obj-info__title">
+                  Total delivery cost:
+            </dt>
+            <dd class="obj-info__price">
+                      <span class="task-price__currency js-task-currency ">
+      $</span><span class="task-price__number  js-task-price js-task-price-live">{{billInfo.packageDetails.price}}</span>
+
+            </dd>
+          </dl>
+
+          <div class="obj-info__secondary">
+              <ul class="obj-info__list no-bullet">
+                  <li><span class="object-info__price-details">
+                  Bringer&#39;s reward &minus;
+                      <strong class="js-task-breakdown-bringer">    <span class="task-price__currency js-task-currency task-price__currency">
+      $</span><span class="task-price__number  js-task-price ">{{shipperReward}}</span>
+</strong></span>
+                  </li>
+                    <li>
+                      <span class="object-info__price-details">
+                      Insurance and service fee &minus;
+                      <strong class="js-task-breakdown-nimber">
+                            <span class="task-price__currency js-task-currency task-price__currency">
+      $</span><span class="task-price__number  js-task-price ">{{insurance}}</span>
+
+                      </strong></span>
+                    </li>
+              </ul>
+          </div>
+        </div>
+      </header>
+      	</div>
+    	<!-- <div ng-show="GoogleMaps_Show" align="center" style="width:100%;height:400px;">
+			<div id="map"></div>
+		</div> -->
 	</div>
+</div>
 
 
 				 <div ng-show="shipperRequests">
-					<div ng-repeat="data in pendingShipperRequests">
+					<!-- <div ng-repeat="data in pendingShipperRequests">
 						<div class="request_margin">
 				        	<h3>{{data.name}} </h3>
 				    		<h3>Pickup location: {{data.pickupLocation.zip}}</h3>
@@ -1731,11 +1942,13 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 			          </div>
 			        </div><!-- task content -->
 
+
 					</div>
+
 				</div>
 
 				<div ng-show="transporterRequests">
-					<div ng-repeat="data in pendingTransporterRequests">
+					<!-- <div ng-repeat="data in pendingTransporterRequests">
 						<div class="request_margin">
 				        	<h3>{{data.name}} </h3>
 				    		<h3>Pickup location: {{data.sourceAddress.zip}}</h3>
@@ -1744,7 +1957,10 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 				    		<h3>Travel Date: {{data.travelDate}}</h3>
 				    		<h3>Vehicle Type: {{data.vehicleType}}</h3>
 						</div>
+<<<<<<< HEAD
 					</div>
+=======
+					</div> -->
 							<div class="content_top">
 				    	<div class="heading">
 				                <h3>Transport Requests</h3>
@@ -1788,7 +2004,7 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 
 
 	<div ng-show="charts_show">
-		<h3 align="center">Total stats by Map</h3><br/>
+		<!-- <h3 align="center">Total stats by Map</h3><br/> -->
 		<div id="chartContainer">
 			<div >Data Chat will load here!</div>
 		</div>
@@ -1798,12 +2014,12 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 			<div class="row">
 			 	<div class="col-sm-6">
 			 	<br/>
-			 		<h3>Revenue Per location</h3><br/>
+			 		<!-- <h3>Revenue Per location</h3><br/> -->
 					<div id="revenuePerLocation">Data Chat will load here!</div>
 				</div>
 				<br/>
 				<div class="col-sm-6">
-					<h3>Trips Per pickup location</h3><br/>
+					<!-- <h3>Trips Per pickup location</h3><br/> -->
 					<div id="tripsPerLocation">Data Chat will load here!</div>
 				</div>
 			</div>
@@ -1811,12 +2027,12 @@ adminPage.controller('adminPage', function($scope,$http,$window){
 			<div class="row">
 				<div class="col-sm-6">
 				<br/>
-					<h3>Trips per dropoff location</h3><br/>
+					<!-- <h3>Trips per dropoff location</h3><br/> -->
 					<div id="ridesPerArea">Data Chat will load here!</div>
 				</div>
 				<br/>
 				<div class="col-sm-6">
-					<h3>Trips Per driver</h3><br/>
+					<!-- <h3>Trips Per driver</h3><br/> -->
 					<div id="ridesPerDriver">Data Chat will load here!</div>
 				</div>
 				<br/>

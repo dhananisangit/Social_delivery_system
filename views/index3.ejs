@@ -1,0 +1,352 @@
+
+<!DOCTYPE html>
+<head>
+
+<meta charset="utf-8">
+<meta name="google" value="notranslate" />
+<meta http-equiv="Content-Language" content="en" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>
+    Social Delivery Service
+</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<meta name="description" content="The social delivery service where you save the environment, make money and do something nice for other people.">
+
+
+<!-- Stylesheets -->
+<link rel="stylesheet" media="all" href="https://d1112petr9ji1a.cloudfront.net/assets/application-bac74edb05b8d09242307623247b39e57872aca9abbde84ab37667ba59ba3a68.css" />
+<link rel="stylesheet" media="all" href="https://d1112petr9ji1a.cloudfront.net/assets/app-2a7eb28789d541ecb4e68b87c8793bceb04d9b85ee51cf52b7eae9e4aa8c7a71.css" />
+
+    <meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="zildzrC0zc98IW3JtQy61zW1QxeatCdd19FRR8gsKG2JA4fLciXkaQylfCi8PRQ2h+3zwjANuvRTueMPHflLQw==" />
+
+    <meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="PImlTDEIIZ4/FYHqmaKKgvKJC8RZDCoH5y9mP+u4Rs57o39J85kIOE+RkAuQkyRjQNG7EfO1t65jR9R3Pm0l4A==" />
+
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+  <script>
+
+  var app = angular.module("schmuber_index_app", []);
+  app.controller("schmuber_index_controller", function($scope,$http,$window,$location) {
+
+    $scope.navigate = function(type){
+      if(type=='login') $window.location.href='login'
+      else if(type=='register')$window.location.href='register'
+
+    }
+
+    // $scope.checkuser = function(){
+    //   $http({
+    //     method:'get',
+    //     url:'/v1/authenticateuser'
+    //   }).then(function(res){
+    //     if(res.data.status == "200"){
+
+
+    //     }
+    //   });
+    // }
+
+});
+
+</script>
+</head>
+
+
+
+<body class="en not-logged-in hm-page" ng-app="schmuber_index_app" ng-controller="schmuber_index_controller">
+<section class="hm-section hm-section--main" data-min-height="0">
+  <div id="eb-head-image" class="hm-carousel">
+    <figure class="item hm-background__item hm-background__item--guitar" data-image="1">
+      <img srcset="https://d1112petr9ji1a.cloudfront.net/assets/home/home-photo-kid-mobile-f1106cfc57131b83d6c3979612b35279b616b8c4afc7dfa02bb7953cb124a310.jpg 480w, https://d1112petr9ji1a.cloudfront.net/assets/home/home-photo-kid-tablet-8fce7df3f5f518f0db1f4bce8790cfaed0a613981159b50451982bdcca7c3b0a.jpg 800w, https://d1112petr9ji1a.cloudfront.net/assets/home/home-photo-guitar-484c624e30c965140d22a4a426476de7b6ea5f98911fc63678b94946ae8c901d.jpg 1280w" src="https://d1112petr9ji1a.cloudfront.net/assets/home/home-photo-kid-tablet-8fce7df3f5f518f0db1f4bce8790cfaed0a613981159b50451982bdcca7c3b0a.jpg" alt="Home photo kid tablet" />
+    </figure>
+  </div><!-- eb-carousel -->
+
+  <div class="hm-container hm-container--main">
+
+    <header class="hm-head fadeInDown animated half-time animation-delay3100">
+      <div class="hm-head__content">
+        <div class="svg-logo-wrapper">
+
+<!-- <svg class="svg-logo  " version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="150px"
+   height="25px" viewBox="0 0 136 23" enable-background="new 0 0 136 23" xml:space="preserve">
+<g id="svg-logo-layer-1">
+  <path class="svg-logo-path " fill-rule="evenodd" clip-rule="evenodd" fill="#CD341D" d="M45.6,9.9V16c0,0.5-0.2,0.7-0.6,0.7h-1.6c-0.4,0-0.6-0.2-0.6-0.7v-5
+    c0-2.1-0.5-3.2-2.1-3.2c-1.8,0-2.8,1.5-2.8,3.8V16c0,0.5-0.2,0.7-0.7,0.7h-1.6c-0.4,0-0.6-0.2-0.6-0.7V6.3c0-0.5,0.2-0.7,0.6-0.7
+    h1.6c0.5,0,0.7,0.2,0.7,0.7v0.8h0.1c0.9-1.2,2-1.8,3.6-1.8C44.6,5.3,45.6,7.5,45.6,9.9z M50,5.6h-1.6c-0.4,0-0.6,0.2-0.6,0.7V16
+    c0,0.5,0.2,0.7,0.6,0.7H50c0.4,0,0.6-0.2,0.6-0.7V6.3C50.7,5.8,50.4,5.6,50,5.6z M49.2,0.1c-0.9,0-1.7,0.8-1.7,1.7s0.8,1.7,1.7,1.7
+    c0.9,0,1.7-0.8,1.7-1.7S50.1,0.1,49.2,0.1z M66.1,5.3c-1.8,0-2.9,1-3.5,2.1h-0.1c-0.5-1.3-1.6-2.1-3.6-2.1c-1.5,0-2.6,0.7-3.3,1.8h0
+    V6.3c0-0.5-0.2-0.7-0.7-0.7h-1.6c-0.4,0-0.6,0.2-0.6,0.7V16c0,0.5,0.2,0.7,0.6,0.7H55c0.5,0,0.7-0.2,0.7-0.7v-4.4
+    c0-2.3,0.7-3.8,2.4-3.8c1.5,0,1.8,1.2,1.8,3V16c0,0.5,0.2,0.7,0.7,0.7h1.6c0.4,0,0.6-0.2,0.6-0.7v-4.2c0-2,0.6-4,2.4-4
+    c1.5,0,1.8,1.2,1.8,3V16c0,0.5,0.2,0.7,0.7,0.7h1.6c0.4,0,0.6-0.2,0.6-0.7V9.9C70,7.3,69.2,5.3,66.1,5.3z M83.5,11.2
+    c0,3-1.6,5.7-4.8,5.7c-1.6,0-2.8-0.5-3.6-1.6H75V16c0,0.5-0.2,0.7-0.7,0.7h-1.6c-0.4,0-0.6-0.2-0.6-0.7V0.7c0-0.5,0.2-0.7,0.6-0.7
+    h1.6C74.8,0,75,0.2,75,0.7V7h0.1c0.8-1.1,1.9-1.7,3.6-1.7C82,5.3,83.5,8,83.5,11.2z M80.5,11.2c0-1.8-0.8-3.5-2.6-3.5
+    C76.1,7.7,75,9.3,75,11c0,2.3,1.1,3.6,2.7,3.6C79.5,14.6,80.5,13.1,80.5,11.2z M95.1,11.2c0,0.5-0.3,0.7-0.8,0.7h-6.9
+    c0.2,1.7,1.5,2.9,3.4,2.9c1.8,0,2.5-0.7,3-0.7c0.2,0,0.4,0.1,0.4,0.4l0.1,1.1c0,0.4-0.1,0.6-0.6,0.7c-1,0.4-2.2,0.6-3.3,0.6
+    c-3.8,0-6.1-2.2-6.1-5.9c0-3.4,2.3-5.7,5.5-5.7C93.5,5.3,95.1,7.7,95.1,11.2z M92.3,10.1c0-1.6-0.9-2.6-2.3-2.6
+    c-1.5,0-2.4,1-2.6,2.6H92.3z M103.3,5.4c-0.2-0.1-0.6-0.1-1-0.1c-1.3,0-2.1,0.6-2.8,1.8h-0.1V6.3c0-0.5-0.2-0.7-0.7-0.7h-1.6
+    c-0.4,0-0.6,0.2-0.6,0.7V16c0,0.5,0.2,0.7,0.6,0.7h1.6c0.5,0,0.7-0.2,0.7-0.7v-4.3c0-2.1,0.7-3.8,2.5-3.8c0.6,0,0.9,0.1,1.1,0.1
+    c0.4,0,0.6-0.2,0.6-0.6V6.1C103.7,5.6,103.5,5.5,103.3,5.4z"/>
+</g>
+<g id="svg-logo-layer-2">
+    <path class="svg-logo-path " fill-rule="evenodd" clip-rule="evenodd" fill="#CD341D" d="M19.4,16.2c-0.5,0-1-0.2-1.3-0.6
+    c-1.1-1.2-4.7-5.2-4.7-8.1c0-3.3,2.7-6,6-6c3.3,0,6,2.7,6,6c0,2.8-3.6,6.9-4.7,8.1C20.4,16,19.9,16.2,19.4,16.2z M19.4,3.3
+    c-2.3,0-4.2,1.9-4.2,4.2c0,2.3,4.2,6.8,4.2,6.8s4.2-4.5,4.2-6.8C23.6,5.2,21.8,3.3,19.4,3.3z M17.3,7.5c0-1.2,0.9-2.1,2.1-2.1
+    c1.2,0,2.1,0.9,2.1,2.1c0,1.2-0.9,2.1-2.1,2.1C18.3,9.6,17.3,8.7,17.3,7.5z M18.9,17.7c0.3-0.4,0.9-0.4,1.3,0c0.4,0.3,0.4,0.9,0,1.3
+    c-0.1,0.1-2.8,2.9-7.4,2.9c-4.5,0-7.3-2.8-7.4-2.9c-0.3-0.4-0.3-0.9,0-1.3c0.4-0.3,0.9-0.3,1.3,0c0,0,2.3,2.4,6.1,2.4
+    C16.6,20.1,18.8,17.8,18.9,17.7z M6,16.2c-0.5,0-1-0.2-1.3-0.6C3.6,14.4,0,10.4,0,7.5c0-3.3,2.7-6,6-6c3.3,0,6,2.7,6,6
+    c0,2.8-3.6,6.9-4.7,8.1C7,16,6.5,16.2,6,16.2z M6,3.3c-2.3,0-4.2,1.9-4.2,4.2c0,2.3,4.2,6.8,4.2,6.8s4.2-4.5,4.2-6.8
+    C10.2,5.2,8.3,3.3,6,3.3z M3.9,7.5c0-1.2,0.9-2.1,2.1-2.1c1.2,0,2.1,0.9,2.1,2.1c0,1.2-0.9,2.1-2.1,2.1C4.8,9.6,3.9,8.7,3.9,7.5z"/>
+</g>
+</svg> -->
+        </div><!-- hm-logo-wrapper -->
+        <nav class="hm-nav hm-nav--cta">
+          <ul class="hm-nav__list">
+              <li class="hm-nav__item">
+                <a class="hm-nav__link--cta metric-home-click-register" href="" ng-click="navigate('register')">Register</a>
+              </li>
+              <li class="hm-nav__item"  >
+                <a class="hm-nav__link" href="" ng-click="navigate('login')">Login</a>
+              </li>
+          </ul>
+        </nav>
+      </div><!-- hm-head-content -->
+    </header><!-- hm-head -->
+
+    <div class="hm-box hm-box--main">
+      <div class="hm-box__content">
+        <header class="hm-header hm-header--main  ">
+          <h1 class="hm-title hm-title--big  fadeIn animated animation-delay1700">
+            <span>
+              Ship everything
+            </span>
+          </h1>
+          <h2 class="hm-subtitle hm-subtitle--big fadeIn animated animation-delay1900">
+            <span class="hm-subtitle-text hm-subtitle-text--show">
+              Send it with someone going that way, anyway
+            </span>
+          </h2>
+        </header><!-- hm-header -->
+
+        <div class="hm-content hm-content--main text-center">
+          <div class="hm-main-cta-wrapper animated animation-delay2500 fadeIn half-time">
+            <a class="hm-cta metric-home-click-send js-tracking" data-animation-classes="animated fadeOutRight half-time ease-out" data-event="{&#39;name&#39;: &#39;Home - Press send CTA&#39;, &#39;options&#39;: {}}" href="send">
+              <b class="hm-cta__title">Send</b>
+              <span class="hm-cta__subtitle">What would you like to send?</span>
+              <span class="hm-cta__icon">{</span>
+            </a>
+            <a class="hm-cta metric-home-click-bring js-tracking" data-animation-classes="animated fadeOutLeft half-time ease-out" data-event="{&#39;name&#39;: &#39;Home - Press bring CTA&#39;, &#39;options&#39;: {}}" href="/tasks/search">
+              <b class="hm-cta__title" ng-click="checkuser()">Bring</b>
+              <span class="hm-cta__subtitle">Make money on your travels</span>
+              <span class="hm-cta__icon">}</span>
+</a>          </div><!-- hm-main-cta-wrapper -->
+        </div><!-- hm-content -->
+      </div><!-- hm-box__content -->
+    </div><!-- hm-box -->
+  </div><!-- hm-container -->
+</section><!--hm-section -->
+
+<div class="scroll-info">
+  <a href="#scroll-section" class="js-jump-to-link">
+    <em class="scroll-info__text">More down here</em>
+    <div class="scroll-info__icon animated bigger-floating infinite"></div>
+  </a>
+</div><!-- scroll-info -->
+
+<section class="module-section expand">
+  <div class="module-content container">
+    <h2 class="o-heading-medium o-heading-bold o-heading-section">
+      Here is how Schmuber works
+    </h2><!-- o-heading-medium -->
+
+    <div class="module-content-col module-content-left module-content-middle module-content-60 how-to__step module-content-full-on-hand">
+      <div class="module-task-list-card cf">
+        <div class="module-task-list-card__media">
+        </div>
+        <div class="module-task-list-card__content">
+          <header>
+            <div class="module-task-card__title module-content-col module-content-75 module-content-left module-content-middle">
+              <h1 class="o-heading-bottom o-heading-smaller o-heading-bold">
+                Classic guitar
+              </h1>
+              <span class="o-paragraph-normal o-paragraph--secondary">
+                Fulham → Old Street
+              </span>
+            </div>
+            <div class="module-task-card__title module-content-col module-content-25 module-content-right module-content-middle text-right">
+              <span class="o-heading-small o-heading-bold">$20</span>
+            </div>
+          </header>
+
+          <div class="module-task-meta cf module-task-meta--off-left module-task-card__meta">
+            <div class="module-task-meta__image">
+              <img src="https://d1112petr9ji1a.cloudfront.net/assets/user-image-sender-f33a90ece584ed9c79183474ac87f8126dcfd46e541d4e43fdaeca100ecd9a62.png" alt="User image sender" />
+            </div>
+
+            <div class="module-task-meta__info">
+              <div class="module-task-meta__info-part">
+                <b class="o-heading-text o-heading-bold o-heading--helper o-heading-no-margin">
+                  Sender
+                </b><br/>
+                <b class="o-paragraph-small o-paragraph--primary">
+                  Peter L.
+                  <span class="obj-task-toolbar__list-rating">
+                    <span class="user-rating user-rating--5 user-rating--small">
+                      5
+                      <span class="user-rating__icon">*</span>
+                    </span>
+                  </span>
+                </b>
+              </div>
+
+              <div class="module-task-meta__info-part">
+                <b class="o-heading-text o-heading-bold o-heading--helper o-heading-no-margin">
+                  Must be delivered by
+                </b><br/>
+                <b class="o-paragraph-small o-paragraph--primary">
+                  13 April, 2017
+                </b>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- module-content -->
+
+    <div class="module-content-col module-content-right module-content-middle module-content-40 how-to__step module-content-full-on-hand">
+      <h3 class="o-heading-smaller o-heading-bold">
+        1. Post your delivery
+      </h3>
+      <p class="o-paragraph-large o-pararaph--secondary">
+        Simply post your shipment on Nimber. We&#39;ll walk you through the whole process.
+      </p>
+    </div>
+
+    <div class="module-content-col module-content-left module-content-middle module-content-60 how-to__step how-to__connector module-content-full-on-hand text-center">
+      <img width="6" src="https://d1112petr9ji1a.cloudfront.net/assets/dotted-connector-117c4f933e0b6924b3c0f0b28be7d384faedf5f8134c71bec5cbb091552aede4.svg" alt="Dotted connector" />
+    </div>
+
+
+    <div class="module-content-col module-content-left module-content-middle module-content-60 how-to__step module-content-full-on-hand">
+      <div class="module-demo-offer cf">
+        <div class="module-demo-offer__media">
+          <img src="https://d1112petr9ji1a.cloudfront.net/assets/user-image-bringer-1-fdad06d0ccf4ef410be54844f08fd91c1aef4fa78a304a555a6cfc62310ed15b.jpg" alt="User image bringer 1" />
+        </div>
+        <header class="module-demo-offer__content">
+          <div class="module-task-card__title module-content-col module-content-75 module-content-left module-content-middle">
+            <h1 class="o-heading-bottom o-heading-smaller o-heading-bold">
+              Jason M.
+              <span class="obj-task-toolbar__list-rating">
+                <span class="user-rating user-rating--5 user-rating--small">
+                  5
+                  <span class="user-rating__icon">*</span>
+                </span>
+              </span>
+            </h1>
+            <b class="o-paragraph-normal o-paragraph--secondary">
+              12 April, 2017 &dash; $15
+            </b>
+          </div>
+          <div class="module-task-card__title module-content-col module-content-25 module-content-right module-content-middle text-right">
+            <span class="o-icon-green-check">✓</span>
+          </div>
+        </header>
+      </div><!-- module-demo-offer -->
+
+      <div class="module-demo-offer cf disablify">
+        <div class="module-demo-offer__media">
+          <img src="https://d1112petr9ji1a.cloudfront.net/assets/user-image-bringer-2-179ddefe14afacf8fa96cbdaaca217661f61c8a1fb8077ed16328e238f15597d.jpg" alt="User image bringer 2" />
+        </div>
+        <header class="module-demo-offer__content">
+          <div class="module-task-card__title module-content-col module-content-75 module-content-left module-content-middle">
+            <h1 class="o-heading-bottom o-heading-smaller o-heading-bold">
+              Petra J.
+              <span class="obj-task-toolbar__list-rating">
+                <span class="user-rating user-rating--5 user-rating--small">
+                  5
+                  <span class="user-rating__icon">*</span>
+                </span>
+              </span>
+            </h1>
+            <b class="o-paragraph-normal o-paragraph--secondary">
+              13 April, 2017 &dash; $20
+            </b>
+          </div>
+          <div class="module-task-card__title module-content-col module-content-25 module-content-right module-content-middle text-right">
+            <span class="o-heading-small o-heading-bold"></span>
+          </div>
+        </header>
+      </div><!-- module-demo-offer -->
+    </div><!-- module-content -->
+
+    <div class="module-content-col module-content-right module-content-middle module-content-40 how-to__step module-content-full-on-hand">
+      <h3 class="o-heading-smaller o-heading-bold">
+        2. Receive delivery offers
+      </h3>
+      <p class="o-paragraph-large o-pararaph--secondary">
+        Bringers will contact you with offers when they can deliver your shipment.
+      </p>
+    </div>
+
+    <div class="module-content-col module-content-left module-content-middle module-content-60 how-to__step how-to__connector module-content-full-on-hand text-center">
+      <img width="6" src="https://d1112petr9ji1a.cloudfront.net/assets/dotted-connector-117c4f933e0b6924b3c0f0b28be7d384faedf5f8134c71bec5cbb091552aede4.svg" alt="Dotted connector" />
+    </div>
+
+    <div class="module-content-col module-content-left module-content-middle module-content-60 how-to__step module-content-full-on-hand">
+      <div class="how-to__connector text-center">
+        <img width="275" class="inline-block" src="https://d1112petr9ji1a.cloudfront.net/assets/icon-matching-partners-fdf7e02cd30ce539a22a093e77121fbe66c67503c12d5b0c8f111ec814602394.png" alt="Icon matching partners" />
+      </div>
+    </div><!-- module-content -->
+
+    <div class="module-content-col module-content-right module-content-middle module-content-40 how-to__step module-content-full-on-hand">
+      <h3 class="o-heading-smaller o-heading-bold">
+        3. Strike a deal
+      </h3>
+      <p class="o-paragraph-large o-pararaph--secondary">
+        Choose a bringer and agree on pickup and delivery times.
+      </p>
+    </div>
+  </div><!-- module-content -->
+</section>
+
+<section class="module-section--black module-section-security expand">
+  <div class="module-content container">
+    <div class="module-content-col module-content-left module-content-50 module-content-full-on-hand">
+      <h1 class="o-heading-medium o-heading-bold o-heading--bright o-heading--space-bottom">
+        Your item is in good hands
+      </h1>
+      <p class="o-paragraph-larger o-paragraph--bright o-paragraph-section">
+        Our community will always strive to deliver your item in perfect condition but if anything goes wrong, we are here to help.
+      </p>
+
+      <ol class="module-list-features">
+        <li class="module-list-feature cf">
+          <figure class="module-list-feature__media">
+            <img width="86" src="https://d1112petr9ji1a.cloudfront.net/assets/icon-security-reviews-d3a66ad18c05565ef425a1cf07cd0f21fef945d0041c855e2836a36b122fdb9a.svg" alt="Icon security reviews" />
+          </figure>
+          <div class="module-list-feature__content">
+            <b class="o-paragraph-large o-paragraph--bright">
+              Bringer selection based on reviews
+            </b>
+          </div>
+        </li>
+      </ol>
+    </div><!-- module-content-50 -->
+  </div><!-- module-content -->
+</section><!-- module-header -->
+
+
+
+
+<!-- Facebook window -->
+<div id="fb-root"></div>
+
+
+
+</body>
+</html>
