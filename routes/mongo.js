@@ -6,8 +6,7 @@ var arrayOfPools= [];
  * Connects to the MongoDB Database with the provided URL
  */
 
-<<<<<<< HEAD
-=======
+
 // for(var i=0;i<100;i++){
 
 // 	 MongoClient.connect("mongodb://sangitdhanani:sjsu1234@ds133211.mlab.com:33211/sds_mongo",function(err, _db){
@@ -37,7 +36,7 @@ var arrayOfPools= [];
 // function releaseConnectionFromPool(connection){
 // 	arrayOfPools.push(connection);
 // }
->>>>>>> 505e7a0273b886e6acaeb335dffa0020689cc01d
+
 
 
 exports.connect = function(url, callback){
