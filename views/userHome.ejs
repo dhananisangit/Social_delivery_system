@@ -26,7 +26,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 	<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
-		<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDKFu5RJEbw7m_TNta9p2aZqwzP0Dq801M&signed_in=true&callback=initMap" async defer></script> -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB5sfbUPXiX4jbxe_a9OHuvkCNN6-tXiHQ&libraries=places" async defer></script>
 
     <script>
 
@@ -35,8 +35,97 @@
     userPage.controller("UserController", function($scope, $http, $window){
 
       $scope.pwd = {oldPassword:"", newPassword:""};
+      $scope.taskDetails = {};
+
+      var placeSearch, autocompletePickup, autocompleteDropoff;
+
+      var componentForm = {
+        street_number: 'short_name',
+        route: 'long_name',
+        locality: 'long_name',
+        administrative_area_level_1: 'short_name',
+        country: 'long_name',
+        postal_code: 'short_name'
+      };
+
+      var addrField = {
+        street_number: 'street1',
+        route: 'street2',
+        locality: 'city',
+        administrative_area_level_1: 'state',
+        country: 'country',
+        postal_code: 'zip'
+      }
+
+
+      $scope.initAutocomplete  = function initAutocomplete(id) {
+
+        if (id == 'pickup') {
+          autocompletePickup = new google.maps.places.Autocomplete(
+            (document.getElementById('autocompletePickup')), {
+              types: ['geocode']
+            });
+            autocompletePickup.addListener('place_changed', fillInPickupAddress);
+        } else if (id == 'dropoff') {
+          autocompleteDropoff = new google.maps.places.Autocomplete(
+            (document.getElementById('autocompleteDropoff')), {
+              types: ['geocode']
+            });
+            autocompleteDropoff.addListener('place_changed', fillInDropoffAddress);
+        }
+      }
+
+      function fillInPickupAddress() {
+        var place = autocompletePickup.getPlace();
+        // console.log(place);
+        $scope.taskDetails.from = {};
+        for (var i = 0; i < place.address_components.length; i++) {
+          var addressType = place.address_components[i].types[0];
+          var val;
+          if (componentForm[addressType]) {
+            val = place.address_components[i][componentForm[addressType]];
+            $scope.taskDetails.from[addrField[addressType]] = val;
+          }
+        }
+        console.log($scope.taskDetails);
+      }
+
+      function fillInDropoffAddress() {
+        var place = autocompleteDropoff.getPlace();
+        // console.log(place);
+        $scope.taskDetails.to = {};
+
+        for (var i = 0; i < place.address_components.length; i++) {
+          var addressType = place.address_components[i].types[0];
+          var val;
+          if (componentForm[addressType]) {
+            val = place.address_components[i][componentForm[addressType]];
+            $scope.taskDetails.to[addrField[addressType]] = val;
+          }
+        }
+        console.log($scope.taskDetails);
+      }
+
+      $scope.geolocate = function geolocate() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            var geolocation = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+            var circle = new google.maps.Circle({
+              center: geolocation,
+              radius: position.coords.accuracy
+            });
+            autocompletePickup.setBounds(circle.getBounds());
+            autocompleteDropoff.setBounds(circle.getBounds());
+          });
+        }
+      }
 
       $scope.sendPackage = function(){
+        var date = document.getElementById("deliveryDate").value;
+        $scope.deliveryRequest.desiredDate = date;
         $http({
           method:'POST',
           url:'/v1/sendpackage',
@@ -129,10 +218,10 @@
         });
       };
 
-      $scope.getDeliveryDetails = function(reqID){
+      $scope.getDeliveryDetails = function(timestamp){
         $http({
           method:'get',
-          url:'/v1/getdeliverydetails?requestID='+reqID
+          url:'/v1/getdeliverydetails?timestamp='+timestamp
         }).then(function(res){
           if(res.data.status == "200"){
             // console.log(res.data);
@@ -160,18 +249,110 @@
         });
       };
 
-      $scope.deleteDeliveryRequest = function(reqID){
+      $scope.deleteDeliveryRequest = function(timestamp){
         $http({
           method:'get',
-          url:'/v1/deletedeliveryrequest?requestID='+reqID,
-          data:{deliveryDetails: $scope.deliveryDetails}
+          url:'/v1/deletedeliveryrequest?timestamp='+timestamp
         }).then(function(res){
           if(res.data.status == "200"){
             console.log(res.data);
             $scope.deliveryDetails = null;
+            // $scope.getDeliveryDetails();
           }
           else if(res.data.status=="400"){
             // console.log(res.data);
+          }
+        });
+      };
+
+      $scope.searchTask = function(){
+        var date = document.getElementById("taskDate").value;
+        $http({
+          method:'get',
+          url:'/v1/searchtask?toCity='+$scope.taskDetails.to.city+'&toState='+$scope.taskDetails.to.state+'&fromCity='+$scope.taskDetails.from.city+'&fromState='+$scope.taskDetails.from.state
+          +'&size='+$scope.taskDetails.size+'&date='+date
+        }).then(function(res){
+          if(res.data.status == "200"){
+            console.log(res.data);
+            $scope.taskSuggestions = res.data.taskSuggestions;
+          }
+          else if(res.data.status=="400"){
+            console.log(res.data);
+          }
+        });
+      };
+
+      $scope.makeOffer = function(timestamp, ID){
+        $http({
+          method:'get',
+          url:'/v1/makeoffer?msg=k&timestamp='+timestamp+'&userID='+ID
+        }).then(function(res){
+          if(res.data.status == "200"){
+            console.log(res.data);
+          }
+          else if(res.data.status=="400"){
+            console.log(res.data);
+          }
+        });
+      };
+
+      $scope.acceptOffer = function(ID, name){
+        $scope.deliveryDetails.transporter = {id: ID, name: name};
+        $http({
+          method:'POST',
+          url:'/v1/acceptoffer',
+          data:{tripDetails: $scope.deliveryDetails}
+        }).then(function(res){
+          if(res.data.status == "200"){
+            console.log(res.data);
+          }
+          else if(res.data.status=="400"){
+            console.log(res.data);
+          }
+        });
+      };
+
+      $scope.getTaskList = function(){
+        $http({
+          method:'get',
+          url:'/v1/gettasklist'
+        }).then(function(res){
+          if(res.data.status == "200"){
+            console.log(res.data);
+            $scope.taskList = res.data.taskList;
+          }
+          else if(res.data.status=="400"){
+            console.log(res.data);
+          }
+        });
+      };
+
+      $scope.getTripList = function(){
+        $http({
+          method:'get',
+          url:'/v1/gettriplist'
+        }).then(function(res){
+          if(res.data.status == "200"){
+            console.log(res.data);
+            $scope.tripList = res.data.tripList;
+          }
+          else if(res.data.status=="400"){
+            console.log(res.data);
+          }
+        });
+      };
+
+      $scope.completeTrip = function(timestamp, ID){
+        $http({
+          method:'POST',
+          url:'/v1/completetrip',
+          data:{timestamp: timestamp, userID: ID}
+        }).then(function(res){
+          if(res.data.status == "200"){
+            console.log(res.data);
+          }
+          else if(res.data.status=="400"){
+            console.log(res.data);
           }
         });
       };
@@ -181,10 +362,10 @@
     </script>
 
   </head>
-  <body ng-app="userPage" ng-controller="UserController">
+  <body ng-app="userPage" ng-controller="UserController" ng-init="">
     <div class="container">
       <div class="raw">
-        <div class="col-sm-4">
+        <div class="col-sm-3">
           <form>
             <div class="form-group">
               <label>Title</label>
@@ -257,14 +438,25 @@
 
             <div class="form-group">
               <label>when:</label>
-              <input type="date" class="form-control" ng-model="deliveryRequest.desiredDate">
+              <input type="date" class="form-control" id="deliveryDate">
             </div>
 
             <button type="submit" class="btn btn-default" ng-click="sendPackage()">Submit</button>
           </form>
         </div>
 
-        <div class="col-sm-4">
+        <div class="col-sm-2">
+            <input type="text" class="form-control" id="autocompletePickup" placeholder="Enter pickup address" ng-focus="initAutocomplete('pickup');geolocate();">
+            <input type="text" class="form-control" id="autocompleteDropoff" placeholder="Enter dropoff address" ng-focus="initAutocomplete('dropoff');geolocate();">
+            <input type="text" class="form-control" placeholder="car type" ng-model="taskDetails.size">
+            <input type="date" id="taskDate" placeholder="date" ng-model="taskDetails.date">
+            <button type="submit" class="btn btn-default" ng-click="searchTask()">Search Task</button>
+            <div ng-repeat="task in taskSuggestions">
+              <p>{{task.name}}</p>
+              <p>{{task.packageDetails.title}}</p>
+              <button type="submit" class="btn btn-default" ng-click="makeOffer(task.timestamp, task.userID)">Make offer</button>
+            </div>
+            <br>
           <button type="submit" class="btn btn-default" ng-click="getUserProfile()">show profile</button>
           <form>
             <div ng-if="updateForm">
@@ -362,11 +554,11 @@
           </form>
         </div>
 
-        <div class="col-sm-4">
+        <div class="col-sm-3">
           <button type="submit" class="btn btn-default" ng-click="getDeliveryList()">delivery list</button>
-          <p ng-repeat="delivery in deliveryList" ng-click="getDeliveryDetails(delivery.requestID)">
-            {{delivery.packageDetails.title}}
-            <div ng-if="deliveryForm">
+          <p ng-repeat="delivery in deliveryList" ng-click="getDeliveryDetails(delivery.timestamp)">
+            {{delivery.packageDetails.title}}</p>
+            <div ng-if="deliveryForm && deliveryDetails">
               <form>
                 <div class="form-group">
                   <label>desiredDate</label>
@@ -445,14 +637,35 @@
                 </div>
                 <button type="submit" class="btn btn-default" ng-click="editDeliveryDetails()">edit detail</button>
                 <br>
-                <button type="submit" class="btn btn-default" ng-click="deleteDeliveryRequest(deliveryDetails.requestID)">Delete</button>
+                <button type="submit" class="btn btn-default" ng-click="deleteDeliveryRequest(deliveryDetails.timestamp)">Delete</button>
+                <br>
+                <div ng-if="deliveryDetails.offers" ng-repeat="offer in deliveryDetails.offers">
+                  <p>From: {{offer.name}}</p>
+                  <button type="submit" class="btn btn-default" ng-click="acceptOffer(offer.userID, offer.name)">Accept offer</button><br>
+                </div>
               </form>
             </div>
-          </p>
-
         </div>
+
+        <div class="col-sm-4">
+          <div class="row">
+            <div class="col-sm-6">
+              <button type="submit" class="btn btn-default" ng-click="getTaskList()">Task List</button>
+              <div ng-if="taskList.length > 0" ng-repeat="task in taskList">
+                <p>{{task.packageDetails.title}}</p>
+                <button type="submit" class="btn btn-default" ng-click="completeTrip(task.timestamp, task.shipper.id)">Complete Trip</button>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <button type="submit" class="btn btn-default" ng-click="getTripList()">Trip List</button><br>
+              <div ng-if="tripList.length > 0" ng-repeat="trip in tripList">
+                <p>{{trip.packageDetails.title}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
-
 
   </body>
