@@ -27,6 +27,10 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 	<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-animate.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-sanitize.js"></script>
+<script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.js"></script>
+	<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDNDBa5lsMqaYCcyhGSQsBiM9JvUxaamu8&libraries=places" async defer></script> -->
 
 	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:400,300|Raleway:300,400,900,700italic,700,300,600">
 	<link rel="stylesheet" type="text/css" href="/css/jquery.bxslider.css">
@@ -34,20 +38,275 @@
 	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="/css/animate.css">
 	<link rel="stylesheet" type="text/css" href="/css/style1.css">
+	<link rel="stylesheet" media="all" href="/css/admin1.css" />
+	<link rel="stylesheet" media="all" href="/css/admin2.css" />
+	<script>
+  var app = angular.module("userPage2", ['ui.bootstrap']);
+  app.controller("UserController2", function($scope,$http,$window,$location, $uibModal) {
+    $scope.send_form=true;
+    $scope.send_confirmation = false;
+    $scope.taskDetails = {};
+		$scope.postTripsec = true
+		$scope.tripListsec = false
+    // $scope.postSendDetails = function(){
+    //   $scope.send_form = false;
+    //   $scope.send_confirmation = true;
+    //   $http({
+    //     method:'get',
+    //     url:'/v1/getdeliverydetails'
+    //   }).then(function(res){
+    //   });
+    // };
+
+    var placeSearch, autocompletePickup, autocompleteDropoff, autocompleteSendPickup, autocompleteSendDropoff;
+
+    var componentForm = {
+      street_number: 'short_name',
+      route: 'long_name',
+      locality: 'long_name',
+      administrative_area_level_1: 'short_name',
+      country: 'long_name',
+      postal_code: 'short_name'
+    };
+
+    var addrField = {
+      street_number: 'street1',
+      route: 'street2',
+      locality: 'city',
+      administrative_area_level_1: 'state',
+      country: 'country',
+      postal_code: 'zip'
+    }
+
+    $scope.initAutocomplete  = function initAutocomplete(id) {
+
+      if (id == 'pickup') {
+        autocompletePickup = new google.maps.places.Autocomplete(
+          (document.getElementById('autocompletePickup')), {
+            types: ['geocode']
+          });
+          autocompletePickup.addListener('place_changed', fillInPickupAddress);
+      } else if (id == 'dropoff') {
+        autocompleteDropoff = new google.maps.places.Autocomplete(
+          (document.getElementById('autocompleteDropoff')), {
+            types: ['geocode']
+          });
+          autocompleteDropoff.addListener('place_changed', fillInDropoffAddress);
+      } else if (id == 'sendPickup') {
+        autocompleteSendPickup = new google.maps.places.Autocomplete(
+          (document.getElementById('sendPickup')), {
+            types: ['geocode']
+          });
+          autocompleteSendPickup.addListener('place_changed', fillInSendPickupAddress);
+      } else if (id == 'sendDropoff') {
+        autocompleteSendDropoff = new google.maps.places.Autocomplete(
+          (document.getElementById('sendDropoff')), {
+            types: ['geocode']
+          });
+          autocompleteSendDropoff.addListener('place_changed', fillInSendDropoffAddress);
+      }
+
+    }
+
+    function fillInPickupAddress() {
+      var place = autocompletePickup.getPlace();
+      // console.log(place);
+      $scope.taskDetails.from = {};
+      for (var i = 0; i < place.address_components.length; i++) {
+        var addressType = place.address_components[i].types[0];
+        var val;
+        if (componentForm[addressType]) {
+          val = place.address_components[i][componentForm[addressType]];
+          $scope.taskDetails.from[addrField[addressType]] = val;
+        }
+      }
+      console.log($scope.taskDetails);
+    }
+
+    function fillInDropoffAddress() {
+      var place = autocompleteDropoff.getPlace();
+      // console.log(place);
+      $scope.taskDetails.to = {};
+
+      for (var i = 0; i < place.address_components.length; i++) {
+        var addressType = place.address_components[i].types[0];
+        var val;
+        if (componentForm[addressType]) {
+          val = place.address_components[i][componentForm[addressType]];
+          $scope.taskDetails.to[addrField[addressType]] = val;
+        }
+      }
+      console.log($scope.taskDetails);
+    }
+
+
+    $scope.geolocate = function geolocate() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          var geolocation = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          };
+          var circle = new google.maps.Circle({
+            center: geolocation,
+            radius: position.coords.accuracy
+          });
+          autocompletePickup.setBounds(circle.getBounds());
+          autocompleteDropoff.setBounds(circle.getBounds());
+        });
+      }
+    };
+
+		$scope.getDeliveryList = function(){
+			$http({
+				method:'get',
+				url:'/v1/getdeliverylist'
+			}).then(function(res){
+				if(res.data.status == "200"){
+					// console.log(res.data);
+					$scope.deliveryList = res.data.deliveries;
+				}
+				else if(res.data.status=="400"){
+					// console.log(res.data);
+				}
+			});
+		};
+
+		$scope.getDeliveryDetails = function(timestamp){
+			$http({
+				method:'get',
+				url:'/v1/getdeliverydetails?timestamp='+timestamp
+			}).then(function(res){
+				if(res.data.status == "200"){
+					// console.log(res.data);
+					$scope.deliveryDetails = res.data.delivery;
+					$scope.deliveryForm = true;
+				}
+				else if(res.data.status=="400"){
+					// console.log(res.data);
+				}
+			});
+		};
+
+		$scope.editDeliveryDetails = function(){
+			$http({
+				method:'POST',
+				url:'/v1/editdeliverydetails',
+				data:{deliveryDetails: $scope.deliveryDetails}
+			}).then(function(res){
+				if(res.data.status == "200"){
+					// console.log(res.data);
+				}
+				else if(res.data.status=="400"){
+					// console.log(res.data);
+				}
+			});
+		};
+
+		$scope.deleteDeliveryRequest = function(timestamp){
+			$http({
+				method:'get',
+				url:'/v1/deletedeliveryrequest?timestamp='+timestamp
+			}).then(function(res){
+				if(res.data.status == "200"){
+
+					$scope.deliveryDetails = null;
+					// $scope.getDeliveryDetails();
+				}
+				else if(res.data.status=="400"){
+					// console.log(res.data);
+				}
+			});
+		};
+
+		$scope.searchTask = function(){
+			var date = document.getElementById("taskDate").value;
+			$http({
+				method:'get',
+				url:'/v1/searchtask?toCity='+$scope.taskDetails.to.city+'&toState='+$scope.taskDetails.to.state+'&fromCity='+$scope.taskDetails.from.city+'&fromState='+$scope.taskDetails.from.state
+				+'&size='+$scope.taskDetails.size+'&date='+date
+			}).then(function(res){
+				if(res.data.status == "200"){
+					console.log(res.data);
+					$scope.taskSuggestions = res.data.taskSuggestions;
+
+					$scope.tripListsec = true
+				}
+				else if(res.data.status=="400"){
+					console.log(res.data);
+				}
+			});
+		};
+
+		$scope.makeOffer = function(timestamp, ID, msg){
+			$http({
+				method:'get',
+				url:'/v1/makeoffer?msg='+msg+'&timestamp='+timestamp+'&userID='+ID
+			}).then(function(res){
+				if(res.data.status == "200"){
+					console.log(res.data);
+				}
+				else if(res.data.status=="400"){
+					console.log(res.data);
+				}
+			});
+		};
+
+
+
+		$scope.sendMessage = function(timestamp, ID){
+      // $scope.tripList = false
+      // $scope.messageForm = true;
+          var modalInstance = $uibModal.open({
+              ariaLabelledBy: 'modal-title',
+              ariaDescribedBy: 'modal-body',
+              templateUrl: 'QuoteContent',
+              controller: 'QuoteModalCtrl',
+              controllerAs: '$ctrl',
+              resolve: {
+                pn: function () {
+                  return "hello";
+                }
+              }
+          });
+
+
+          modalInstance.result.then(function (message) {
+            console.log(message);
+						$scope.makeOffer(timestamp, ID, message);
+          });
+    }
+
+
+});
+
+angular.module('userPage2').controller('QuoteModalCtrl', function ($uibModalInstance,pn) {
+    var $ctrl = this;
+    $ctrl.pn=pn
+    $ctrl.ok = function () {
+        $uibModalInstance.close($ctrl.message);
+    };
+
+    $ctrl.cancel = function () {
+        $uibModalInstance.dismiss('cancel');
+    };
+});
+
+</script>
 
             </head>
-    <body>
-        <script>
+    <body ng-app="userPage2" ng-controller="UserController2">
+        <!-- <script>
         var dataLayer = [{"user_id":"250ca36b34e54c12c75489db1b68bbc9"}];
-    </script>
+    </script> -->
     <!-- Google Tag Manager -->
-    <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-KKF9GD"
+    <!-- <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-KKF9GD"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-KKF9GD');</script>
+    })(window,document,'script','dataLayer','GTM-KKF9GD');</script> -->
     <!-- End Google Tag Manager -->
 <!-- HEADER -->
 <!-- HEADER -->
@@ -64,9 +323,9 @@
           <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav navbar-right">
               <li class="active"><a href="/send">Send Packages</a></li>
-							<li class="active"><a href="/send">Search</a></li>
+							<li class="active"><a href="/search">Search</a></li>
 							<li class="active"><a href="/profile">My Profile</a></li>
-							<li class="active"><a href="/inbox">Inbox</a></li>
+							<li class="active"><a href="">Deliveries</a></li>
 							<li class="active"><a href="/">Sign Out</a></li>
             </ul>
           </div>
@@ -76,7 +335,7 @@
 <!-- end header -->
 <!-- END HEADER -->
 
-                <div id="main">
+                <div id="main" ng-show="postTripsec">
             <div class="container">
 
                 <div id="content">
@@ -94,15 +353,17 @@
     <div class="row">
         <div class="col-md-12">
 
-            <form action="" method="post" id="travel-form" class="form-horizontal">
+            <form id="travel-form" class="form-horizontal">
 
                 <fieldset>
                     <div class="row">
                         <div class="col-md-12">
                                     <div class="form-group"><label class="control-label col-sm-2 required">
-            From
-        </label><div class="col-sm-10"><input type="text" id="travel_form_type_origin_label" name="travel_form_type[origin][label]" required="required" ggplace-label="ggplace-label" placeholder="City or Country" class="form-control" /><input type="hidden" id="travel_form_type_origin_placeId" name="travel_form_type[origin][placeId]" ggplace-id="ggplace-id" /></div></div>
-
+            From (city)
+        </label><div class="col-sm-10"><input type="text" id="" ng-model="taskDetails.from.city" name="travel_form_type[origin][label]" required="required" ggplace-label="ggplace-label" placeholder="City or Country" class="form-control" /><input type="hidden" id="travel_form_type_origin_placeId" name="travel_form_type[origin][placeId]" ggplace-id="ggplace-id" /></div></div>
+				<div class="form-group"><label class="control-label col-sm-2 required">
+				From (state)
+			</label><div class="col-sm-10"><input type="text" id="" ng-model="taskDetails.from.state" name="travel_form_type[origin][label]" required="required" ggplace-label="ggplace-label" placeholder="City or Country" class="form-control" /><input type="hidden" id="travel_form_type_origin_placeId" name="travel_form_type[origin][placeId]" ggplace-id="ggplace-id" /></div></div>
                         </div>
                     </div>
                     <div class="row">
@@ -140,9 +401,11 @@
                     <div class="row">
                         <div class="col-md-12">
                                     <div class="form-group"><label class="control-label col-sm-2 required">
-            To
-        </label><div class="col-sm-10"><input type="text" id="travel_form_type_arrival_label" name="travel_form_type[arrival][label]" required="required" ggplace-label="ggplace-label" placeholder="City" class="form-control" /><input type="hidden" id="travel_form_type_arrival_placeId" name="travel_form_type[arrival][placeId]" ggplace-id="ggplace-id" /></div></div>
-
+            To (city)
+        </label><div class="col-sm-10"><input type="text" id=""  ng-model="taskDetails.to.city" name="travel_form_type[arrival][label]" required="required" ggplace-label="ggplace-label" placeholder="City" class="form-control" /><input type="hidden" id="travel_form_type_arrival_placeId" name="travel_form_type[arrival][placeId]" ggplace-id="ggplace-id" /></div></div>
+				<div class="form-group"><label class="control-label col-sm-2 required">
+				To (state)
+			</label><div class="col-sm-10"><input type="text" id="" ng-model="taskDetails.to.state" name="travel_form_type[arrival][label]" required="required" ggplace-label="ggplace-label" placeholder="City" class="form-control" /><input type="hidden" id="travel_form_type_arrival_placeId" name="travel_form_type[arrival][placeId]" ggplace-id="ggplace-id" /></div></div>
                         </div>
                     </div>
                 </fieldset>
@@ -152,14 +415,14 @@
                             <h4 class="section-header">Fixed date trip</h4>
                             <div class="fields-wrapper">
                                 <div class="form-group"><label class="control-label col-sm-4 required" for="travel_form_type_arrivalDate">
-            Arrival date of your trip
-        </label><div class="col-sm-8"><input type="date" id="travel_form_type_arrivalDate" name="travel_form_type[arrivalDate]" required="required" class="form-control" value="2017-05-15" /></div></div>
+            Date of your trip
+        </label><div class="col-sm-8"><input type="date" id="taskDate" name="travel_form_type[arrivalDate]" required="required" class="form-control" value="2017-05-15" /></div></div>
                                     <div class="pb-help-message child-">
                     </div>
 
-                                <div class="form-group"><label class="control-label col-sm-4" for="travel_form_type_returnDate">
+                                <!-- <div class="form-group"><label class="control-label col-sm-4" for="travel_form_type_returnDate">
             Arrival date of your optional return trip
-        </label><div class="col-sm-8"><input type="date" id="travel_form_type_returnDate" name="travel_form_type[returnDate]" class="form-control" /></div></div>
+        </label><div class="col-sm-8"><input type="date" id="travel_form_type_returnDate" name="travel_form_type[returnDate]" class="form-control" /></div></div> -->
                                     <div class="pb-help-message child-">
                     </div>
 
@@ -192,7 +455,7 @@
                         <fieldset>
                                     <div class="form-group"><label class="control-label col-sm-2 required" for="travel_form_type_size">
             Size you may transport
-        </label><div class="col-sm-10"><select id="travel_form_type_size" name="travel_form_type[size]" placeholder="travel_form.placeholder.size" class="form-control"><option value="s">Small</option><option value="m">Medium</option><option value="l">Large</option><option value="xl" selected="selected">Extra large</option></select></div></div>
+        </label><div class="col-sm-10"><select id="travel_form_type_size" ng-model="taskDetails.size" name="travel_form_type[size]" placeholder="travel_form.placeholder.size" class="form-control"><option value="s">Small</option><option value="m">Medium</option><option value="l">Large</option><option value="xl" selected="selected">Extra large</option></select></div></div>
                 <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <div class="pb-help-message child-size">
@@ -243,7 +506,7 @@
                     </div>
                 </div>
                 <button type="button" class="btn btn-info pull-left" data-toggle="collapse" data-target="#more-details">Add details</button>
-                <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-check"></i> Post your trip</button>
+                <button type="submit" class="btn btn-primary pull-right" ng-click="searchTask()"><i class="fa fa-check"></i> Post your trip</button>
             </form>
 
         </div>
@@ -251,5 +514,154 @@
                 </div>
             </div>
         </div>
+
+				<div ng-show="tripListsec">
+
+					<section class="section expand animated fadeIn ease-out container module-content js-search-results search-results">
+					    <h5 class="section-subtitle">{{deliveryDetails.length}} deliveries found</h5>
+					    <ol class="unstyled" data-append-to="search-results-list">
+					          <li>
+
+					<div class="task-list__item task-list__item--editable " ng-repeat="data in taskSuggestions">
+					    <div class="task-list__container js-task-list__container">
+					      <div class="module-content-70 module-content-col-no-pad full-on-mobile">
+					        <div>
+					  <input type="hidden" class="task_lat" value="37.3291088">
+					  <input type="hidden" class="task_lng" value="-121.9045261">
+					  <input type="hidden" class="task_delivery_lat" value="37.3291088">
+					  <input type="hidden" class="task_delivery_lng" value="-121.9045261">
+					  <input type="hidden" class="task_title" value="Chair">
+					</div>
+
+					<section class="marker-popup ebmap_popup_78568" style="display:none">
+					  <div class="marker-popup__section">
+					    <a class="marker-popup__image" href="/tasks/78568">
+					      <img alt="An image that shows Chair" title="Click to see the task" src="https://d1xqbpwl1wh09p.cloudfront.net/jobs/default/default-xs_130x130.png" />
+					</a>    <div class="marker-popup__info">
+					      <h1 class="h5 marker-popup__title"><a title="See more" href="/tasks/78568">Chair</a></h1>
+
+					<ul class="task-locations">
+					  <li>
+					    <b class="task-locations__from">From</b>
+					    <span class="task-locations__from-position js-location-from">
+					          {{data.pickupLocation.city}}
+					    </span>
+					  </li>
+					  <li>
+					    <b class="task-locations__to">To</b>
+					    <span class="task-locations__to-position js-location-to">
+					          {{data.dropoffLocation.city}}
+					    </span>
+					  </li>
+					</ul><!-- task-locations -->
+					    </div>
+					  </div><!-- marker-popup__section -->
+					<!-- marker-popup__section -->
+					</section>
+					        <a class="task-list__image" href="/tasks/78568">
+					            <img alt="An image that shows Chair" title="Click to see the task" src="https://d1xqbpwl1wh09p.cloudfront.net/jobs/default/default-xs_130x130.png" />
+					</a>        <div class="task-list__content">
+					          <div class="js-result-item-main" data-task-id="78568">
+					          <div class="task-list__inner">
+					            <div class="task-list__info">
+					              <h2 class="h5 task-list__title">
+					                <a title="Chair" href="/tasks/78568">{{data.packageDetails.title}}</a>
+					              </h2>
+
+					           	<span class="task-locations">
+						            <span class="task-location">
+					                {{data.pickupLocation.city}}
+					              </span><b class="task-to-icon icon-font">
+					              →
+					              </b><span class="task-location">
+					                {{data.dropoffLocation.city}}
+					              </span>
+						        </span>
+					            </div><!-- task-list__info -->
+
+					            <div class="task-list__side-options">
+					              <a class="task-list__price" title="See more" href="/tasks/78568">
+					                      <span class="task-price__currency js-task-currency ">
+					      $</span><span class="task-price__number  js-task-price ">{{data.packageDetails.price}}</span>
+
+					</a>            </div><!-- task-list_side-options -->
+					          </div><!-- task-list__inner -->
+
+					          <div class="task-list__bottom-options">
+					            <ul class="task-list-detail-list">
+					                  <li>
+					                  {{data.packageDetails.size}}
+					                    <span class="hide-on-mobile" style="margin-left: 5px;"></span>
+					                  </li>
+
+					            </ul>
+					          </div><!-- task-list__bottom-options -->
+					          </div>
+					        </div><!-- task content -->
+					      </div>
+
+					      <div class="module-content-30-minus module-content-col-no-pad-right full-on-mobile">
+					      <div class="task-list-sender-container cf">
+					<div class="task-list-sender task-list-user">
+					<a class="messages__secondary-image task-list-sender-avatar" href="/users/109557/show">
+					  <img alt="Jan D." src="https://d1xqbpwl1wh09p.cloudfront.net/avatars/default/default_60x60@2x.png" />
+					</a>      <a class="task-list-sender-content" href="/users/109557/show">
+					  <span class="task-list-user-role">
+					    Sender
+					  </span>
+					  <span class="messages__title-text">
+					    {{data.name}}
+					  </span>
+
+					<span class="user-rating user-rating--0   user-rating--empty    " >
+
+					<span class="user-rating__icon">*</span>
+					</span>
+
+					</a><!-- messages__title-content -->
+					</div><!-- task-list-sender -->
+
+					<div class="task-list-sender-buttons">
+					  <a class="btn--outline-arrow-right--thin task-list-sender-connect task-list-sender-connect-chat" href="" ng-click="sendMessage(data.timestamp, data.userID)">
+					    <span class="icon-font icon-contact-delivery-list">❞</span>
+					    Make an Offer
+					    <span class="icon-font arrow-right pull-right">}</span>
+					</a>    </div>
+					</div><!-- task-list-sender-container -->
+					    </div><!-- container -->
+					</div><!-- item -->
+					          </li>
+					    </ol>
+					</section>
+					</div>
+
+				</div>
+
+				<div ng-show="messageForm" class="modal-demo">
+				  <script type="text/ng-template" id="QuoteContent">
+				      <!-- <div class="modal-header">
+				      </div>
+				      <div class="modal-body" id="modal-body">
+
+				      </div>
+				      <div class="modal-footer">
+				          <button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">OK</button>
+				          <button class="btn btn-warning" type="button" ng-click="$ctrl.cancel()">Cancel</button>
+				      </div> -->
+				      <div class="modal-header">
+				    <h3 class="modal-title" id="modal-title">Send message to shipper!</h3>
+				</div>
+				<div class="modal-body" id="modal-body">
+				  <h4>You can include your trip information here</h4>
+				<textarea class="modal-offer__textarea  js-ctrl-submit" name="chat_action[message]" ng-model="$ctrl.message" placeholder="Send message to sender" data-required="true"></textarea>
+				</div>
+				<div class="modal-footer">
+				    <button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">Send</button>
+				    <button class="btn btn-warning" type="button" ng-click="$ctrl.cancel()">Cancel</button>
+				</div>
+				  </script>
+				</div>
+
+
                 </body>
 </html>

@@ -103,8 +103,9 @@ function sendPackage(req,res){
 				country:req.body.deliveryRequest.pickupLocation.country}, dropoffLocation:{street:req.body.deliveryRequest.dropoffLocation.street1 + " " + req.body.deliveryRequest.dropoffLocation.street2, city:req.body.deliveryRequest.dropoffLocation.city, state:req.body.deliveryRequest.dropoffLocation.state, zip:req.body.deliveryRequest.dropoffLocation.zip, country:req.body.deliveryRequest.dropoffLocation.country},
 				packageDetails:{title:req.body.deliveryRequest.packageDetails.title, note:req.body.deliveryRequest.packageDetails.note, size:req.body.deliveryRequest.packageDetails.size, price:req.body.deliveryRequest.packageDetails.price}, desiredDate:req.body.deliveryRequest.desiredDate,
 				timestamp: d}, function(err, user){
-				// console.log(user)
+
 				if(user){
+					console.log(user);
 					var result={"status":"200","msg":"Your request has been submitted."};
 				}else{
 					var result={"status":"400","msg":"Something went wrong. Please try again."};
@@ -166,24 +167,6 @@ function updateCustomerPassword(req,res){
 				res.send(result);
 			}
 		});
-	});
-}
-
-function sendPackage(req,res){
-	mongo.connect(mongoURL, function(){
-			var coll = mongo.collection('shipperRequestPool');
-			// coll.insert({userID:"1232132121", name:"Sangit Dhanani1", pickupLocation:{street:"754 the alameda", apt:"2311", city:"San Jose", state:"CA",zip:"95126",country:"USA"}, dropoffLocation:{street:"754 the alameda", apt:"2311", city:"San Jose", state:"CA",zip:"95126",country:"USA"}, packageDetails:{title:"Chair", note:"light weight", size:"Medium",price:"$38.00"}, desiredDate:"2017-05-20"}, function(err, user){
-			coll.insert({requestID:"req" + req.session.data.userID, userID:req.session.data.userID, name:req.session.data.name, pickupLocation:{street:req.body.deliveryRequest.pickupLocation.street, apt:req.body.deliveryRequest.pickupLocation.apt, city:req.body.deliveryRequest.pickupLocation.city, state:req.body.deliveryRequest.pickupLocation.state, zip:req.body.deliveryRequest.pickupLocation.zip ,
-				country:req.body.deliveryRequest.pickupLocation.country}, dropoffLocation:{street:req.body.deliveryRequest.dropoffLocation.street, apt:req.body.deliveryRequest.dropoffLocation.apt, city:req.body.deliveryRequest.dropoffLocation.city, state:req.body.deliveryRequest.dropoffLocation.state, zip:req.body.deliveryRequest.dropoffLocation.zip, country:req.body.deliveryRequest.dropoffLocation.country},
-				packageDetails:{title:req.body.deliveryRequest.packageDetails.title, note:req.body.deliveryRequest.packageDetails.note, size:req.body.deliveryRequest.packageDetails.size, price:req.body.deliveryRequest.packageDetails.price}, desiredDate:req.body.deliveryRequest.desiredDate}, function(err, user){
-				// console.log(user)
-				if(user){
-					var result={"status":"200","msg":"Your request has been submitted."};
-				}else{
-					var result={"status":"400","msg":"Something went wrong. Please try again."};
-				}
-				res.send(result)
-			});
 	});
 }
 
@@ -268,7 +251,7 @@ function makeOffer(req,res){
 	mongo.connect(mongoURL, function(){
 			var coll = mongo.collection('shipperRequestPool');
 			var d = new Date();
-			d = d.toString();
+			d = d.toString(); console.log(req.session.data.userID);
 			coll.update({$and: [{userID: req.query.userID}, {timestamp: req.query.timestamp}]}, {$push:{offers: {userID: req.session.data.userID, name: req.session.data.name, message:req.query.msg, when: d}}}, function(err, success){
 				if(success){
 
