@@ -53,6 +53,7 @@ app.use('/home', index);
 
 app.use('/send', sendPackage.sendPackage);
 app.use('/search', postTrip.postTrip)
+app.use('/inbox', users.inbox)
 // app.get('/users', users);
 app.post('/v1/authenticateuser', users.login)
 

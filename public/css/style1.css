@@ -133,11 +133,21 @@ HEADER
     color: #fff;
 }
 .navbar-brand {
+		position:absolute;
+		left:20;
+		transform:translateX(-100%);
     padding: 0px;
     font-size: 24px;
     text-transform: uppercase;
-    padding: 15px 0px;
+    padding: 10px 20px;
     margin-top: 6px;
+
+}
+
+#myNavbar{
+	position: absolute;
+	right:20;
+	transform: translateX(150%);
 }
 .navbar-default .navbar-nav > li > a
 {

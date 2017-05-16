@@ -1,0 +1,178 @@
+
+<!DOCTYPE html>
+<head>
+<meta charset="utf-8">
+  <meta name="google" value="notranslate" />
+<meta http-equiv="Content-Language" content="en" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>
+    Schmuber
+</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<meta name="description" content="
+  The social delivery service where you save the environment, make money and do something nice for other people.
+">
+<meta name="apple-itunes-app" content="app-id=1037756477">
+<!-- Favicons -->
+<link rel="shortcut icon" href="//d1xqbpwl1wh09p.cloudfront.net/web_images/favicon.png" type="image/png">
+<link href="//d1xqbpwl1wh09p.cloudfront.net/web_images/touch-icon.png" rel="apple-touch-icon-precomposed">
+<link href=""
+
+<!-- Facebook Settings Code -->
+<meta property="og:title" content="
+    Nimber - Going your way, anyway!
+" />
+<meta property="og:site_name" content="Nimber" />
+<meta property="og:type" content="website" />
+<meta property="og:image:url" content="
+    https://d1xqbpwl1wh09p.cloudfront.net/web_images/fb-image.jpg
+"/>
+<meta property="og:image:secure_url" content="
+    https://d1xqbpwl1wh09p.cloudfront.net/web_images/fb-image.jpg
+" />
+<meta property="fb:app_id" content="262841183796158" />
+
+<meta property="og:description" content="
+    The social delivery service where you save the environment, make money and do something nice for other people.
+"/>
+
+
+<!-- Stylesheets -->
+<link rel="stylesheet" media="all" href="https://d1112petr9ji1a.cloudfront.net/assets/application-bac74edb05b8d09242307623247b39e57872aca9abbde84ab37667ba59ba3a68.css" />
+<link rel="stylesheet" media="all" href="https://d1112petr9ji1a.cloudfront.net/assets/app-2a7eb28789d541ecb4e68b87c8793bceb04d9b85ee51cf52b7eae9e4aa8c7a71.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:400,300|Raleway:300,400,900,700italic,700,300,600">
+    <link rel="stylesheet" type="text/css" href="/css/jquery.bxslider.css">
+    <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/animate.css">
+    <link rel="stylesheet" type="text/css" href="/css/style1.css">
+    <link rel="stylesheet" media="all" href="/css/admin1.css" />
+    <link rel="stylesheet" media="all" href="/css/admin2.css" />
+    <link href="/css/adminHome.css" rel="stylesheet" type="text/css" media="all"/>
+
+ <script>
+
+  var app = angular.module("schmuber_index_app", []);
+  app.controller("schmuber_index_controller", function($scope,$http,$window,$location) {
+
+
+});
+
+</script>
+</head>
+
+<body ng-app="schmuber_index_app" ng-controller="schmuber_index_controller">
+  <!-- HEADER -->
+        <nav class="navbar navbar-default navbar-fixed-top" style="background-color: #4A566B">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="/">Schmu<span class="logo-dec">ber</span></a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+              <ul class="nav navbar-nav navbar-right">
+                <li class="active"><a href="/send">Send Packages</a></li>
+  							<li class="active"><a href="/send">Search</a></li>
+  							<li class="active"><a href="/profile">My Profile</a></li>
+  							<li class="active"><a href="/inbox">Inbox</a></li>
+  							<li class="active"><a href="/">Sign Out</a></li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+    <br/><br/><br/><br/><br/>
+  <!-- end header -->
+  <div class="wrap" style="width:95%" ng-init="getHomeStats()">
+   <div class="content_top">
+     <div class="heading">
+           <h3 >Trip Information: </h3>
+     </div>
+   <div>
+     <header class="obj-info  obj-info--header  cf">
+       <div class="obj-info__left  obj-info__item" style="background-image: url('https://d1xqbpwl1wh09p.cloudfront.net/jobs/default/default-m_150x150@2x.png')">
+         <figure id="task-page-image" class="obj-info__figure  js-task-main-image  eb-image">
+               <img alt="Chair" id="task-avatar" src="https://d1xqbpwl1wh09p.cloudfront.net/jobs/default/default-m_150x150@2x.png" />
+         </figure>
+
+
+             <!-- Image upload form -->
+             <form class='task-image-upload-photo image-upload-form' id='task-image-upload-photo' action='/utils/upload_image' method=''data-url_field="#task-page-image-url"data-id="task-image-upload-modal"data-button_class="hidify"data-path_field="#uploaded_image_key_77762"data-task_id="77762"data-auto_update="true"data-img="js-task-main-image"data-size="130x130"data-error_message="The image couldn't uploaded, please try again or contact us."data-generic_error_message="Your image is too big to upload, please choose a smaller one."> <canvas id='canvas' width='300'></canvas><input type='file' name='file_upload' id='file_upload-task-image-upload-photo'/> </form>
+             <input type="hidden" id="task-page-image-url" value="" />
+             <form class="non-html5-upload hidify" enctype="multipart/form-data" action="/utils/upload_image" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="HGMvB8V5rodzxj4cHWfCNNC5wKbK7NQrk8N47g54oBR5T3O+dIVM8xfCphCviQxpgHcP1Og53USZOSR1zhBsDg==" />
+                 <input type="file" name="image" id="image" />
+                 <input type="hidden" name="bucket" id="bucket" value="jobs" />
+                 <input type="hidden" name="task_id" id="task_id" value="77762" />
+                 <input type="hidden" name="auto_update" id="auto_update" value="true" />
+                 <input type="hidden" name="redirect_after" id="redirect_after" value="" class="js-redirect-path" />
+                 <input type="hidden" name="redirect_hash" id="redirect_hash" value="" class="js-redirect-hash" />
+                 <input type="submit" name="commit" value="Upload" class="hidify" data-disable-with="Upload" />
+     </form>
+   </div>
+
+       <div class="obj-info__middle  obj-info__item">
+         <h1 class="obj-info__title js-task-page-title">Title: {{billInfo.packageDetails.title}}</h1>
+         <span class="obj-info__locations  task-block__locations">
+           <span class="js-task-page-location-from">
+              {{billInfo.pickupLocation.city}}
+           </span><b class="task-to-icon icon-font">
+           →
+         </b><span class="js-task-page-location-to">
+               {{billInfo.dropoffLocation.city}}
+           </span>
+         </span>
+       </div>
+
+       <div class="obj-info__right  obj-info__item">
+         <dl class="obj-info__meta">
+           <dt class="obj-info__title">
+                 Total delivery cost:
+           </dt>
+           <dd class="obj-info__price">
+                     <span class="task-price__currency js-task-currency ">
+     $</span><span class="task-price__number  js-task-price js-task-price-live">{{billInfo.packageDetails.price}}</span>
+
+           </dd>
+         </dl>
+
+         <div class="obj-info__secondary">
+             <ul class="obj-info__list no-bullet">
+                 <li><span class="object-info__price-details">
+                 Bringer&#39;s reward &minus;
+                     <strong class="js-task-breakdown-bringer">    <span class="task-price__currency js-task-currency task-price__currency">
+     $</span><span class="task-price__number  js-task-price ">{{shipperReward}}</span>
+</strong></span>
+                 </li>
+                   <li>
+                     <span class="object-info__price-details">
+                     Insurance and service fee &minus;
+                     <strong class="js-task-breakdown-nimber">
+                           <span class="task-price__currency js-task-currency task-price__currency">
+     $</span><span class="task-price__number  js-task-price ">{{insurance}}</span>
+
+                     </strong></span>
+                   </li>
+             </ul>
+         </div>
+       </div>
+     </header>
+       </div>
+     <!-- <div ng-show="GoogleMaps_Show" align="center" style="width:100%;height:400px;">
+     <div id="map"></div>
+   </div> -->
+ </div>
+</div>
+
+
+</body>
+</html>

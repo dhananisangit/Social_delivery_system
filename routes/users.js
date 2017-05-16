@@ -6,6 +6,10 @@ function home(req,res){
 	res.render('userHome');
 }
 
+function inbox(req,res){
+	res.render('inbox');
+}
+
 function login(req,res){
 	mongo.connect(mongoURL, function(){
 			var coll = mongo.collection('customerDetails');
@@ -278,6 +282,7 @@ function getOpenShipperRequests(req,res){
 
 exports.login = login;
 exports.home = home;
+exports.inbox = inbox;
 exports.getCustomerDetails = getCustomerDetails;
 exports.updateCustomerProfile = updateCustomerProfile;
 exports.updateCustomerCC = updateCustomerCC;
