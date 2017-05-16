@@ -1,5 +1,4 @@
 var mongo = require('./mongo')
-// var mongoURL = "mongodb://localhost:27017/social_delivery_system";
 var mongoURL = "mongodb://sangitdhanani:sjsu1234@ds133211.mlab.com:33211/sds_mongo";
 
 function home(req,res){
@@ -80,6 +79,7 @@ function getOpenTransporterRequests(req,res){
 }
 
 function getCustomerFeedback(req,res){
+	console.log(req.session.data.userID)
 	mongo.connect(mongoURL, function(){
 			var coll = mongo.collection('customerFeedback');
 			coll.find({userID:req.body.userID}).toArray(function(err, reviews){
@@ -96,8 +96,39 @@ function getCustomerFeedback(req,res){
 	});
 }
 
+function getCustomerDetails(req,res){
+	mongo.connect(mongoURL, function(){
+			var coll = mongo.collection('customerFeedback');
+			coll.find({"userID":req.session.data.userID}).toArray(function(err, reviews){
+			if(reviews){
+				console.log(reviews)
+				var coll1 = mongo.collection('customerDetails');
+				coll1.find({"userID": req.session.data.userID}).toArray(function(err, details){
+					if(details){
+						console.log(details)
+						var result = {"status":"200", "reviews": reviews, "details":details}
+							res.send(result)
+					}
+					else{
+						var result = {"status":"400"};
+					}
+				})
+			}
+			else {
+					var result = {"status":"400"}
+			}
+
+
+		});
+	});
+}
+
+
+
+
 function revenuePerLocation(req,res){
 	var data = [];
+
 	mongo.connect(mongoURL, function(){
 		var coll = mongo.collection('tripDetails');
 		coll.aggregate([{ $group: { _id: {pickupState:"$pickupLocation.state"}, count: { $sum:"$packageDetails.price" } } }]).toArray(function(err, revenuePerLocation){
@@ -164,7 +195,7 @@ function ridesPerDriver(req,res){
 		coll.aggregate([{ $group: { _id: {transporterID:"$transporter.id",driver_name:"$transporter.name"}, count: { $sum: "$packageDetails.price" } } }]).limit(20).toArray(function(err, ridesPerDriverArray){
 			if(ridesPerDriverArray){
 				for(var i=0;i<ridesPerDriverArray.length;i++){
-					data[i] = {"label": ridesPerDriverArray[i]._id.transporterID, "value": ridesPerDriverArray[i].count};
+					data[i] = {"label": ridesPerDriverArray[i]._id.driver_name, "value": ridesPerDriverArray[i].count};
 				}
 				var result = {"status":"200","ridesPerDriver":data};
 			}
@@ -186,3 +217,4 @@ exports.tripsPerLocation = tripsPerLocation;
 exports.ridesPerArea = ridesPerArea;
 exports.ridesPerDriver = ridesPerDriver;
 exports.getCustomerFeedback = getCustomerFeedback;
+exports.getCustomerDetails = getCustomerDetails;
