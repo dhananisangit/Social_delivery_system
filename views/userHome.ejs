@@ -1,0 +1,671 @@
+<!DOCTYPE HTML>
+<head>
+<title>Amazon Fresh | Home </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link href="https://images-na.ssl-images-amazon.com/images/G/01/omaha/css/default._V1455922598_.css" type="text/css" rel="stylesheet" />    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+ <link rel="shortcut icon"
+	href="https://images-na.ssl-images-amazon.com/images/G/01/omaha/images/ui/favicon.ico"
+	type="image/vnd.microsoft.icon" />
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+	<!-- <link href="/css/style.css" rel="stylesheet" type="text/css" media="all"/>
+	<link href="/css/slider.css" rel="stylesheet" type="text/css" media="all"/>
+	<script type="text/javascript" src="/js/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="/js/move-top.js"></script>
+	<script type="text/javascript" src="/js/easing.js"></script>
+	<script type="text/javascript" src="/js/startstop-slider.js"></script> -->
+	<link href="https://images-na.ssl-images-amazon.com/images/G/01/omaha/css/default._V1455922598_.css" type="text/css" rel="stylesheet" />
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB5sfbUPXiX4jbxe_a9OHuvkCNN6-tXiHQ&libraries=places" async defer></script>
+
+    <script>
+
+    var userPage = angular.module('userPage', []);
+
+    userPage.controller("UserController", function($scope, $http, $window){
+
+      $scope.pwd = {oldPassword:"", newPassword:""};
+      $scope.taskDetails = {};
+
+      var placeSearch, autocompletePickup, autocompleteDropoff;
+
+      var componentForm = {
+        street_number: 'short_name',
+        route: 'long_name',
+        locality: 'long_name',
+        administrative_area_level_1: 'short_name',
+        country: 'long_name',
+        postal_code: 'short_name'
+      };
+
+      var addrField = {
+        street_number: 'street1',
+        route: 'street2',
+        locality: 'city',
+        administrative_area_level_1: 'state',
+        country: 'country',
+        postal_code: 'zip'
+      }
+
+
+      $scope.initAutocomplete  = function initAutocomplete(id) {
+
+        if (id == 'pickup') {
+          autocompletePickup = new google.maps.places.Autocomplete(
+            (document.getElementById('autocompletePickup')), {
+              types: ['geocode']
+            });
+            autocompletePickup.addListener('place_changed', fillInPickupAddress);
+        } else if (id == 'dropoff') {
+          autocompleteDropoff = new google.maps.places.Autocomplete(
+            (document.getElementById('autocompleteDropoff')), {
+              types: ['geocode']
+            });
+            autocompleteDropoff.addListener('place_changed', fillInDropoffAddress);
+        }
+      }
+
+      function fillInPickupAddress() {
+        var place = autocompletePickup.getPlace();
+        // console.log(place);
+        $scope.taskDetails.from = {};
+        for (var i = 0; i < place.address_components.length; i++) {
+          var addressType = place.address_components[i].types[0];
+          var val;
+          if (componentForm[addressType]) {
+            val = place.address_components[i][componentForm[addressType]];
+            $scope.taskDetails.from[addrField[addressType]] = val;
+          }
+        }
+        console.log($scope.taskDetails);
+      }
+
+      function fillInDropoffAddress() {
+        var place = autocompleteDropoff.getPlace();
+        // console.log(place);
+        $scope.taskDetails.to = {};
+
+        for (var i = 0; i < place.address_components.length; i++) {
+          var addressType = place.address_components[i].types[0];
+          var val;
+          if (componentForm[addressType]) {
+            val = place.address_components[i][componentForm[addressType]];
+            $scope.taskDetails.to[addrField[addressType]] = val;
+          }
+        }
+        console.log($scope.taskDetails);
+      }
+
+      $scope.geolocate = function geolocate() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            var geolocation = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+            var circle = new google.maps.Circle({
+              center: geolocation,
+              radius: position.coords.accuracy
+            });
+            autocompletePickup.setBounds(circle.getBounds());
+            autocompleteDropoff.setBounds(circle.getBounds());
+          });
+        }
+      }
+
+      $scope.sendPackage = function(){
+        var date = document.getElementById("deliveryDate").value;
+        $scope.deliveryRequest.desiredDate = date;
+        $http({
+          method:'POST',
+          url:'/v1/sendpackage',
+          data:{deliveryRequest: $scope.deliveryRequest},
+        }).then(function(res){
+          if(res.data.status == "200"){
+            console.log(res.data);
+          }
+          else if(res.data.status=="400"){
+            console.log(res.data);
+          }
+        });
+      };
+
+      $scope.getUserProfile = function(){
+        $http({
+          method:'get',
+          url:'/v1/getuserprofile'
+        }).then(function(res){
+          if(res.data.status == "200"){
+            $scope.userDetails = res.data.userDetails;
+            $scope.updateForm = true;
+          }
+          else if(res.data.status=="400"){
+            // console.log(res.data);
+          }
+        });
+      };
+
+      $scope.editUserProfile = function(){
+        $http({
+          method:'POST',
+          url:'/v1/edituserprofile',
+          data:{profile: $scope.userDetails}
+        }).then(function(res){
+          if(res.data.status == "200"){
+            // console.log(res.data);
+          }
+          else if(res.data.status=="400"){
+            // console.log(res.data);
+          }
+        });
+      };
+
+      $scope.editCCInfo = function(){
+        $http({
+          method:'POST',
+          url:'/v1/editusercc',
+          data:{ccInfo: $scope.userDetails.ccInfo[0]}
+        }).then(function(res){
+          if(res.data.status == "200"){
+            // console.log(res.data);
+          }
+          else if(res.data.status=="400"){
+            // console.log(res.data);
+          }
+        });
+      };
+
+      $scope.changeUserPassword = function(){
+        $http({
+          method:'POST',
+          url:'/v1/changeuserpassword',
+          data:{
+            oldPassword: $scope.pwd.oldPassword,
+            newPassword: $scope.pwd.newPassword
+          }
+        }).then(function(res){
+          if(res.data.status == "200"){
+            // console.log(res.data);
+          }
+          else if(res.data.status=="400"){
+            // console.log(res.data);
+          }
+        });
+      };
+
+      $scope.getDeliveryList = function(){
+        $http({
+          method:'get',
+          url:'/v1/getdeliverylist'
+        }).then(function(res){
+          if(res.data.status == "200"){
+            // console.log(res.data);
+            $scope.deliveryList = res.data.deliveries;
+          }
+          else if(res.data.status=="400"){
+            // console.log(res.data);
+          }
+        });
+      };
+
+      $scope.getDeliveryDetails = function(timestamp){
+        $http({
+          method:'get',
+          url:'/v1/getdeliverydetails?timestamp='+timestamp
+        }).then(function(res){
+          if(res.data.status == "200"){
+            // console.log(res.data);
+            $scope.deliveryDetails = res.data.delivery;
+            $scope.deliveryForm = true;
+          }
+          else if(res.data.status=="400"){
+            // console.log(res.data);
+          }
+        });
+      };
+
+      $scope.editDeliveryDetails = function(){
+        $http({
+          method:'POST',
+          url:'/v1/editdeliverydetails',
+          data:{deliveryDetails: $scope.deliveryDetails}
+        }).then(function(res){
+          if(res.data.status == "200"){
+            // console.log(res.data);
+          }
+          else if(res.data.status=="400"){
+            // console.log(res.data);
+          }
+        });
+      };
+
+      $scope.deleteDeliveryRequest = function(timestamp){
+        $http({
+          method:'get',
+          url:'/v1/deletedeliveryrequest?timestamp='+timestamp
+        }).then(function(res){
+          if(res.data.status == "200"){
+            console.log(res.data);
+            $scope.deliveryDetails = null;
+            // $scope.getDeliveryDetails();
+          }
+          else if(res.data.status=="400"){
+            // console.log(res.data);
+          }
+        });
+      };
+
+      $scope.searchTask = function(){
+        var date = document.getElementById("taskDate").value;
+        $http({
+          method:'get',
+          url:'/v1/searchtask?toCity='+$scope.taskDetails.to.city+'&toState='+$scope.taskDetails.to.state+'&fromCity='+$scope.taskDetails.from.city+'&fromState='+$scope.taskDetails.from.state
+          +'&size='+$scope.taskDetails.size+'&date='+date
+        }).then(function(res){
+          if(res.data.status == "200"){
+            console.log(res.data);
+            $scope.taskSuggestions = res.data.taskSuggestions;
+          }
+          else if(res.data.status=="400"){
+            console.log(res.data);
+          }
+        });
+      };
+
+      $scope.makeOffer = function(timestamp, ID){
+        $http({
+          method:'get',
+          url:'/v1/makeoffer?msg=k&timestamp='+timestamp+'&userID='+ID
+        }).then(function(res){
+          if(res.data.status == "200"){
+            console.log(res.data);
+          }
+          else if(res.data.status=="400"){
+            console.log(res.data);
+          }
+        });
+      };
+
+      $scope.acceptOffer = function(ID, name){
+        $scope.deliveryDetails.transporter = {id: ID, name: name};
+        $http({
+          method:'POST',
+          url:'/v1/acceptoffer',
+          data:{tripDetails: $scope.deliveryDetails}
+        }).then(function(res){
+          if(res.data.status == "200"){
+            console.log(res.data);
+          }
+          else if(res.data.status=="400"){
+            console.log(res.data);
+          }
+        });
+      };
+
+      $scope.getTaskList = function(){
+        $http({
+          method:'get',
+          url:'/v1/gettasklist'
+        }).then(function(res){
+          if(res.data.status == "200"){
+            console.log(res.data);
+            $scope.taskList = res.data.taskList;
+          }
+          else if(res.data.status=="400"){
+            console.log(res.data);
+          }
+        });
+      };
+
+      $scope.getTripList = function(){
+        $http({
+          method:'get',
+          url:'/v1/gettriplist'
+        }).then(function(res){
+          if(res.data.status == "200"){
+            console.log(res.data);
+            $scope.tripList = res.data.tripList;
+          }
+          else if(res.data.status=="400"){
+            console.log(res.data);
+          }
+        });
+      };
+
+      $scope.completeTrip = function(timestamp, ID){
+        $http({
+          method:'POST',
+          url:'/v1/completetrip',
+          data:{timestamp: timestamp, userID: ID}
+        }).then(function(res){
+          if(res.data.status == "200"){
+            console.log(res.data);
+          }
+          else if(res.data.status=="400"){
+            console.log(res.data);
+          }
+        });
+      };
+
+    });
+
+    </script>
+
+  </head>
+  <body ng-app="userPage" ng-controller="UserController" ng-init="">
+    <div class="container">
+      <div class="raw">
+        <div class="col-sm-3">
+          <form>
+            <div class="form-group">
+              <label>Title</label>
+              <input type="text" class="form-control" ng-model="deliveryRequest.packageDetails.title">
+            </div>
+            <div class="form-group">
+              <label>note:</label>
+              <input type="text" class="form-control" ng-model="deliveryRequest.packageDetails.note">
+            </div>
+            <div class="form-group">
+              <label>size:</label>
+              <input type="text" class="form-control" ng-model="deliveryRequest.packageDetails.size">
+            </div>
+            <div class="form-group">
+              <label>price:</label>
+              <input type="text" class="form-control" ng-model="deliveryRequest.packageDetails.price">
+            </div>
+
+            <h4>Pickup location</h4>
+            <div class="form-group">
+              <label>street:</label>
+              <input type="text" class="form-control" ng-model="deliveryRequest.pickupLocation.street">
+            </div>
+            <div class="form-group">
+              <label>apt:</label>
+              <input type="text" class="form-control" ng-model="deliveryRequest.pickupLocation.apt">
+            </div>
+            <div class="form-group">
+              <label>city:</label>
+              <input type="text" class="form-control" ng-model="deliveryRequest.pickupLocation.city">
+            </div>
+            <div class="form-group">
+              <label>state:</label>
+              <input type="text" class="form-control" ng-model="deliveryRequest.pickupLocation.state">
+            </div>
+            <div class="form-group">
+              <label>zip:</label>
+              <input type="text" class="form-control" ng-model="deliveryRequest.pickupLocation.zip">
+            </div>
+            <div class="form-group">
+              <label>country:</label>
+              <input type="text" class="form-control" ng-model="deliveryRequest.pickupLocation.country">
+            </div>
+
+            <h4>Dropoff location</h4>
+            <div class="form-group">
+              <label>street:</label>
+              <input type="text" class="form-control" ng-model="deliveryRequest.dropoffLocation.street">
+            </div>
+            <div class="form-group">
+              <label>apt:</label>
+              <input type="text" class="form-control" ng-model="deliveryRequest.dropoffLocation.apt">
+            </div>
+            <div class="form-group">
+              <label>city:</label>
+              <input type="text" class="form-control"  ng-model="deliveryRequest.dropoffLocation.city">
+            </div>
+            <div class="form-group">
+              <label>state:</label>
+              <input type="text" class="form-control" ng-model="deliveryRequest.dropoffLocation.state">
+            </div>
+            <div class="form-group">
+              <label>zip:</label>
+              <input type="text" class="form-control" ng-model="deliveryRequest.dropoffLocation.zip">
+            </div>
+            <div class="form-group">
+              <label>country:</label>
+              <input type="text" class="form-control" ng-model="deliveryRequest.dropoffLocation.country">
+            </div>
+
+            <div class="form-group">
+              <label>when:</label>
+              <input type="date" class="form-control" id="deliveryDate">
+            </div>
+
+            <button type="submit" class="btn btn-default" ng-click="sendPackage()">Submit</button>
+          </form>
+        </div>
+
+        <div class="col-sm-2">
+            <input type="text" class="form-control" id="autocompletePickup" placeholder="Enter pickup address" ng-focus="initAutocomplete('pickup');geolocate();">
+            <input type="text" class="form-control" id="autocompleteDropoff" placeholder="Enter dropoff address" ng-focus="initAutocomplete('dropoff');geolocate();">
+            <input type="text" class="form-control" placeholder="car type" ng-model="taskDetails.size">
+            <input type="date" id="taskDate" placeholder="date" ng-model="taskDetails.date">
+            <button type="submit" class="btn btn-default" ng-click="searchTask()">Search Task</button>
+            <div ng-repeat="task in taskSuggestions">
+              <p>{{task.name}}</p>
+              <p>{{task.packageDetails.title}}</p>
+              <button type="submit" class="btn btn-default" ng-click="makeOffer(task.timestamp, task.userID)">Make offer</button>
+            </div>
+            <br>
+          <button type="submit" class="btn btn-default" ng-click="getUserProfile()">show profile</button>
+          <form>
+            <div ng-if="updateForm">
+            <div class="form-group">
+              <label>firstName</label>
+              <input type="text" class="form-control" ng-model="userDetails.firstName">
+            </div>
+            <div class="form-group">
+              <label>lastName:</label>
+              <input type="text" class="form-control" ng-model="userDetails.lastName">
+            </div>
+            <h4>adress</h4>
+            <div class="form-group">
+              <label>street:</label>
+              <input type="text" class="form-control" ng-model="userDetails.address[0].street">
+            </div>
+            <div class="form-group">
+              <label>apt:</label>
+              <input type="text" class="form-control" ng-model="userDetails.address[0].apt">
+            </div>
+            <div class="form-group">
+              <label>city</label>
+              <input type="text" class="form-control" ng-model="userDetails.address[0].city">
+            </div>
+            <div class="form-group">
+              <label>state:</label>
+              <input type="text" class="form-control" ng-model="userDetails.address[0].state">
+            </div>
+            <div class="form-group">
+              <label>zip:</label>
+              <input type="text" class="form-control" ng-model="userDetails.address[0].zip">
+            </div>
+            <div class="form-group">
+              <label>country:</label>
+              <input type="text" class="form-control" ng-model="userDetails.address[0].country">
+            </div>
+            <button type="submit" class="btn btn-default" ng-click="editUserProfile()">update profile</button>
+
+            <h4>Update cc</h4>
+            <div class="form-group">
+              <label>number:</label>
+              <input type="text" class="form-control" ng-model="userDetails.ccInfo[0].number">
+            </div>
+            <div class="form-group">
+              <label>cvv:</label>
+              <input type="text" class="form-control" ng-model="userDetails.ccInfo[0].cvv">
+            </div>
+            <div class="form-group">
+              <label>expMonth:</label>
+              <input type="text" class="form-control" ng-model="userDetails.ccInfo[0].expMonth">
+            </div>
+            <div class="form-group">
+              <label>expYear:</label>
+              <input type="text" class="form-control" ng-model="userDetails.ccInfo[0].expYear">
+            </div>
+            <div class="form-group">
+              <label>street:</label>
+              <input type="text" class="form-control" ng-model="userDetails.ccInfo[0].billingAddress.street">
+            </div>
+            <div class="form-group">
+              <label>apt:</label>
+              <input type="text" class="form-control" ng-model="userDetails.ccInfo[0].billingAddress.apt">
+            </div>
+            <div class="form-group">
+              <label>city:</label>
+              <input type="text" class="form-control" ng-model="userDetails.ccInfo[0].billingAddress.city">
+            </div>
+            <div class="form-group">
+              <label>state:</label>
+              <input type="text" class="form-control" ng-model="userDetails.ccInfo[0].billingAddress.state">
+            </div>
+            <div class="form-group">
+              <label>zip:</label>
+              <input type="text" class="form-control" ng-model="userDetails.ccInfo[0].billingAddress.zip">
+            </div>
+            <div class="form-group">
+              <label>country:</label>
+              <input type="text" class="form-control" ng-model="userDetails.ccInfo[0].billingAddress.country">
+            </div>
+            <button type="submit" class="btn btn-default" ng-click="editCCInfo()">update ccInfo</button>
+
+            <br><br>
+            <h4>Change Password</h4>
+            <div class="form-group">
+              <label>old Password:</label>
+              <input type="password" class="form-control" ng-model="pwd.oldPassword">
+            </div>
+            <div class="form-group">
+              <label>new Password:</label>
+              <input type="password" class="form-control" ng-model="pwd.newPassword">
+            </div>
+            <button type="submit" class="btn btn-default" ng-click="changeUserPassword()">change password</button>
+            </div>
+
+          </form>
+        </div>
+
+        <div class="col-sm-3">
+          <button type="submit" class="btn btn-default" ng-click="getDeliveryList()">delivery list</button>
+          <p ng-repeat="delivery in deliveryList" ng-click="getDeliveryDetails(delivery.timestamp)">
+            {{delivery.packageDetails.title}}</p>
+            <div ng-if="deliveryForm && deliveryDetails">
+              <form>
+                <div class="form-group">
+                  <label>desiredDate</label>
+                  <input type="text" class="form-control" ng-model="deliveryDetails.desiredDate">
+                </div>
+                <br>
+                <h4>pickup adress</h4>
+                <div class="form-group">
+                  <label>street:</label>
+                  <input type="text" class="form-control" ng-model="deliveryDetails.pickupLocation.street">
+                </div>
+                <div class="form-group">
+                  <label>apt:</label>
+                  <input type="text" class="form-control" ng-model="deliveryDetails.pickupLocation.apt">
+                </div>
+                <div class="form-group">
+                  <label>city</label>
+                  <input type="text" class="form-control" ng-model="deliveryDetails.pickupLocation.city">
+                </div>
+                <div class="form-group">
+                  <label>state:</label>
+                  <input type="text" class="form-control" ng-model="deliveryDetails.pickupLocation.state">
+                </div>
+                <div class="form-group">
+                  <label>zip:</label>
+                  <input type="text" class="form-control" ng-model="deliveryDetails.pickupLocation.zip">
+                </div>
+                <div class="form-group">
+                  <label>country:</label>
+                  <input type="text" class="form-control" ng-model="deliveryDetails.pickupLocation.country">
+                </div>
+                <br>
+                <h4>dropoffLocation</h4>
+                <div class="form-group">
+                  <label>street:</label>
+                  <input type="text" class="form-control" ng-model="deliveryDetails.dropoffLocation.street">
+                </div>
+                <div class="form-group">
+                  <label>apt:</label>
+                  <input type="text" class="form-control" ng-model="deliveryDetails.dropoffLocation.apt">
+                </div>
+                <div class="form-group">
+                  <label>city:</label>
+                  <input type="text" class="form-control" ng-model="deliveryDetails.dropoffLocation.city">
+                </div>
+                <div class="form-group">
+                  <label>state:</label>
+                  <input type="text" class="form-control" ng-model="deliveryDetails.dropoffLocation.state">
+                </div>
+                <div class="form-group">
+                  <label>zip:</label>
+                  <input type="text" class="form-control" ng-model="deliveryDetails.dropoffLocation.zip">
+                </div>
+                <div class="form-group">
+                  <label>country:</label>
+                  <input type="text" class="form-control" ng-model="deliveryDetails.dropoffLocation.country">
+                </div>
+
+                <br><br>
+                <h4>Package Details</h4>
+                <div class="form-group">
+                  <label>note</label>
+                  <input type="text" class="form-control" ng-model="deliveryDetails.packageDetails.note">
+                </div>
+                <div class="form-group">
+                  <label>price</label>
+                  <input type="text" class="form-control" ng-model="deliveryDetails.packageDetails.price">
+                </div>
+                <div class="form-group">
+                  <label>size</label>
+                  <input type="text" class="form-control" ng-model="deliveryDetails.packageDetails.size">
+                </div>
+                <div class="form-group">
+                  <label>title</label>
+                  <input type="text" class="form-control" ng-model="deliveryDetails.packageDetails.title">
+                </div>
+                <button type="submit" class="btn btn-default" ng-click="editDeliveryDetails()">edit detail</button>
+                <br>
+                <button type="submit" class="btn btn-default" ng-click="deleteDeliveryRequest(deliveryDetails.timestamp)">Delete</button>
+                <br>
+                <div ng-if="deliveryDetails.offers" ng-repeat="offer in deliveryDetails.offers">
+                  <p>From: {{offer.name}}</p>
+                  <button type="submit" class="btn btn-default" ng-click="acceptOffer(offer.userID, offer.name)">Accept offer</button><br>
+                </div>
+              </form>
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+          <div class="row">
+            <div class="col-sm-6">
+              <button type="submit" class="btn btn-default" ng-click="getTaskList()">Task List</button>
+              <div ng-if="taskList.length > 0" ng-repeat="task in taskList">
+                <p>{{task.packageDetails.title}}</p>
+                <button type="submit" class="btn btn-default" ng-click="completeTrip(task.timestamp, task.shipper.id)">Complete Trip</button>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <button type="submit" class="btn btn-default" ng-click="getTripList()">Trip List</button><br>
+              <div ng-if="tripList.length > 0" ng-repeat="trip in tripList">
+                <p>{{trip.packageDetails.title}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </body>
