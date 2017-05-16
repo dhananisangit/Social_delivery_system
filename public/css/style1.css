@@ -133,9 +133,9 @@ HEADER
     color: #fff;
 }
 .navbar-brand {
-		position:absolute;
+		/*position:absolute;
 		left:20;
-		transform:translateX(-100%);
+		transform:translateX(-100%);*/
     padding: 0px;
     font-size: 24px;
     text-transform: uppercase;
@@ -144,11 +144,11 @@ HEADER
 
 }
 
-#myNavbar{
+/*#myNavbar{
 	position: absolute;
 	right:20;
 	transform: translateX(150%);
-}
+}*/
 .navbar-default .navbar-nav > li > a
 {
     padding: 1px 10px;
