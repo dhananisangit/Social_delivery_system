@@ -99,8 +99,8 @@ function sendPackage(req,res){
 			var d = new Date();
 			d = d.getTime().toString();
 			// coll.insert({userID:"1232132121", name:"Sangit Dhanani1", pickupLocation:{street:"754 the alameda", apt:"2311", city:"San Jose", state:"CA",zip:"95126",country:"USA"}, dropoffLocation:{street:"754 the alameda", apt:"2311", city:"San Jose", state:"CA",zip:"95126",country:"USA"}, packageDetails:{title:"Chair", note:"light weight", size:"Medium",price:"$38.00"}, desiredDate:"2017-05-20"}, function(err, user){
-			coll.insert({userID:req.session.data.userID, name:req.session.data.name, pickupLocation:{street:req.body.deliveryRequest.pickupLocation.street, apt:req.body.deliveryRequest.pickupLocation.apt, city:req.body.deliveryRequest.pickupLocation.city, state:req.body.deliveryRequest.pickupLocation.state, zip:req.body.deliveryRequest.pickupLocation.zip ,
-				country:req.body.deliveryRequest.pickupLocation.country}, dropoffLocation:{street:req.body.deliveryRequest.dropoffLocation.street, apt:req.body.deliveryRequest.dropoffLocation.apt, city:req.body.deliveryRequest.dropoffLocation.city, state:req.body.deliveryRequest.dropoffLocation.state, zip:req.body.deliveryRequest.dropoffLocation.zip, country:req.body.deliveryRequest.dropoffLocation.country},
+			coll.insert({userID:req.session.data.userID, name:req.session.data.name, pickupLocation:{street:req.body.deliveryRequest.pickupLocation.street1 + " " +req.body.deliveryRequest.pickupLocation.street2, city:req.body.deliveryRequest.pickupLocation.city, state:req.body.deliveryRequest.pickupLocation.state, zip:req.body.deliveryRequest.pickupLocation.zip ,
+				country:req.body.deliveryRequest.pickupLocation.country}, dropoffLocation:{street:req.body.deliveryRequest.dropoffLocation.street1 + " " + req.body.deliveryRequest.dropoffLocation.street2, city:req.body.deliveryRequest.dropoffLocation.city, state:req.body.deliveryRequest.dropoffLocation.state, zip:req.body.deliveryRequest.dropoffLocation.zip, country:req.body.deliveryRequest.dropoffLocation.country},
 				packageDetails:{title:req.body.deliveryRequest.packageDetails.title, note:req.body.deliveryRequest.packageDetails.note, size:req.body.deliveryRequest.packageDetails.size, price:req.body.deliveryRequest.packageDetails.price}, desiredDate:req.body.deliveryRequest.desiredDate,
 				timestamp: d}, function(err, user){
 				// console.log(user)
@@ -148,8 +148,8 @@ function getAllDeliveryRequests(req,res){
 function updateDeliveryRequest(req,res){
 	mongo.connect(mongoURL, function(){
 			var coll = mongo.collection('shipperRequestPool');
-			coll.update({$and: [{userID: req.session.data.userID}, {timestamp: req.body.deliveryDetails.timestamp}]},{ $set: {pickupLocation:{street:req.body.deliveryDetails.pickupLocation.street, apt:req.body.deliveryDetails.pickupLocation.apt, city:req.body.deliveryDetails.pickupLocation.city, state:req.body.deliveryDetails.pickupLocation.state, zip:req.body.deliveryDetails.pickupLocation.zip ,country:req.body.deliveryDetails.pickupLocation.country},
-				dropoffLocation:{street:req.body.deliveryDetails.dropoffLocation.street, apt:req.body.deliveryDetails.dropoffLocation.apt, city:req.body.deliveryDetails.dropoffLocation.city, state:req.body.deliveryDetails.dropoffLocation.state, zip:req.body.deliveryDetails.dropoffLocation.zip, country:req.body.deliveryDetails.dropoffLocation.country}, packageDetails:{title:req.body.deliveryDetails.packageDetails.title, note:req.body.deliveryDetails.packageDetails.note, size:req.body.deliveryDetails.packageDetails.size, price:req.body.deliveryDetails.packageDetails.price}, desiredDate:req.body.deliveryDetails.desiredDate}}, function(err, success){
+			coll.update({$and: [{userID: req.session.data.userID}, {timestamp: req.body.deliveryDetails.timestamp}]},{ $set: {pickupLocation:{street:req.body.deliveryDetails.pickupLocation.street, city:req.body.deliveryDetails.pickupLocation.city, state:req.body.deliveryDetails.pickupLocation.state, zip:req.body.deliveryDetails.pickupLocation.zip ,country:req.body.deliveryDetails.pickupLocation.country},
+				dropoffLocation:{street:req.body.deliveryDetails.dropoffLocation.street, city:req.body.deliveryDetails.dropoffLocation.city, state:req.body.deliveryDetails.dropoffLocation.state, zip:req.body.deliveryDetails.dropoffLocation.zip, country:req.body.deliveryDetails.dropoffLocation.country}, packageDetails:{title:req.body.deliveryDetails.packageDetails.title, note:req.body.deliveryDetails.packageDetails.note, size:req.body.deliveryDetails.packageDetails.size, price:req.body.deliveryDetails.packageDetails.price}, desiredDate:req.body.deliveryDetails.desiredDate}}, function(err, success){
 				if(success){
 					var result={"status":"200", "msg":"Your delivery details are successfully updated."};
 				}else{
@@ -224,8 +224,8 @@ function acceptOffer(req,res){
 			d = d.getTime().toString();
 			coll.insert({transporter: {id:req.body.tripDetails.transporter.id, name:req.body.tripDetails.transporter.name}, shipper: {id:req.session.data.userID, name:req.session.data.name},
 				packageDetails: {title:req.body.tripDetails.packageDetails.title, note:req.body.tripDetails.packageDetails.note, size:req.body.tripDetails.packageDetails.size, price:req.body.tripDetails.packageDetails.price},
-				pickupLocation: {street:req.body.tripDetails.pickupLocation.street, apt:req.body.tripDetails.pickupLocation.apt, city:req.body.tripDetails.pickupLocation.city, state:req.body.tripDetails.pickupLocation.state, zip:req.body.tripDetails.pickupLocation.zip, country:req.body.tripDetails.pickupLocation.country},
-				dropoffLocation: {street:req.body.tripDetails.dropoffLocation.street, apt:req.body.tripDetails.dropoffLocation.apt, city:req.body.tripDetails.dropoffLocation.city, state:req.body.tripDetails.dropoffLocation.state, zip:req.body.tripDetails.dropoffLocation.zip, country:req.body.tripDetails.dropoffLocation.country},
+				pickupLocation: {street:req.body.tripDetails.pickupLocation.street, city:req.body.tripDetails.pickupLocation.city, state:req.body.tripDetails.pickupLocation.state, zip:req.body.tripDetails.pickupLocation.zip, country:req.body.tripDetails.pickupLocation.country},
+				dropoffLocation: {street:req.body.tripDetails.dropoffLocation.street, city:req.body.tripDetails.dropoffLocation.city, state:req.body.tripDetails.dropoffLocation.state, zip:req.body.tripDetails.dropoffLocation.zip, country:req.body.tripDetails.dropoffLocation.country},
 				completed: false, timestamp: d}, function(err, success){
 				if(success){
 					// console.log(req.body.tripDetails.timestamp);

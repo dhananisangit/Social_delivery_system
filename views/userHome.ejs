@@ -36,8 +36,9 @@
 
       $scope.pwd = {oldPassword:"", newPassword:""};
       $scope.taskDetails = {};
+      $scope.deliveryRequest = {};
 
-      var placeSearch, autocompletePickup, autocompleteDropoff;
+      var placeSearch, autocompletePickup, autocompleteDropoff, autocompleteSendPickup, autocompleteSendDropoff;
 
       var componentForm = {
         street_number: 'short_name',
@@ -57,7 +58,6 @@
         postal_code: 'zip'
       }
 
-
       $scope.initAutocomplete  = function initAutocomplete(id) {
 
         if (id == 'pickup') {
@@ -72,7 +72,20 @@
               types: ['geocode']
             });
             autocompleteDropoff.addListener('place_changed', fillInDropoffAddress);
+        } else if (id == 'sendPickup') {
+          autocompleteSendPickup = new google.maps.places.Autocomplete(
+            (document.getElementById('sendPickup')), {
+              types: ['geocode']
+            });
+            autocompleteSendPickup.addListener('place_changed', fillInSendPickupAddress);
+        } else if (id == 'sendDropoff') {
+          autocompleteSendDropoff = new google.maps.places.Autocomplete(
+            (document.getElementById('sendDropoff')), {
+              types: ['geocode']
+            });
+            autocompleteSendDropoff.addListener('place_changed', fillInSendDropoffAddress);
         }
+
       }
 
       function fillInPickupAddress() {
@@ -106,6 +119,37 @@
         console.log($scope.taskDetails);
       }
 
+      function fillInSendPickupAddress() {
+        var place = autocompleteSendPickup.getPlace();
+        // console.log(place);
+        $scope.deliveryRequest.pickupLocation = {};
+        for (var i = 0; i < place.address_components.length; i++) {
+          var addressType = place.address_components[i].types[0];
+          var val;
+          if (componentForm[addressType]) {
+            val = place.address_components[i][componentForm[addressType]];
+            $scope.deliveryRequest.pickupLocation[addrField[addressType]] = val;
+          }
+        }
+        console.log($scope.deliveryRequest.pickupLocation);
+      }
+
+      function fillInSendDropoffAddress() {
+        var place = autocompleteSendDropoff.getPlace();
+        // console.log(place);
+        $scope.deliveryRequest.dropoffLocation = {};
+
+        for (var i = 0; i < place.address_components.length; i++) {
+          var addressType = place.address_components[i].types[0];
+          var val;
+          if (componentForm[addressType]) {
+            val = place.address_components[i][componentForm[addressType]];
+            $scope.deliveryRequest.dropoffLocation[addrField[addressType]] = val;
+          }
+        }
+        console.log($scope.deliveryRequest.dropoffLocation);
+      }
+
       $scope.geolocate = function geolocate() {
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(function(position) {
@@ -123,9 +167,25 @@
         }
       }
 
+      function addFields() {
+        for (var key in addrField) {
+          if ($scope.deliveryRequest.dropoffLocation[addrField[key]] === undefined) {
+            $scope.deliveryRequest.dropoffLocation[addrField[key]] = '';
+          }
+        }
+        for (var key in addrField) {
+          if ($scope.deliveryRequest.pickupLocation[addrField[key]] === undefined) {
+            $scope.deliveryRequest.pickupLocation[addrField[key]] = '';
+          }
+        }
+        console.log($scope.deliveryRequest.dropoffLocation);
+        console.log($scope.deliveryRequest.pickupLocation);
+      }
+
       $scope.sendPackage = function(){
         var date = document.getElementById("deliveryDate").value;
         $scope.deliveryRequest.desiredDate = date;
+        addFields();
         $http({
           method:'POST',
           url:'/v1/sendpackage',
@@ -366,6 +426,8 @@
     <div class="container">
       <div class="raw">
         <div class="col-sm-3">
+          <input type="text" class="form-control" id="sendPickup" placeholder="Enter pickup address" ng-focus="initAutocomplete('sendPickup');">
+          <input type="text" class="form-control" id="sendDropoff" placeholder="Enter dropoff address" ng-focus="initAutocomplete('sendDropoff');">
           <form>
             <div class="form-group">
               <label>Title</label>
@@ -384,7 +446,7 @@
               <input type="text" class="form-control" ng-model="deliveryRequest.packageDetails.price">
             </div>
 
-            <h4>Pickup location</h4>
+            <!-- <h4>Pickup location</h4>
             <div class="form-group">
               <label>street:</label>
               <input type="text" class="form-control" ng-model="deliveryRequest.pickupLocation.street">
@@ -408,9 +470,9 @@
             <div class="form-group">
               <label>country:</label>
               <input type="text" class="form-control" ng-model="deliveryRequest.pickupLocation.country">
-            </div>
+            </div> -->
 
-            <h4>Dropoff location</h4>
+            <!-- <h4>Dropoff location</h4>
             <div class="form-group">
               <label>street:</label>
               <input type="text" class="form-control" ng-model="deliveryRequest.dropoffLocation.street">
@@ -434,7 +496,7 @@
             <div class="form-group">
               <label>country:</label>
               <input type="text" class="form-control" ng-model="deliveryRequest.dropoffLocation.country">
-            </div>
+            </div> -->
 
             <div class="form-group">
               <label>when:</label>
@@ -570,10 +632,10 @@
                   <label>street:</label>
                   <input type="text" class="form-control" ng-model="deliveryDetails.pickupLocation.street">
                 </div>
-                <div class="form-group">
+                <!-- <div class="form-group">
                   <label>apt:</label>
                   <input type="text" class="form-control" ng-model="deliveryDetails.pickupLocation.apt">
-                </div>
+                </div> -->
                 <div class="form-group">
                   <label>city</label>
                   <input type="text" class="form-control" ng-model="deliveryDetails.pickupLocation.city">
@@ -596,10 +658,10 @@
                   <label>street:</label>
                   <input type="text" class="form-control" ng-model="deliveryDetails.dropoffLocation.street">
                 </div>
-                <div class="form-group">
+                <!-- <div class="form-group">
                   <label>apt:</label>
                   <input type="text" class="form-control" ng-model="deliveryDetails.dropoffLocation.apt">
-                </div>
+                </div> -->
                 <div class="form-group">
                   <label>city:</label>
                   <input type="text" class="form-control" ng-model="deliveryDetails.dropoffLocation.city">
